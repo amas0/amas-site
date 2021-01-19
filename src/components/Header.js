@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
-import ColorModeToggle from "./ColorModeToggle";
 
 function Header(props) {
   return (
@@ -17,7 +16,6 @@ function Header(props) {
       <Link to="/" sx={{ flex: 1 }}>
         <NavLink sx={{ color: "text" }}>{props.title}</NavLink>
       </Link>
-      <ColorModeToggle />
     </header>
   );
 }

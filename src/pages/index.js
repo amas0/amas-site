@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 import { jsx } from "theme-ui";
 
 import Layout from "../components/Layout";
@@ -26,7 +26,7 @@ function Index({ data }) {
             }}
           >
             <h2>
-              {node.frontmatter.date} - {node.frontmatter.title}
+              {node.frontmatter.title}
             </h2>
           </Link>
         </div>

@@ -1,0 +1,238 @@
+---
+path: "/posts/dice-roll-probability"
+date: "2021/01/19"
+title: "Probabilities of simple dice rolls"
+summary: "Exploration of the probability distributions and behavior of dice rolls"
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import Vega from "../../components/Vega";
+import one_dice_vega from "./one_dice_vega.json";
+import two_dice_vega from "./two_dice_vega.json";
+
+<SEO title="Probability distributions of dice rolls" />
+
+I want to take some time to talk about dice. We all know those small,
+typically symmetric, solid objects that we toss during gaming and gambling.
+[For millenia](https://www.metmuseum.org/art/collection/search/551072?img=1),
+humanity has allowed fate to generate random outcomes by the throw of a dice.
+As popular as ever, it is worth taking a closer look at how dice behave by
+exploring the mathematics that describe them.
+
+## A single roll
+
+Let's start by thinking about the most familiar of situations, rolling a
+single 6-sided dice, with either numbers or pips indicating the value of a
+face. There's not too much to say here, if the dice is fair, then each side
+shows up with probability $\frac{1}{6}$. So, what's the probability of
+getting a 6? 1-in-6. How about the probability of getting a 5 or 6? We just
+add together the two probabilities to find $\frac{1}{6} + \frac{1}{6} =
+\frac{2}{6}$, or 1-in-3. Pretty simple.
+
+While the 6-sided dice (or d6) is the most common, plenty of other dice
+appear in other contexts, such as the [Dungeons and Dragons](https://en.wikipedia.org/wiki/Dungeons_%26_Dragons) linchpin: the
+20-sided dice (or d20). Instead of going down the list of possible numbers of
+sides for a dice, let's just take the general case and say we have an
+$n$-sided dice. As for the 6-sided dice, the probability of any one side
+showing after a roll is $\frac{1}{n}$. We can formalize our notion of dice
+roll outcomes a bit by letting $X$ represent the outcome of a roll as a
+random variable. If our dice is $n$-sided, then $X$ can take on values $1, 2,
+\cdots, n$, each with probability $\frac{1}{n}$. We can summarize this by
+writing:
+
+$$
+\boxed{
+X \sim \textrm{Dice}(n) \qquad P(X=x) = 
+\begin{cases}
+	\frac{1}{n} & x\in\{1,\cdots,n\} \\
+	0 & \mathrm{otherwise}
+\end{cases}
+}
+$$
+
+The notation on the left says that $X$ is distributed according to the **dice
+roll distribution** with $n$ sides (we could call it the [discrete uniform
+distribution](https://en.wikipedia.org/wiki/Discrete_uniform_distribution)
+with endpoints 1 and $n$, but I think "dice roll" more clearly describes what
+it is). The right-hand side defines the [probability mass
+function](https://en.wikipedia.org/wiki/Probability_mass_function) (PMF) of
+the distribution -- giving the probability that a specific face $x$
+appears when rolling. Explicitly stating that the probability is zero outside 
+of bounds of the dice is not really necessary, but gives a well-defined answer 
+to questions like: "what is the probability of rolling a 7 on a 6-sided dice?" 
+(it's zero).
+
+Working with the PMF is great, because any conclusions we draw from using it
+will be true for dice of any number of sides, we just substitute in a value 
+for $n$. One simple and useful result is to calculate $P(X \leq x)$, the 
+probability that a dice roll is less than or equal to a given value, $x$.
+This follows pretty simply from the PMF:
+
+$$
+\begin{aligned}
+P(X\leq x) &= P(X=1) + \cdots + P(X=x) \\
+&= \sum_{k=1}^x P(X=k) \\
+&= \sum_{k=1}^x \frac{1}{n} \\
+P(X\leq x)&= \frac{x}{n}
+\end{aligned}
+$$
+
+This expression is the [cumulative distribution
+function](https://en.wikipedia.org/wiki/Cumulative_distribution_function). It's 
+simple to use it to compute the complement, the probability that a dice roll is 
+above some value, $P(X > x)$:
+
+$$
+P(X > x) = 1 - P(X \leq x) = 1 - \frac{x}{n}
+$$
+
+Here's a quick example familiar to anyone who has played a fantasy tabletop RPG:
+
+> Alice's character Ria is facing down a vicious gnoll. Ria strikes out with her 
+> longsword. In order to strike true, Alice needs to roll above an 11 on a d20.
+> What is the probability that Ria successfully attacks the gnoll?
+
+> Using the above result: $P(X > 11) = 1 - \frac{11}{20} = \frac{9}{20} = 45\%$. 
+> Despite Ria's skill with a blade, her chances are slightly worse than the
+> flip of a coin.
+
+To try to hammer home what we mean by the probabilities of a single dice
+roll, the below chart shows the probability of a particular outcome for a
+6-sided dice roll -- unsurprisingly, it's flat. You can click and shift-click
+the bars to calculate the sum of outcomes and get the same results that the
+CDF would give you:
+
+<div style={{display: 'flex', justifyContent: 'center'}}>
+	<Vega spec={one_dice_vega} />
+</div>
+
+
+## One roll more
+
+All right, so one dice roll is pretty straightforward. There is not much more
+to say than what we have above. Most games that use dice often have variety in
+both the number and types of dice to add complexity and nuance. As an obvious
+step from the previous section, we will look at what happens when rolling two 
+dice instead of one -- such a setup forms the basis of casino games
+like [craps](https://en.wikipedia.org/wiki/Craps).
+
+The first point to note is that when we roll two dice, the outcome of one has
+no effect on the outcome of the other -- in the parlance of probability, we
+say that the two dice are
+[independent](https://en.wikipedia.org/wiki/Independence_(probability_theory)).
+Independence tells us that the probability of a joint outcome is the product of
+the two individual outcomes. If $X_1, X_2 \sim \textrm{Dice}(n)$ represent the
+two dice rolls, then:
+
+$$
+P(X_1 = x_1 \textrm{ and } X_2 = x_2) = P(X_1 = x_1)P(X_2 = x_2)
+$$
+
+This allows us to directly calculate particular joint outcomes using the PMF
+that we define for the single dice roll case. As a quick example:
+
+> What is the probability of rolling snake eyes (two 1s) on two 6-sided dice?
+>
+> Directly from above, we calculate $P(X_1 = 1 \textrm{ and } X_2 = 1) = \frac{1}{6}\cdot\frac{1}{6} = \frac{1}{36} \approx 2.7\%$
+
+While this gives us all the machinery we need to calculate joint outcomes, it
+is not what we are usually interested in when we roll two dice. More often,
+we want to know the _total value_ shown. We can use $Y = X_1 + X_2$ to represent
+the sum of two dice rolls as a random variable. There are a number of ways to
+calculate the probabilities $P(Y=y)$ -- often you see counting up the number
+of ways to get a particular sum and dividing that by the total possible
+outcomes. Here we are going to do a little random variable algebra and arrive
+at the same result:
+
+$$
+\begin{aligned}
+P(Y = y) &= P(X_1 + X_2 = y) \\
+&= P(X_1 = y - X_2) \\
+&= \sum_{x_2=1}^n P(X_1 = y - x_2 \vert X_2 = x_2)P(X_2=x_2)
+\end{aligned}
+$$
+
+The last step uses the [law of total probability](https://en.wikipedia.org/wiki/Law_of_total_probability)
+to allow us to write this sum as a product of the individual probabilities of
+$X_1$ and $X_2$. From before, we know the probabilities are both
+$\frac{1}{n}$, but _only when their argument is within the range
+$1,\cdots,n$_. In the above summation, we need to take care to determine when
+a term is non-zero. To help us notationally, we will rewrite our PMF as:
+
+$$
+P(X=x) = \frac{1}{n}\mathbf{1}_{\{1,\cdots,n\}}(x)
+$$
+
+The boldface, $\mathbf{1}$, is the [indicator function](https://en.wikipedia.org/wiki/Indicator_function) 
+that is 1 when the argument $x$ is within $\{1,\cdots, n\}$ and 0 otherwise.
+This is just a way to rewrite our piecewise function from before in a
+more compact way. If we apply this to our expression for $P(Y=y)$ above, we
+get:
+
+$$
+P(Y=y) = \sum_{x_2=1}^n \frac{1}{n^2} \mathbf{1}_{\{1,\cdots,n\}}(y-x_2)\mathbf{1}_{\{1,\cdots,n\}}(x_2)
+$$
+
+We can pull the factor of $\frac{1}{n^2}$ out of the sum and the second
+indicator function is always 1 since the values of $x_2$ that we are summing
+up are exactly the values for which the PMF is nonzero, so this gives:
+
+$$
+P(Y=y) = \frac{1}{n^2} \sum_{x_2=1}^n \mathbf{1}_{\{1,\cdots,n\}}(y-x_2)
+$$
+
+Since the indicator function either takes on the value of 1 or 0, we just 
+need to count up the number of times that it takes on a value of 1. We do
+this by first writing the inequality that would satisfy the indicator
+function:
+
+$$
+1 \leq y - x_2 \leq n \implies y-n \leq x_2 \leq y - 1 
+$$
+
+Since $x_2$ is bounded by $1$ and $n$ in the summation, we can add those 
+additional bounds to get:
+
+$$
+\max(y-n,1) \leq x_2 \leq \min(y - 1 , n)
+$$
+
+Now we just count up the number of integers in these bounds, multiply by the 
+factor of $\frac{1}{n^2}$ that we pulled out and we have out PDF for $Y$:
+
+$$
+\boxed{
+P(Y=y) = \begin{cases}
+\frac{\min(y-1,n) - \max(y-n, 1) + 1}{n^2} &y \in \{2,3,\cdots, 2n\} \\
+0 &\textrm{otherwise}
+\end{cases}
+}
+$$
+
+A simple example shows how we can use it:
+
+> Sam is shooting craps in Vegas and rolls two 6-sided dice. He needs the
+> dice to add up to 7 to win his bet. What are the chances of Sam winning?
+>
+> Directly from the above PMF: 
+> $P(Y=7) = \frac{6 - 1 + 1}{36} = \frac{6}{36} = \frac{1}{6}$, we see Sam
+> will win this bet 1-in-6 times.
+
+A better way to get an idea of how the sum of two dice rolls behaves is to
+look at the shape of the distribution, shown below. The uniform 
+distribution that characterizes a single roll has been replaced by a 
+symmetric, triangular distribution.
+
+<div style={{display: 'flex', justifyContent: 'center'}}>
+	<Vega spec={two_dice_vega} />
+</div>
+
+One of the key properties of adding together multiple dice rolls is that 
+the distribution gets narrower and the majority of the results fall near
+the average outcome. Sums of dice rolls rather quickly approach a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution)
+as you increase the number of dice. 
+
+There will be time to explore the world beyond rolling just two dice, but
+that is another post for another day.

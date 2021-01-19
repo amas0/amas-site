@@ -4,6 +4,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { Link } from "gatsby";
 import React from "react";
 import Layout from "../components/Layout";
+import "katex/dist/katex.min.css"
 
 const shortcodes = { Link }; // Provide common components here
 
