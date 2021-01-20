@@ -21,18 +21,19 @@ function Posts({ data }) {
 export default Posts;
 
 export const pageQuery = graphql`
-  query MyQueryPostPage {
-    allMdx {
-      edges {
-        node {
-          frontmatter {
-            title
-            path
-            summary
-            date
-          }
-        }
-      }
-    }
+query MyQueryPostPage {
+	allMdx(sort: {order: DESC, fields: frontmatter___date}) {
+	  edges {
+		node {
+		  frontmatter {
+			title
+			path
+			summary
+			date
+		  }
+		}
+	  }
+	}
   }
+  
 `;
