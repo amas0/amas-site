@@ -9,6 +9,7 @@ function Posts({ data }) {
 	return (
 		<Layout>
 			<SEO title="Posts" />
+			<h1>All posts</h1>
 			{data.allMdx.edges.map(({ node }) => (
 				<div key={node.frontmatter.path} style={{marginBottom: "1rem"}}>
 				<Snippet frontmatter={node.frontmatter}/>
