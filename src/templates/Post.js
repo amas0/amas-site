@@ -4,7 +4,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { Link } from "gatsby";
 import React from "react";
 import Layout from "../components/Layout";
-import "katex/dist/katex.min.css"
+import "katex/dist/katex.min.css";
 
 const shortcodes = { Link }; // Provide common components here
 
@@ -13,7 +13,12 @@ const Post = ({ data: { mdx: post } }) => {
   const { body } = post;
   return (
     <Layout>
-      <h1>{post.frontmatter.title}</h1>
+      <div style={{ marginBottom: "1.45rem" }}>
+        <h1 style={{ marginBottom: "0" }}>{post.frontmatter.title}</h1>
+        <div style={{ color: "grey", marginLeft: ".1rem" }}>
+          {post.frontmatter.date}
+        </div>
+      </div>
       <MDXProvider components={shortcodes}>
         <MDXRenderer>{post.body}</MDXRenderer>
       </MDXProvider>
@@ -29,6 +34,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         path
+        date
       }
       body
     }
