@@ -20,39 +20,41 @@ function Layout(props) {
         }
       `}
       render={(data) => (
-        <div sx={{ mx: 3 }}>
-          <div
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              minHeight: "100vh",
-              maxWidth: "42rem",
-              margin: "auto",
-            }}
-          >
-            <Header title={data.site.siteMetadata.title} />
-            <main
+        <div>
+          <Header title={data.site.siteMetadata.title} />
+          <div sx={{ mx: 3 }}>
+            <div
               sx={{
-                width: "100%",
-                flex: "1 1 auto",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+                maxWidth: "42rem",
+                margin: "auto",
               }}
             >
-              <div
+              <main
                 sx={{
-                  mx: "auto",
-                  py: 3,
+                  width: "100%",
+                  flex: "1 1 auto",
                 }}
               >
-                {props.children}
-              </div>
-            </main>
-            <footer
-              sx={{
-                width: "100%",
-              }}
-            >
-              {data.site.siteMetadata.footer}
-            </footer>
+                <div
+                  sx={{
+                    mx: "auto",
+                    py: 3,
+                  }}
+                >
+                  {props.children}
+                </div>
+              </main>
+              <footer
+                sx={{
+                  width: "100%",
+                }}
+              >
+                {data.site.siteMetadata.footer}
+              </footer>
+            </div>
           </div>
         </div>
       )}

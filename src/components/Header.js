@@ -2,6 +2,14 @@
 import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
 
+function HeaderLink(props) {
+  return (
+    <Link to={props.to} sx={{ mx: ".5rem" }}>
+      <NavLink sx={{ color: "background" }}>{props.text}</NavLink>
+    </Link>
+  );
+}
+
 function Header(props) {
   return (
     <header
@@ -11,17 +19,23 @@ function Header(props) {
         display: "flex",
         alignItems: "center",
         py: 2,
+        px: 2,
+        background: "#171717",
       }}
     >
-      <Link to="/" sx={{ flex: 1 }}>
-        <NavLink sx={{ color: "text" }}>{props.title}</NavLink>
-      </Link>
-      <Link to="/allposts" sx={{ flex: 0.1 }}>
-        <NavLink>Posts</NavLink>
-      </Link>
-      <Link to="/about">
-        <NavLink>About</NavLink>
-      </Link>
+      <div>
+        <HeaderLink to="/" text={props.title} />
+      </div>
+      <div
+        sx={{
+          justifyContent: "space-between",
+          display: "flex",
+          alignItems: "center"
+        }}
+      >
+        <HeaderLink to="/allposts" text="Posts" />
+        <HeaderLink to="/about" text="About" />
+      </div>
     </header>
   );
 }
