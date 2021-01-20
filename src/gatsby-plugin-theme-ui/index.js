@@ -6,13 +6,6 @@ export default {
     primary: "#07c",
     secondary: "#30c",
     muted: "#f6f6f6",
-    modes: {
-      dark: {
-        text: "#fff",
-        background: "#000",
-        primary: "#0cf",
-      },
-    },
   },
   fonts: {
     body:
