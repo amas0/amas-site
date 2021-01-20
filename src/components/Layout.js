@@ -22,7 +22,7 @@ function Layout(props) {
       render={(data) => (
         <div>
           <Header title={data.site.siteMetadata.title} />
-          <div sx={{ mx: 3 }}>
+          <div sx={{ mx: 3, marginTop: "2rem" }}>
             <div
               sx={{
                 display: "flex",
