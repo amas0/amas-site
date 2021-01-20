@@ -26,8 +26,9 @@ const AboutPage = () => {
             about anything. Reader beware.
           </p>
           <p>
-            You can check me on <a href="https://twitter.com/_amas0">Twitter</a>
-            , <a href="https://github.com/amas0">Github</a> or email me directly.
+            You can check me out on{" "}
+            <a href="https://twitter.com/_amas0">Twitter</a>,{" "}
+            <a href="https://github.com/amas0">Github</a> or email me directly.
           </p>
         </Layout>
       )}
