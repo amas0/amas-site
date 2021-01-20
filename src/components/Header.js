@@ -16,6 +16,9 @@ function Header(props) {
       <Link to="/" sx={{ flex: 1 }}>
         <NavLink sx={{ color: "text" }}>{props.title}</NavLink>
       </Link>
+      <Link to="/about">
+        <NavLink>About</NavLink>
+      </Link>
     </header>
   );
 }
