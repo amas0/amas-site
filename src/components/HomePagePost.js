@@ -1,4 +1,4 @@
-import React from "react";
+/** @jsx jsx */
 import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
 import { MDXProvider } from "@mdx-js/react";
@@ -7,11 +7,11 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 function HomePagePost({ node }) {
   return (
     <div>
-      <div style={{ marginBottom: "1.45rem" }}>
+      <div sx={{ marginBottom: "1.45rem" }}>
         <Link to={node.frontmatter.path}>
           <NavLink>
-            <h1 style={{ marginBottom: "0" }}>{node.frontmatter.title}</h1>
-            <div style={{ color: "grey", marginLeft: ".1rem" }}>
+            <h1 sx={{ marginBottom: "0" }}>{node.frontmatter.title}</h1>
+            <div sx={{ color: "grey", marginLeft: ".1rem" }}>
               {node.frontmatter.date}
             </div>
           </NavLink>
@@ -31,7 +31,7 @@ function HomePagePost({ node }) {
       <MDXProvider>
         <MDXRenderer>{node.body}</MDXRenderer>
       </MDXProvider>
-	  <hr style={{ height: 1 }}/>
+	  <hr sx={{ height: 1 }}/>
     </div>
   );
 }

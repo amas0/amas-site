@@ -9,8 +9,6 @@ import "katex/dist/katex.min.css";
 const shortcodes = { Link }; // Provide common components here
 
 const Post = ({ data: { mdx: post } }) => {
-  const { title } = post.frontmatter;
-  const { body } = post;
   return (
     <Layout>
       <div style={{ marginBottom: "1.45rem" }}>

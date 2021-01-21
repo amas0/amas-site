@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import { jsx } from "theme-ui";
 
 import HomePagePost from "../components/HomePagePost";
@@ -15,7 +15,7 @@ function Index({ data }) {
     <Layout>
       <SEO title="Home" />
       <Masthead/>
-      <hr style={{ height: 1 }}/>
+      <hr sx={{ height: 1 }}/>
       {data.allMdx.edges.map(({ node }) => (
         <div key={node.frontmatter.path}>
           <HomePagePost node={node}></HomePagePost>

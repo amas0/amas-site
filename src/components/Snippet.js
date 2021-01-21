@@ -1,13 +1,13 @@
-import React from "react";
+/** @jsx jsx */
 import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
 
 function Snippet({ frontmatter }) {
   return (
-    <Link to={frontmatter.path} style={{ textDecoration: "none" }}>
+    <Link to={frontmatter.path} sx={{ textDecoration: "none" }}>
       <NavLink>
         <div
-          style={{
+          sx={{
             fontSize: "24px",
             fontWeight: "bold",
           }}
@@ -15,7 +15,7 @@ function Snippet({ frontmatter }) {
           {frontmatter.title}
         </div>
         <div
-          style={{
+          sx={{
 			fontSize: "18px",
 			fontWeight: "normal",
             display: "inline",
