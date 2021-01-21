@@ -2,7 +2,9 @@
 import { Link, graphql } from "gatsby";
 import { jsx } from "theme-ui";
 
+import HomePagePost from "../components/HomePagePost";
 import Layout from "../components/Layout";
+import Masthead from "../components/Masthead";
 import SEO from "../components/SEO";
 
 import { Vega } from "react-vega";
@@ -12,23 +14,10 @@ function Index({ data }) {
   return (
     <Layout>
       <SEO title="Home" />
+      <Masthead/>
       {data.allMdx.edges.map(({ node }) => (
         <div key={node.frontmatter.path}>
-          <Link
-            to={node.frontmatter.path}
-            sx={{
-              marginBottom: ".5rem",
-              textDecoration: "none",
-              color: "text",
-              "&:hover": {
-                color: "primary",
-              },
-            }}
-          >
-            <h2>
-              {node.frontmatter.title}
-            </h2>
-          </Link>
+          <HomePagePost node={node}></HomePagePost>
         </div>
       ))}
     </Layout>
@@ -38,8 +27,8 @@ function Index({ data }) {
 export default Index;
 
 export const pageQuery = graphql`
-  query MyQuery {
-    allMdx {
+  query HomePageQuery {
+    allMdx(sort: { order: DESC, fields: frontmatter___date }, limit: 4) {
       edges {
         node {
           frontmatter {
@@ -48,6 +37,7 @@ export const pageQuery = graphql`
             summary
             date
           }
+          body
         }
       }
     }
