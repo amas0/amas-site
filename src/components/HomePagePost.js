@@ -18,7 +18,7 @@ function HomePagePost({ node }) {
           }}
         >
           <h1 sx={{ marginBottom: "0" }}>{node.frontmatter.title}</h1>
-          <div sx={{ color: "grey", marginLeft: ".1rem" }}>
+          <div sx={{ color: "#696969", marginLeft: ".1rem" }}>
             {node.frontmatter.date}
           </div>
         </Link>
