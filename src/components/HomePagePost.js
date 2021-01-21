@@ -31,7 +31,7 @@ function HomePagePost({ node }) {
       <MDXProvider>
         <MDXRenderer>{node.body}</MDXRenderer>
       </MDXProvider>
-	  <hr style={{ height: 2 }}/>
+	  <hr style={{ height: 1 }}/>
     </div>
   );
 }
