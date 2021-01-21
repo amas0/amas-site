@@ -15,9 +15,6 @@ module.exports = {
         trackingIds: [
           "G-GNBJQCCY49"
         ],
-        gtagConfig: {
-          anonymize_ip: true
-        }
       }
     },
     {
