@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";

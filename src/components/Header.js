@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import { Link } from "gatsby";
 import { jsx, NavLink } from "theme-ui";
 
 function HeaderLink(props) {
