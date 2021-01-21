@@ -4,9 +4,9 @@ import { jsx, NavLink } from "theme-ui";
 
 function HeaderLink(props) {
   return (
-    <Link to={props.to} sx={{ mx: ".5rem" }}>
-      <NavLink sx={{ color: "background" }}>{props.text}</NavLink>
-    </Link>
+    <NavLink href={props.to} sx={{ color: "background", mx: ".5rem" }}>
+      {props.text}
+    </NavLink>
   );
 }
 
@@ -30,7 +30,7 @@ function Header(props) {
         sx={{
           justifyContent: "space-between",
           display: "flex",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <HeaderLink to="/allposts" text="Posts" />
