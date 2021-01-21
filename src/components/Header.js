@@ -1,11 +1,23 @@
 /** @jsx jsx */
-import { jsx, NavLink } from "theme-ui";
+import { Link } from "gatsby";
+import { jsx } from "theme-ui";
 
 function HeaderLink(props) {
   return (
-    <NavLink href={props.to} sx={{ color: "background", mx: ".5rem" }}>
+    <Link
+      to={props.to}
+      sx={{
+        color: "background",
+        mx: ".5rem",
+        textDecoration: "none",
+        fontWeight: "bold",
+        "&:hover": {
+          color: "#5496ff"
+        }
+      }}
+    >
       {props.text}
-    </NavLink>
+    </Link>
   );
 }
 
