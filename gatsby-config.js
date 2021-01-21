@@ -10,6 +10,17 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [
+          "G-GNBJQCCY49"
+        ],
+        gtagConfig: {
+          anonymize_ip: true
+        }
+      }
+    },
+    {
       resolve: `gatsby-plugin-feed`,
       options: {
         query: `
