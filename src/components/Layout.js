@@ -50,6 +50,8 @@ function Layout(props) {
               <footer
                 sx={{
                   width: "100%",
+                  display: "flex",
+                  justifyContent: "center"
                 }}
               >
                 {data.site.siteMetadata.footer}
