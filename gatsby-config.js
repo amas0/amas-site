@@ -3,11 +3,62 @@ const path = require("path");
 module.exports = {
   siteMetadata: {
     title: "Title Here",
-    description: "Inspired by @chrisbiscardi, but with batteries included.",
-    author: "@zeevosec",
+    description: "It's a blog, I suppose.",
+    author: "",
     footer: "All rights reserved.",
+    siteUrl: "https://mysiteurl.com",
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.edges.map((edge) => {
+                return Object.assign({}, edge.node.frontmatter, {
+                  description: edge.node.excerpt,
+                  date: edge.node.frontmatter.date,
+                  url: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
+                  guid: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
+                  custom_elements: [{ "content:encoded": edge.node.body }],
+                });
+              });
+            },
+            query: `
+              {
+                allMdx(sort: {order: DESC, fields: frontmatter___date}) {
+                  edges {
+                    node {
+                      excerpt
+                      frontmatter {
+                        date
+                        path
+                        title
+                      }
+                      body
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Your Site's RSS Feed",
+          },
+        ],
+      },
+    },
     "gatsby-plugin-react-helmet",
     {
       resolve: `gatsby-source-filesystem`,
@@ -43,7 +94,8 @@ module.exports = {
       options: {
         defaultLayouts: { default: path.resolve("./src/components/Layout.js") },
         gatsbyRemarkPlugins: [
-          `gatsby-remark-katex`, `gatsby-remark-smartypants`
+          `gatsby-remark-katex`,
+          `gatsby-remark-smartypants`,
         ],
         remarkPlugins: [require("remark-math"), require("remark-html-katex")],
       },
