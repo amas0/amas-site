@@ -25,7 +25,11 @@ export default function AboutPage() {
       </p>
       <p>
         You can check me out on <a href="https://twitter.com/_amas0">Twitter</a>
-        , <a href="https://github.com/amas0">Github</a>, or email me directly.
+        , <a href="https://github.com/amas0">Github</a>, or via email at{" "}
+        <a href="mailto:contact@analyticscheck.net">
+          contact@analyticscheck.net
+        </a>
+        .
       </p>
       <p>
         This site was built with <a href="https://www.gatsbyjs.com/">Gatsby</a>{" "}

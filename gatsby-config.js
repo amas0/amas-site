@@ -2,11 +2,11 @@ const path = require("path");
 
 module.exports = {
   siteMetadata: {
-    title: "Title Here",
+    title: "Analytics Check",
     description: "It's a blog, I suppose.",
-    author: "",
+    author: "Analytics Check",
     footer: "All rights reserved.",
-    siteUrl: "https://mysiteurl.com",
+    siteUrl: "https://analyticscheck.net",
   },
   plugins: [
     {
@@ -54,7 +54,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Your Site's RSS Feed",
+            title: "Analytics Check's RSS Feed",
           },
         ],
       },
