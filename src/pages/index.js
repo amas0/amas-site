@@ -5,7 +5,6 @@ import { jsx } from "theme-ui";
 import HomePagePost from "../components/HomePagePost";
 import Layout from "../components/Layout";
 import Masthead from "../components/Masthead";
-import SEO from "../components/SEO";
 
 import { Vega } from "react-vega";
 import { Helmet } from "react-helmet";
