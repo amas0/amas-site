@@ -62,7 +62,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Analytics Check's RSS Feed",
+            title: "Analytics Check",
           },
         ],
       },
