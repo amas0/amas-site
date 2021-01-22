@@ -20,8 +20,9 @@ export default function Masthead() {
     >
       <h1
         style={{
-          fontSize: "2.5rem",
-          fontWeight: "bold",
+          fontSize: "3.5rem",
+          fontFamily: "Cinzel Decorative",
+          color: "#00320b"
         }}
       >
         {site.siteMetadata.title}

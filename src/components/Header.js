@@ -12,8 +12,8 @@ function HeaderLink(props) {
         textDecoration: "none",
         fontWeight: "bold",
         "&:hover": {
-          color: "#5496ff"
-        }
+          color: "#5496ff",
+        },
       }}
     >
       {props.text}
@@ -35,7 +35,22 @@ function Header(props) {
       }}
     >
       <div>
-        <HeaderLink to="/" text={props.title} />
+        <Link
+          to="/"
+          sx={{
+            justifyContent: "space-between",
+            mx: ".5rem",
+            textDecoration: "none",
+            fontWeight: "bold",
+            fontFamily: "Cinzel Decorative",
+            color: "background",
+            "&:hover": {
+              color: "#5496ff",
+            },
+          }}
+        >
+          {props.title}
+        </Link>
       </div>
       <div
         sx={{
