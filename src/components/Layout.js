@@ -21,7 +21,7 @@ function Layout(props) {
       `}
       render={(data) => (
         <div>
-          <Header title={data.site.siteMetadata.title} />
+          <Header title={data.site.siteMetadata.title} icon={}/>
           <div sx={{ mx: 3, marginTop: "2rem" }}>
             <div
               sx={{
