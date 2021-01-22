@@ -1,21 +1,6 @@
-# Gatsby Starter Vega
+# Analytics Check 
 
-View this starter [live on Netlify](https://gatsby-starter-vega.netlify.app/)
+Site source code for https://analyticscheck.net. 
 
-1. Create a new Gatsby site using this starter
-
-```sh
-gatsby new my-site https://github.com/zeevosec/gatsby-starter-vega
-```
-
-2. Install dependencies
-
-```sh
-yarn
-```
-
-3. Run develop
-
-```sh
-yarn develop
-```
+Built with gatsby, hosted on netlify, and based on
+https://github.com/zeevosec/gatsby-starter-vega
