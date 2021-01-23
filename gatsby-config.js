@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   siteMetadata: {
     title: "Analytics Check",
-    description: "It's a blog, I suppose.",
+    description: "Make an Analytics check...with disadvantage.",
     author: "Analytics Check",
     footer: "All rights reserved.",
     siteUrl: "https://analyticscheck.net",

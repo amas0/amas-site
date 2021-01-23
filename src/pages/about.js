@@ -18,10 +18,11 @@ export default function AboutPage() {
     <Layout>
       <SEO title="About" />
       <p>
-        Hey, I'm Andrew. {site.siteMetadata.title} is my blog about math, games,
-        data, combinations of those, and whatever else may strike my personal
-        interest. I suppose that means this blog could be about anything. Reader
-        beware.
+        {site.siteMetadata.title} is a blog about using math to understand
+        the world of gaming. Whether it be the probability rules that 
+        define how fate controls tabletop games or the statistics
+        describe how we choose to play our favorite video games there is much
+        to explore. I hope you enjoy reading!
       </p>
       <p>
         You can check me out on <a href="https://twitter.com/_amas0">Twitter</a>
