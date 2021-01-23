@@ -6,11 +6,12 @@ import HomePagePost from "../components/HomePagePost";
 import Layout from "../components/Layout";
 import Masthead from "../components/Masthead";
 
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 
 function Index({ data }) {
   return (
     <Layout>
+      <SEO title="Analytics Check" titleTemplate=""/>
       <Masthead />
       <hr sx={{ height: 1 }} />
       {data.allMdx.edges.map(({ node }) => (
@@ -18,11 +19,6 @@ function Index({ data }) {
           <HomePagePost node={node}></HomePagePost>
         </div>
       ))}
-      <Helmet
-        title="Analytics Check"
-        titleTemplate="%s"
-        description="...can I roll Perception instead?"
-      />
     </Layout>
   );
 }

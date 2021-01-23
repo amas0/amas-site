@@ -5,6 +5,7 @@ import { Link } from "gatsby";
 import React from "react";
 import Layout from "../components/Layout";
 import "katex/dist/katex.min.css";
+import SEO from "../components/SEO";
 
 const shortcodes = { Link }; // Provide common components here
 
@@ -17,6 +18,10 @@ const Post = ({ data: { mdx: post } }) => {
           {post.frontmatter.date}
         </div>
       </div>
+      <SEO
+        title={post.frontmatter.title}
+        description={post.frontmatter.summary}
+      />
       <MDXProvider components={shortcodes}>
         <MDXRenderer>{post.body}</MDXRenderer>
       </MDXProvider>
@@ -33,6 +38,7 @@ export const pageQuery = graphql`
         title
         path
         date
+        summary
       }
       body
     }

@@ -3,20 +3,23 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
 
-function SEO({ description, lang, meta, keywords, title }) {
+function SEO({ description, lang, meta, keywords, title, titleTemplate }) {
   return (
     <StaticQuery
       query={detailsQuery}
       render={(data) => {
         const metaDescription =
           description || data.site.siteMetadata.description;
+        if (titleTemplate !== ``) {
+          titleTemplate = `%s | ${data.site.siteMetadata.title}`;
+        }
         return (
           <Helmet
             htmlAttributes={{
               lang,
             }}
             title={title}
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+            titleTemplate={titleTemplate}
             meta={[
               {
                 name: "description",
@@ -49,6 +52,10 @@ function SEO({ description, lang, meta, keywords, title }) {
               {
                 name: "twitter:description",
                 content: metaDescription,
+              },
+              {
+                name: "og:image",
+                content: data.allImageSharp.nodes[0].fixed.src,
               },
             ]
               .concat(
@@ -85,6 +92,13 @@ export default SEO;
 
 const detailsQuery = graphql`
   query DefaultSEOQuery {
+    allImageSharp(filter: { fixed: { originalName: { eq: "icon.png" } } }) {
+      nodes {
+        fixed {
+          src
+        }
+      }
+    }
     site {
       siteMetadata {
         title

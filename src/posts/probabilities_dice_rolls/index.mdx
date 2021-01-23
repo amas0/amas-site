@@ -2,7 +2,7 @@
 path: "/posts/dice-roll-probability"
 date: "2021/01/19"
 title: "Probabilities of simple dice rolls"
-summary: "Exploration of the probability distributions and behavior of dice rolls"
+summary: "Looking at rolling dice, the math behind it, and understanding how they behave."
 ---
 
 import { Link } from "gatsby";
@@ -11,8 +11,6 @@ import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
 import one_dice_vega from "./one_dice_vega.json";
 import two_dice_vega from "./two_dice_vega.json";
-
-<SEO title="Probability distributions of dice rolls" />
 
 I want to take some time to talk about dice. We all know those small,
 typically symmetric, solid objects that we toss during gaming and gambling.
@@ -44,7 +42,7 @@ writing:
 
 $$
 \boxed{
-X \sim \textrm{Dice}(n) \qquad P(X=x) = 
+X \sim \textrm{Dice}(n) \qquad P(X=x) =
 \begin{cases}
 	\frac{1}{n} & x\in\{1,\cdots,n\} \\
 	0 & \mathrm{otherwise}
@@ -59,14 +57,14 @@ with endpoints 1 and $n$, but I think "dice roll" more clearly describes what
 it is). The right-hand side defines the [probability mass
 function](https://en.wikipedia.org/wiki/Probability_mass_function) (PMF) of
 the distribution -- giving the probability that a specific face $x$
-appears when rolling. Explicitly stating that the probability is zero outside 
-of bounds of the dice is not really necessary, but gives a well-defined answer 
-to questions like: "what is the probability of rolling a 7 on a 6-sided dice?" 
+appears when rolling. Explicitly stating that the probability is zero outside
+of bounds of the dice is not really necessary, but gives a well-defined answer
+to questions like: "what is the probability of rolling a 7 on a 6-sided dice?"
 (it's zero).
 
 Working with the PMF is great, because any conclusions we draw from using it
-will be true for dice of any number of sides, we just substitute in a value 
-for $n$. One simple and useful result is to calculate $P(X \leq x)$, the 
+will be true for dice of any number of sides, we just substitute in a value
+for $n$. One simple and useful result is to calculate $P(X \leq x)$, the
 probability that a dice roll is less than or equal to a given value, $x$.
 This follows pretty simply from the PMF:
 
@@ -80,8 +78,8 @@ P(X\leq x)&= \frac{x}{n}
 $$
 
 This expression is the [cumulative distribution
-function](https://en.wikipedia.org/wiki/Cumulative_distribution_function). It's 
-simple to use it to compute the complement, the probability that a dice roll is 
+function](https://en.wikipedia.org/wiki/Cumulative_distribution_function). It's
+simple to use it to compute the complement, the probability that a dice roll is
 above some value, $P(X > x)$:
 
 $$
@@ -90,11 +88,11 @@ $$
 
 Here's a quick example familiar to anyone who has played a fantasy tabletop RPG:
 
-> Alice's character Ria is facing down a vicious gnoll. Ria strikes out with her 
+> Alice's character Ria is facing down a vicious gnoll. Ria strikes out with her
 > longsword. In order to strike true, Alice needs to roll above an 11 on a d20.
 > What is the probability that Ria successfully attacks the gnoll?
 
-> Using the above result: $P(X > 11) = 1 - \frac{11}{20} = \frac{9}{20} = 45\%$. 
+> Using the above result: $P(X > 11) = 1 - \frac{11}{20} = \frac{9}{20} = 45\%$.
 > Despite Ria's skill with a blade, her chances are slightly worse than the
 > flip of a coin.
 
@@ -106,20 +104,19 @@ CDF would give you:
 
 <VegaWrapper spec={one_dice_vega} />
 
-
 ## One roll more
 
 All right, so one dice roll is pretty straightforward. There is not much more
 to say than what we have above. Most games that use dice often have variety in
 both the number and types of dice to add complexity and nuance. As an obvious
-step from the previous section, we will look at what happens when rolling two 
+step from the previous section, we will look at what happens when rolling two
 dice instead of one -- such a setup forms the basis of casino games
 like [craps](https://en.wikipedia.org/wiki/Craps).
 
 The first point to note is that when we roll two dice, the outcome of one has
 no effect on the outcome of the other -- in the parlance of probability, we
 say that the two dice are
-[independent](https://en.wikipedia.org/wiki/Independence_(probability_theory)).
+[independent](<https://en.wikipedia.org/wiki/Independence_(probability_theory)>).
 Independence tells us that the probability of a joint outcome is the product of
 the two individual outcomes. If $X_1, X_2 \sim \textrm{Dice}(n)$ represent the
 two dice rolls, then:
@@ -163,7 +160,7 @@ $$
 P(X=x) = \frac{1}{n}\mathbf{1}_{\{1,\cdots,n\}}(x)
 $$
 
-The boldface, $\mathbf{1}$, is the [indicator function](https://en.wikipedia.org/wiki/Indicator_function) 
+The boldface, $\mathbf{1}$, is the [indicator function](https://en.wikipedia.org/wiki/Indicator_function)
 that is 1 when the argument $x$ is within $\{1,\cdots, n\}$ and 0 otherwise.
 This is just a way to rewrite our piecewise function from before in a
 more compact way. If we apply this to our expression for $P(Y=y)$ above, we
@@ -181,23 +178,23 @@ $$
 P(Y=y) = \frac{1}{n^2} \sum_{x_2=1}^n \mathbf{1}_{\{1,\cdots,n\}}(y-x_2)
 $$
 
-Since the indicator function either takes on the value of 1 or 0, we just 
+Since the indicator function either takes on the value of 1 or 0, we just
 need to count up the number of times that it takes on a value of 1. We do
 this by first writing the inequality that would satisfy the indicator
 function:
 
 $$
-1 \leq y - x_2 \leq n \implies y-n \leq x_2 \leq y - 1 
+1 \leq y - x_2 \leq n \implies y-n \leq x_2 \leq y - 1
 $$
 
-Since $x_2$ is bounded by $1$ and $n$ in the summation, we can add those 
+Since $x_2$ is bounded by $1$ and $n$ in the summation, we can add those
 additional bounds to get:
 
 $$
 \max(y-n,1) \leq x_2 \leq \min(y - 1 , n)
 $$
 
-Now we just count up the number of integers in these bounds, multiply by the 
+Now we just count up the number of integers in these bounds, multiply by the
 factor of $\frac{1}{n^2}$ that we pulled out and we have out PDF for $Y$:
 
 $$
@@ -214,22 +211,21 @@ A simple example shows how we can use it:
 > Sam is shooting craps in Vegas and rolls two 6-sided dice. He needs the
 > dice to add up to 7 to win his bet. What are the chances of Sam winning?
 >
-> Directly from the above PMF: 
+> Directly from the above PMF:
 > $P(Y=7) = \frac{6 - 1 + 1}{36} = \frac{6}{36} = \frac{1}{6}$, we see Sam
 > will win this bet 1-in-6 times.
 
 A better way to get an idea of how the sum of two dice rolls behaves is to
-look at the shape of the distribution, shown below. The uniform 
-distribution that characterizes a single roll has been replaced by a 
+look at the shape of the distribution, shown below. The uniform
+distribution that characterizes a single roll has been replaced by a
 symmetric, triangular distribution.
-
 
 <VegaWrapper spec={two_dice_vega} />
 
-One of the key properties of adding together multiple dice rolls is that 
+One of the key properties of adding together multiple dice rolls is that
 the distribution gets narrower and the majority of the results fall near
 the average outcome. Sums of dice rolls rather quickly approach a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution)
-as you increase the number of dice. 
+as you increase the number of dice.
 
 There will be time to explore the world beyond rolling just two dice, but
 that is another post for another day.
