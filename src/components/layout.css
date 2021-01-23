@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap");
 html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -621,11 +621,25 @@ pre tt:before,
 pre tt:after {
   content: "";
 }
+
+.vega-embed {
+  width: 75%;
+  height: 100%;
+  display: flex;
+  margin: auto;
+}
+
 @media only screen and (max-width: 480px) {
   html {
     font-size: 100%;
   }
   .katex-display {
     overflow-x: auto;
+  }
+  .vega-embed {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin: auto;
   }
 }

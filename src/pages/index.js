@@ -10,7 +10,6 @@ import { Vega } from "react-vega";
 import { Helmet } from "react-helmet";
 
 function Index({ data }) {
-  console.log(Vega);
   return (
     <Layout>
       <Masthead />

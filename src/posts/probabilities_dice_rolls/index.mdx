@@ -8,7 +8,7 @@ summary: "Exploration of the probability distributions and behavior of dice roll
 import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
-import Vega from "../../components/Vega";
+import VegaWrapper from "../../components/Vega";
 import one_dice_vega from "./one_dice_vega.json";
 import two_dice_vega from "./two_dice_vega.json";
 
@@ -104,9 +104,7 @@ roll, the below chart shows the probability of a particular outcome for a
 the bars to calculate the sum of outcomes and get the same results that the
 CDF would give you:
 
-<div style={{display: 'flex', justifyContent: 'center'}}>
-	<Vega spec={one_dice_vega} />
-</div>
+<VegaWrapper spec={one_dice_vega} />
 
 
 ## One roll more
@@ -225,9 +223,8 @@ look at the shape of the distribution, shown below. The uniform
 distribution that characterizes a single roll has been replaced by a 
 symmetric, triangular distribution.
 
-<div style={{display: 'flex', justifyContent: 'center'}}>
-	<Vega spec={two_dice_vega} />
-</div>
+
+<VegaWrapper spec={two_dice_vega} />
 
 One of the key properties of adding together multiple dice rolls is that 
 the distribution gets narrower and the majority of the results fall near

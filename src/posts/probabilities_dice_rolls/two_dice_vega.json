@@ -1,247 +1,85 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "background": "#f2f0e9",
-  "padding": 5,
-  "width": 500,
-  "height": 300,
-  "title": {
-    "text": "Probabilities of rolling two 6-sided dice",
-    "frame": "group"
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"fontSize": 16}
   },
-  "style": "cell",
-  "data": [
-    {"name": "selector029_store"},
+  "layer": [
     {
-      "name": "data-f8344ecc1a454745964b75449901a0a6",
-      "values": [
-        {"y": 2, "pmf": 0.027777777777777776},
-        {"y": 3, "pmf": 0.05555555555555555},
-        {"y": 4, "pmf": 0.08333333333333333},
-        {"y": 5, "pmf": 0.1111111111111111},
-        {"y": 6, "pmf": 0.1388888888888889},
-        {"y": 7, "pmf": 0.16666666666666666},
-        {"y": 8, "pmf": 0.1388888888888889},
-        {"y": 9, "pmf": 0.1111111111111111},
-        {"y": 10, "pmf": 0.08333333333333333},
-        {"y": 11, "pmf": 0.05555555555555555},
-        {"y": 12, "pmf": 0.027777777777777776}
-      ]
-    },
-    {
-      "name": "data_0",
-      "source": "data-f8344ecc1a454745964b75449901a0a6",
-      "transform": [{"type": "identifier", "as": "_vgsid_"}]
-    },
-    {
-      "name": "data_1",
-      "source": "data_0",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "isValid(datum[\"pmf\"]) && isFinite(+datum[\"pmf\"])"
+      "mark": "bar",
+      "encoding": {
+        "color": {
+          "condition": {"value": "#942222", "selection": "selector001"},
+          "value": "#966e6e"
+        },
+        "x": {"type": "ordinal", "field": "y", "title": "Value of sum"},
+        "y": {
+          "type": "quantitative",
+          "field": "pmf",
+          "scale": {"domain": [0, 0.5]},
+          "title": "Probability"
         }
-      ]
+      },
+      "selection": {
+        "selector001": {"type": "multi", "empty": "none", "toggle": true}
+      }
     },
     {
-      "name": "data_2",
-      "source": "data_0",
+      "mark": {"type": "text", "align": "center", "dy": -6},
+      "encoding": {
+        "color": {
+          "condition": {"value": "#942222", "selection": "selector001"},
+          "value": "#966e6e"
+        },
+        "size": {"value": 12},
+        "text": {"type": "quantitative", "field": "pmf", "format": ".2"},
+        "x": {"type": "ordinal", "field": "y", "title": "Value of sum"},
+        "y": {
+          "type": "quantitative",
+          "field": "pmf",
+          "scale": {"domain": [0, 0.5]},
+          "title": "Probability"
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left"},
+      "encoding": {
+        "color": {"value": "#942222"},
+        "size": {"value": 16},
+        "text": {"type": "nominal", "field": "label"},
+        "x": {"value": 10},
+        "y": {"value": 15}
+      },
       "transform": [
+        {"filter": {"selection": "selector001"}},
+        {"aggregate": [{"op": "sum", "field": "pmf", "as": "spmf"}]},
         {
-          "type": "filter",
-          "expr": "(vlSelectionTest(\"selector029_store\", datum))"
-        },
-        {
-          "type": "aggregate",
-          "groupby": [],
-          "ops": ["sum"],
-          "fields": ["pmf"],
-          "as": ["spmf"]
-        },
-        {
-          "type": "formula",
-          "expr": "\"P(selection)=\" + format(datum.spmf, \".2f\")",
+          "calculate": "\"P(selection)=\" + format(datum.spmf, \".2f\")",
           "as": "label"
         }
       ]
     }
   ],
-  "signals": [
-    {
-      "name": "unit",
-      "value": {},
-      "on": [
-        {"events": "mousemove", "update": "isTuple(group()) ? group() : unit"}
-      ]
-    },
-    {
-      "name": "selector029",
-      "update": "vlSelectionResolve(\"selector029_store\", \"union\", true)"
-    },
-    {
-      "name": "selector029_tuple",
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "click"}],
-          "update": "datum && item().mark.marktype !== 'group' ? {unit: \"layer_0\", fields: selector029_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"_vgsid_\"]]} : null",
-          "force": true
-        },
-        {"events": [{"source": "scope", "type": "dblclick"}], "update": "null"}
-      ]
-    },
-    {
-      "name": "selector029_tuple_fields",
-      "value": [{"type": "E", "field": "_vgsid_"}]
-    },
-    {
-      "name": "selector029_toggle",
-      "value": false,
-      "on": [
-        {
-          "events": [{"source": "scope", "type": "click"}],
-          "update": "event.shiftKey"
-        },
-        {"events": [{"source": "scope", "type": "dblclick"}], "update": "false"}
-      ]
-    },
-    {
-      "name": "selector029_modify",
-      "on": [
-        {
-          "events": {"signal": "selector029_tuple"},
-          "update": "modify(\"selector029_store\", selector029_toggle ? null : selector029_tuple, selector029_toggle ? null : true, selector029_toggle ? selector029_tuple : null)"
-        }
-      ]
-    }
-  ],
-  "marks": [
-    {
-      "name": "layer_0_marks",
-      "type": "rect",
-      "style": ["bar"],
-      "interactive": true,
-      "from": {"data": "data_1"},
-      "encode": {
-        "update": {
-          "fill": [
-            {
-              "test": "(vlSelectionTest(\"selector029_store\", datum))",
-              "value": "#942222"
-            },
-            {"value": "#966e6e"}
-          ],
-          "x": {"scale": "x", "field": "y"},
-          "width": {"scale": "x", "band": true},
-          "y": {"scale": "y", "field": "pmf"},
-          "y2": {"scale": "y", "value": 0}
-        }
-      }
-    },
-    {
-      "name": "layer_1_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "data_1"},
-      "encode": {
-        "update": {
-          "align": {"value": "center"},
-          "dy": {"value": -6},
-          "fill": [
-            {
-              "test": "(vlSelectionTest(\"selector029_store\", datum))",
-              "value": "#942222"
-            },
-            {"value": "#966e6e"}
-          ],
-          "x": {"scale": "x", "field": "y", "band": 0.5},
-          "y": {"scale": "y", "field": "pmf"},
-          "text": {"signal": "format(datum[\"pmf\"], \".2\")"},
-          "fontSize": {"value": 12},
-          "baseline": {"value": "middle"}
-        }
-      }
-    },
-    {
-      "name": "layer_2_marks",
-      "type": "text",
-      "style": ["text"],
-      "interactive": false,
-      "from": {"data": "data_2"},
-      "encode": {
-        "update": {
-          "align": {"value": "left"},
-          "fill": {"value": "#942222"},
-          "x": {"value": 10},
-          "y": {"value": 15},
-          "text": {"signal": "''+datum[\"label\"]"},
-          "fontSize": {"value": 16},
-          "baseline": {"value": "middle"}
-        }
-      }
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "band",
-      "domain": {"data": "data_1", "field": "y", "sort": true},
-      "range": [0, {"signal": "width"}],
-      "paddingInner": 0.1,
-      "paddingOuter": 0.05
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "domain": [0, 0.5],
-      "range": [{"signal": "height"}, 0],
-      "nice": true,
-      "zero": true
-    }
-  ],
-  "axes": [
-    {
-      "scale": "y",
-      "orient": "left",
-      "gridScale": "x",
-      "grid": true,
-      "tickCount": {"signal": "ceil(height/40)"},
-      "domain": false,
-      "labels": false,
-      "maxExtent": 0,
-      "minExtent": 0,
-      "ticks": false,
-      "zindex": 0
-    },
-    {
-      "scale": "x",
-      "orient": "bottom",
-      "grid": false,
-      "title": "Value of sum",
-      "labelAlign": "center",
-      "labelBaseline": "top",
-      "labelOverlap": true,
-      "zindex": 0
-    },
-    {
-      "scale": "y",
-      "orient": "left",
-      "grid": false,
-      "title": "Probability",
-      "labelAlign": "right",
-      "labelBaseline": "middle",
-      "labelOverlap": true,
-      "tickCount": {"signal": "ceil(height/40)"},
-      "zindex": 0
-    }
-  ],
-  "config": {
-    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
-    "style": {
-      "guide-label": {"font": "noto sans"},
-      "guide-title": {"font": "noto sans"},
-      "group-title": {"font": "noto sans", "fontSize": 16},
-      "group-subtitle": {"font": "noto sans"},
-      "text": {"font": "noto sans"}
-    }
+  "data": {"name": "data-f8344ecc1a454745964b75449901a0a6"},
+  "title": "Sum of rolling two 6-sided dice",
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-f8344ecc1a454745964b75449901a0a6": [
+      {"y": 2, "pmf": 0.027777777777777776},
+      {"y": 3, "pmf": 0.05555555555555555},
+      {"y": 4, "pmf": 0.08333333333333333},
+      {"y": 5, "pmf": 0.1111111111111111},
+      {"y": 6, "pmf": 0.1388888888888889},
+      {"y": 7, "pmf": 0.16666666666666666},
+      {"y": 8, "pmf": 0.1388888888888889},
+      {"y": 9, "pmf": 0.1111111111111111},
+      {"y": 10, "pmf": 0.08333333333333333},
+      {"y": 11, "pmf": 0.05555555555555555},
+      {"y": 12, "pmf": 0.027777777777777776}
+    ]
   }
 }
