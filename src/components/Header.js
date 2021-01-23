@@ -14,6 +14,7 @@ function HeaderLink(props) {
         "&:hover": {
           color: "#5496ff",
         },
+        fontFamily: "Cinzel Decorative"
       }}
     >
       {props.text}
