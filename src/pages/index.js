@@ -6,7 +6,6 @@ import HomePagePost from "../components/HomePagePost";
 import Layout from "../components/Layout";
 import Masthead from "../components/Masthead";
 
-import { Vega } from "react-vega";
 import { Helmet } from "react-helmet";
 
 function Index({ data }) {
