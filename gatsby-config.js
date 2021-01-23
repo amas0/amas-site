@@ -9,6 +9,7 @@ module.exports = {
     siteUrl: "https://analyticscheck.net",
   },
   plugins: [
+    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
