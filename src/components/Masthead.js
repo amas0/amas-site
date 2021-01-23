@@ -16,6 +16,7 @@ export default function Masthead() {
       style={{
         display: "flex",
         justifyContent: "center",
+        textAlign: "center"
       }}
     >
       <h1
