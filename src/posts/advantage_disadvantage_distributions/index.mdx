@@ -125,3 +125,29 @@ $$
 
 ## The distributions 
 
+To take our expressions to their final state, we just need to substitute in 
+the functional forms of these probability statements <Link
+to="/posts/dice-roll-probability">that we found previously</Link>. First,
+let's take a look at advantage:
+
+$$
+P(Y_{adv} = y) = 2\left(\frac{1}{n}\right)\left(\frac{y-1}{n}\right) + \left(\frac{1}{n}\right)^2
+$$
+
+Which simplifies to:
+
+$$
+\boxed{ P(Y_{adv} = y) = \frac{2y - 1}{n^2} \qquad y\in\{1,\cdots,n\}}
+$$
+
+For disadvantage:
+
+$$
+P(Y_{dis} = y) = 2\left(\frac{1}{n}\right)\left(1 - \frac{y}{n}\right) + \left(\frac{1}{n}\right)^2
+$$
+
+Which simplifies to:
+
+$$
+\boxed{ P(Y_{dis} = y) = \frac{-2y + 2n + 1}{n^2} \qquad y\in\{1,\cdots,n\}}
+$$
