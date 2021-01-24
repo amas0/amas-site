@@ -9,6 +9,14 @@ module.exports = {
     siteUrl: "https://analyticscheck.net",
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /svgs/
+        }
+      }
+    },
     `gatsby-plugin-preact`,
     {
       resolve: `gatsby-plugin-google-gtag`,
