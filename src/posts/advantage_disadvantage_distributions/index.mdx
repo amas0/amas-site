@@ -9,6 +9,7 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+import adv_vs_dis from "./adv_vs_dis.json";
 
 In Dungeons and Dragons 5th edition, the [Advantage and
 Disadvantage](https://5thsrd.org/rules/advantage_and_disadvantage/) mechanic
@@ -123,7 +124,7 @@ $$
 P(Y_{dis} = y) = 2 P(X=y)P(X > y) + P(X = y)^2
 $$
 
-## The distributions 
+## The probability mass functions
 
 To take our expressions to their final state, we just need to substitute in 
 the functional forms of these probability statements <Link
@@ -149,5 +150,72 @@ $$
 Which simplifies to:
 
 $$
-\boxed{ P(Y_{dis} = y) = \frac{-2y + 2n + 1}{n^2} \qquad y\in\{1,\cdots,n\}}
+\boxed{ P(Y_{dis} = y) = \frac{2(n - y + 1) - 1}{n^2} \qquad y\in\{1,\cdots,n\}}
 $$
+
+The above form shows the clear symmetries between the two processes. A great
+way to really understand what these probability distributions look like is to
+plot them. Below we show the probabilities of a d20 roll with advantage and
+disadvantage.
+
+<VegaWrapper spec={adv_vs_dis} />
+
+A few things are immediately obvious -- advantage shifts the odds in favor of
+high numbers, disadvantage does the same for low numbers, and they are mirror
+images of each other. The symmetry of the probabilities is not terribly
+surprising given the underlying process is symmetric, but it's nice to see
+clearly. 
+
+Another point worth making is the single most likely outcome for rolling with 
+advantage is the max value of the dice. For disadvantage it's going to be
+rolling a 1. While still unlikely in general, it's notable that you would 
+expect to see the extreme outcomes more often than any other single value.
+
+## The cumulative distribution functions 
+
+We can take our work one step further and calculate the cumulative distribution
+functions of advantage/disadvantage. Our approach will be to directly calculate:
+
+$$
+P(Y_{adv} \leq y) = \sum_{k=1}^y P(Y_{adv} = k) \qquad 
+P(Y_{dis} \leq y) = \sum_{k=1}^y P(Y_{dis} = k)
+$$
+
+We'll start with advantage.
+
+$$
+\begin{aligned}
+P(Y_{adv} \leq y) &= \sum_{k=1}^y  \frac{2k - 1}{n^2}\\
+&= \frac{2}{n^2}\left(\sum_{k=1}^y k\right) - \frac{1}{n^2} \left(\sum_{k=1}^y 1 \right)
+\end{aligned}
+$$
+
+Using the fact that $\sum_{k=1}^y k = y(y+1)/2$, the above expression
+simplifies to:
+
+$$
+\boxed{
+	P(Y_{adv} \leq y) = \left(\frac{y}{n}\right)^2 \qquad y\in\{1,\cdots,n\}
+}
+$$
+
+We will carry out a nearly identical process for disadvantage:
+
+$$
+\begin{aligned}
+P(Y_{dis} \leq y) &= \sum_{k=1}^y \frac{2(n - k + 1) - 1}{n^2}\\
+&= \frac{2}{n}\left(\sum_{k=1}^y 1\right) - 
+\frac{2}{n^2} \left(\sum_{k=1}^y k\right) + \frac{1}{n^2} \left(\sum_{k=1}^y 1\right)
+\end{aligned}
+$$
+
+Similar to before we can evaluate these sums and get our final expression:
+
+$$
+\boxed{
+	P(Y_{dis} \leq y) = \frac{2y}{n} - \left(\frac{y}{n}\right)^2 \qquad y\in\{1,\cdots,n\}
+
+}
+$$
+
+FURTHER DISCUSSION AND GRAPHIC HERE

@@ -1,0 +1,133 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"fontSize": 16}
+  },
+  "layer": [
+    {
+      "mark": "point",
+      "encoding": {
+        "color": {
+          "type": "ordinal",
+          "field": "variable",
+          "legend": {
+            "direction": "horizontal",
+            "labelFontSize": 14,
+            "offset": 10,
+            "orient": "top",
+            "title": ""
+          },
+          "scale": {
+            "domain": ["Advantage", "Disadvantage"],
+            "range": ["#5b63bd", "#942222"]
+          }
+        },
+        "x": {"type": "ordinal", "field": "y", "title": "Roll outcome"},
+        "y": {"type": "quantitative", "field": "value", "title": "Probability"}
+      }
+    },
+    {
+      "mark": {"type": "rule", "color": "gray"},
+      "encoding": {"x": {"type": "ordinal", "field": "y"}},
+      "transform": [{"filter": {"selection": "selector006"}}]
+    },
+    {
+      "mark": "point",
+      "encoding": {
+        "opacity": {"value": 0},
+        "x": {"type": "ordinal", "field": "y"}
+      },
+      "selection": {
+        "selector006": {
+          "type": "single",
+          "nearest": true,
+          "on": "mouseover",
+          "fields": ["y"],
+          "empty": "none"
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5, "size": 14},
+      "encoding": {
+        "color": {
+          "type": "ordinal",
+          "field": "variable",
+          "legend": {
+            "direction": "horizontal",
+            "labelFontSize": 14,
+            "offset": 10,
+            "orient": "top",
+            "title": ""
+          },
+          "scale": {
+            "domain": ["Advantage", "Disadvantage"],
+            "range": ["#5b63bd", "#942222"]
+          }
+        },
+        "text": {
+          "condition": {
+            "type": "quantitative",
+            "field": "value",
+            "selection": "selector006"
+          },
+          "value": " "
+        },
+        "x": {"type": "ordinal", "field": "y", "title": "Roll outcome"},
+        "y": {"type": "quantitative", "field": "value", "title": "Probability"}
+      }
+    }
+  ],
+  "data": {"name": "data-59718ab1ced12d74b1b3957af66f1676"},
+  "padding": {"left": 5, "top": 5, "right": 45, "bottom": 5},
+  "title": "d20 rolls with Advantage vs Disadvantage",
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-59718ab1ced12d74b1b3957af66f1676": [
+      {"y": 1, "variable": "Advantage", "value": 0.0025},
+      {"y": 2, "variable": "Advantage", "value": 0.0075},
+      {"y": 3, "variable": "Advantage", "value": 0.0125},
+      {"y": 4, "variable": "Advantage", "value": 0.0175},
+      {"y": 5, "variable": "Advantage", "value": 0.0225},
+      {"y": 6, "variable": "Advantage", "value": 0.0275},
+      {"y": 7, "variable": "Advantage", "value": 0.0325},
+      {"y": 8, "variable": "Advantage", "value": 0.0375},
+      {"y": 9, "variable": "Advantage", "value": 0.0425},
+      {"y": 10, "variable": "Advantage", "value": 0.0475},
+      {"y": 11, "variable": "Advantage", "value": 0.0525},
+      {"y": 12, "variable": "Advantage", "value": 0.0575},
+      {"y": 13, "variable": "Advantage", "value": 0.0625},
+      {"y": 14, "variable": "Advantage", "value": 0.0675},
+      {"y": 15, "variable": "Advantage", "value": 0.0725},
+      {"y": 16, "variable": "Advantage", "value": 0.0775},
+      {"y": 17, "variable": "Advantage", "value": 0.0825},
+      {"y": 18, "variable": "Advantage", "value": 0.0875},
+      {"y": 19, "variable": "Advantage", "value": 0.0925},
+      {"y": 20, "variable": "Advantage", "value": 0.0975},
+      {"y": 1, "variable": "Disadvantage", "value": 0.0975},
+      {"y": 2, "variable": "Disadvantage", "value": 0.0925},
+      {"y": 3, "variable": "Disadvantage", "value": 0.0875},
+      {"y": 4, "variable": "Disadvantage", "value": 0.0825},
+      {"y": 5, "variable": "Disadvantage", "value": 0.0775},
+      {"y": 6, "variable": "Disadvantage", "value": 0.0725},
+      {"y": 7, "variable": "Disadvantage", "value": 0.0675},
+      {"y": 8, "variable": "Disadvantage", "value": 0.0625},
+      {"y": 9, "variable": "Disadvantage", "value": 0.0575},
+      {"y": 10, "variable": "Disadvantage", "value": 0.0525},
+      {"y": 11, "variable": "Disadvantage", "value": 0.0475},
+      {"y": 12, "variable": "Disadvantage", "value": 0.0425},
+      {"y": 13, "variable": "Disadvantage", "value": 0.0375},
+      {"y": 14, "variable": "Disadvantage", "value": 0.0325},
+      {"y": 15, "variable": "Disadvantage", "value": 0.0275},
+      {"y": 16, "variable": "Disadvantage", "value": 0.0225},
+      {"y": 17, "variable": "Disadvantage", "value": 0.0175},
+      {"y": 18, "variable": "Disadvantage", "value": 0.0125},
+      {"y": 19, "variable": "Disadvantage", "value": 0.0075},
+      {"y": 20, "variable": "Disadvantage", "value": 0.0025}
+    ]
+  }
+}
