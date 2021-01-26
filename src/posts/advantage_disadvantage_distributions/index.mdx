@@ -1,0 +1,239 @@
+---
+path: "/posts/advantage-disadvantage-distribution"
+date: "2021/01/23"
+title: "A derivation of the Advantage/Disadvantage probability distributions"
+summary: "Summary here"
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import adv_vs_dis from "./adv_vs_dis.json";
+import cdf from "./cdf.json"
+
+In Dungeons and Dragons 5th edition, the [Advantage and
+Disadvantage](https://5thsrd.org/rules/advantage_and_disadvantage/) mechanic
+provides a straightforward way to tip the scales of fate in favor
+(or against) the characters depending on the circumstances they face. The 
+mechanic works like this -- when rolling a d20 (20-sided dice) to determine
+the outcome of an action, you instead roll two d20s and keep either the
+higher result (with advantage) or the lower (with disadvantage). As a result, the odds of particular outcomes change. In this post, we derive the 
+probability distributions that describe those outcomes to better understand
+how rolling with advantage or disadvantage works. 
+
+## Two dice rolls and the comparisons between them
+
+Every dice roll serves as a means to sample from an underlying probability 
+distribution. <Link to="/posts/dice-roll-probability">As discussed in a
+previous post</Link>, this underlying distribution is one that picks a 
+random whole number between 1 and $n$, the number of sides on the dice, which
+we can call the _dice roll distribution_. 
+
+Rolling two dice does nothing more than generate a sample of size two 
+instead of one from the dice roll distribution. As with most dice rolls,
+we assume that the outcome on one dice has no effect on the other, or
+[independence](https://en.wikipedia.org/wiki/Independence_(probability_theory)).
+
+We write the following to represent our random sample:
+
+$$
+X_1, X_2 \sim \textrm{Dice}(n)
+$$
+
+Meaning that $X_1$ and $X_2$ each represent the random outcome of an
+$n$-sided dice roll. Although the advantage/disadvantage mechanic typically
+applies to $n=20$, it's straightforward to explore the result for a general
+value $n$ and substitute in 20 later.
+
+Using our above notation, we mathematically express advantage and disadvantage 
+as the maximum and minimum of the random variables above:
+
+$$
+Y_{adv} = \max(X_1, X_2) \qquad Y_{dis} = \min(X_1, X_2)
+$$
+
+There's nothing particularly profound here. We've just defined explicitly
+what advantage and disadvantage are.
+
+## A little bit of algebra to get us going
+
+Ultimately, we are interested in the probability that a roll with advantage
+or disadvantage gives a specific value, e.g. $P(Y_{adv} = y)$. First, let's
+focus on advantage. We can start by writing the following:
+
+$$
+P(Y_{adv} = y) = P(\max(X_1, X_2) = y)
+$$
+
+The probability that the maximum of two random variables is equal to $y$ can be 
+rewritten as the probability that _one_ of the two variables is equal to $y$
+and the other is less than $y$. Since either $X_1$ or $X_2$ can be the
+maximum, we just add together the same situation but swapped. There is one
+edge case this doesn't capture -- if $X_1 = X_2 = y$ -- we can add that on to
+get the full, correct expression:
+
+$$
+\begin{aligned}
+P(\max(X_1, X_2) = y) = P(X_1 = y, X_2 < y) &+ P(X_1 < y, X_2 = y)\\
+&+ P(X_1 = y, X_2 = y)
+\end{aligned}
+$$
+
+As $X_1$ and $X_2$ are independent, the joint probabilities become products,
+and since $X_1$ and $X_2$ come from the same distribution, we
+can drop the subscript and just call them $X$ to refer to underlying dice
+roll distribution.
+
+
+$$
+\begin{aligned}
+P(\max(X_1, X_2) = y) = P(X = y) P(X < y) &+ P(X < y)P(X = y) \\
+&+ P(X=y)^2
+\end{aligned}
+$$
+
+The first two terms on the right side are identical, we combine them to get:
+
+$$
+P(\max(X_1, X_2) = y) = 2 P(X = y) P(X < y) + P(X=y)^2
+$$
+
+One minor simplification, as $y$ is discrete, we can write $P(X < y) = P(X
+\leq y-1)$. This gives (and also using the $Y_{adv}$ notation again)
+
+$$
+P(Y_{adv} = y) = 2 P(X = y) P(X \leq y-1) + P(X=y)^2
+$$
+
+This gives us the probability mass function of rolling with advantage in
+terms of the PMF and CDF of the dice roll distribution, $X$. Before we
+substitute in those functions, let's quickly go through a similar process for
+the disadvantage distribution:
+
+$$
+\begin{aligned}
+P(Y_{dis} = y) &= P(\min(X_1, X_2) = y) \\
+&= P(X_1 = y, X_2 > y) + P(X_1 > y, X_2 = y) + P(X_1=y, X_2 = y) \\
+\end{aligned}
+$$
+
+Which gives, in similar form to above:
+
+$$
+P(Y_{dis} = y) = 2 P(X=y)P(X > y) + P(X = y)^2
+$$
+
+## The probability mass functions
+
+To take our expressions to their simplified forms, we substitute in the
+functional forms of these probability statements <Link
+to="/posts/dice-roll-probability">that we found previously</Link>. First,
+we do so for advantage:
+
+$$
+P(Y_{adv} = y) = 2\left(\frac{1}{n}\right)\left(\frac{y-1}{n}\right) + \left(\frac{1}{n}\right)^2
+$$
+
+Which simplifies to:
+
+$$
+\boxed{ P(Y_{adv} = y) = \frac{2y - 1}{n^2} \qquad y\in\{1,\cdots,n\}}
+$$
+
+For disadvantage:
+
+$$
+P(Y_{dis} = y) = 2\left(\frac{1}{n}\right)\left(1 - \frac{y}{n}\right) + \left(\frac{1}{n}\right)^2
+$$
+
+Which simplifies to:
+
+$$
+\boxed{ P(Y_{dis} = y) = \frac{2(n - y + 1) - 1}{n^2} \qquad y\in\{1,\cdots,n\}}
+$$
+
+The above forms show the clear symmetries between the two processes. A great
+way to really understand what these probability distributions look like is to
+plot them, like below:
+
+<VegaWrapper spec={adv_vs_dis} />
+
+A few things are immediately obvious -- advantage shifts the odds in favor of
+high numbers, disadvantage does the same for low numbers, and they are mirror
+images of each other. The symmetry is not terribly surprising given the
+underlying process is symmetric, but it's nice to see clearly.
+
+Another point worth making is the single most likely outcome for rolling with
+advantage is the max value of the dice. For disadvantage it's rolling a 1.
+While still unlikely in general, it's notable that you would expect to see
+the extreme outcomes more often than any other single value.
+
+## The cumulative distribution functions 
+
+We can take our work one step further and find the cumulative distribution
+functions of advantage and disadvantage. Our approach will be to directly
+calculate:
+
+$$
+P(Y_{adv} \leq y) = \sum_{k=1}^y P(Y_{adv} = k) \qquad 
+P(Y_{dis} \leq y) = \sum_{k=1}^y P(Y_{dis} = k)
+$$
+
+We'll start with advantage.
+
+$$
+\begin{aligned}
+P(Y_{adv} \leq y) &= \sum_{k=1}^y  \frac{2k - 1}{n^2}\\
+&= \frac{2}{n^2}\left(\sum_{k=1}^y k\right) - \frac{1}{n^2} \left(\sum_{k=1}^y 1 \right)
+\end{aligned}
+$$
+
+Using the fact that $\sum_{k=1}^y k = y(y+1)/2$, the above expression
+simplifies to:
+
+$$
+\boxed{
+	P(Y_{adv} \leq y) = \left(\frac{y}{n}\right)^2 \qquad y\in\{1,\cdots,n\}
+}
+$$
+
+We will carry out a nearly identical process for disadvantage:
+
+$$
+\begin{aligned}
+P(Y_{dis} \leq y) &= \sum_{k=1}^y \frac{2(n - k + 1) - 1}{n^2}\\
+&= \frac{2}{n}\left(\sum_{k=1}^y 1\right) - 
+\frac{2}{n^2} \left(\sum_{k=1}^y k\right) + \frac{1}{n^2} \left(\sum_{k=1}^y 1\right)
+\end{aligned}
+$$
+
+Similar to before we can evaluate these sums and get our final expression:
+
+$$
+\boxed{
+	P(Y_{dis} \leq y) = \frac{2y}{n} - \left(\frac{y}{n}\right)^2 \qquad y\in\{1,\cdots,n\}
+
+}
+$$
+
+Taking a look at these CDFs graphically shows the differing behavior clearly:
+
+<VegaWrapper spec={cdf} />
+
+They again appear similar but mirrored -- advantage grows slowly at first but
+picks up as it gets to the higher numbers, disadvantage grows quickly and
+tapers off as you reach the high numbers.
+
+The median provides a good rule of them for these distributions. When rolling
+with advantage, you are more likely to roll a 15 or higher than below that.
+With disadvantage, you are more likely to roll a 6 or below than above that.
+The fact that the bulk of the distributions are pushed closer to the extremes
+shows just how much of an effect this mechanic has on the potential outcomes.
+
+Advantage and disadvantage is rather simple to implement but does an
+excellent job at biasing the outcome of dice rolls in whichever way best
+suits the situation at hand. Since it's rise in popularity in DnD 5e, it has
+proliferated to other tabletop games, and some of the results in this post
+can go a long way towards getting a strong understanding of how advantage and
+disadvantage really work.

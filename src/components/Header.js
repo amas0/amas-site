@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { Link } from "gatsby";
 import { jsx } from "theme-ui";
+import RSS from "./../svgs/rss.svg";
 
 function HeaderLink(props) {
   return (
@@ -14,7 +15,7 @@ function HeaderLink(props) {
         "&:hover": {
           color: "#5496ff",
         },
-        fontFamily: "Cinzel Decorative"
+        fontFamily: "Cinzel Decorative",
       }}
     >
       {props.text}
@@ -62,6 +63,19 @@ function Header(props) {
       >
         <HeaderLink to="/allposts" text="Posts" />
         <HeaderLink to="/about" text="About" />
+        <a href="/rss.xml">
+          <RSS
+            sx={{
+              color: "background",
+              height: "1rem",
+              width: "1rem",
+              marginLeft: "0.2rem",
+              "&:hover": {
+                color: "#5496ff",
+              },
+            }}
+          />
+        </a>
       </div>
     </header>
   );
