@@ -29,7 +29,7 @@ function Snippet({ frontmatter }) {
           color: "#2A2A2A",
         }}
       >
-        {frontmatter.date} - {frontmatter.summary}
+        {frontmatter.date + " - " + frontmatter.summary}
       </div>
     </Link>
   );
