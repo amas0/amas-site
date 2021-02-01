@@ -1,0 +1,67 @@
+---
+path: "/posts/advantage-disadvantage-tips"
+date: "2021/02/01"
+title: "Some helpful rules of thumb about Advantage and Disadvantage"
+summary: "Advantage and Disadvantage significantly change the outcome of dice
+rolls. Here we state some practical tips that can help us when using
+these mechanics."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import adv_vs_dis from "../advantage_disadvantage_distributions/adv_vs_dis.json";
+import cdf from "../advantage_disadvantage_distributions/cdf.json";
+
+In our <Link to="/posts/advantage-disadvantage-distribution">
+previous post</Link>, we dug into the mathematics of DnD 5e's advantage and
+disadvantage mechanic. Looking at the probability expressions we derived
+allowed us to understand their general behavior. Here we go through
+a few helpful rules of thumb to provide more practical results to
+apply directly in your games.
+
+## A few tips
+
+As advantage and disadvantage only applies to d20 rolls in DnD, these results
+come from our probability expressions with $n=20$.
+
+#### Advantage
+
+* The single _most likely_ outcome is a natural 20, occurring in about 1-in-10 rolls.
+* The _least likely_ outcome is a natural 1, occurring in 1-in-400 rolls.
+* There is about a _1-in-2_ chance of rolling a 15 or higher.
+* There is about a _9-in-10_ chance of rolling a 7 or higher.
+* Rolling a natural 20 is more likely than rolling _below_ a 7.
+
+#### Disadvantage
+
+* The single _most likely_ outcome is a natural 1, occurring in about 1-in-10 rolls.
+* The _least likely_ outcome is a natural 20, occurring in 1-in-400 rolls.
+* There is about a _1-in-2_ chance of rolling a 6 or lower.
+* There is about a _9-in-10_ chance of rolling a 14 or lower.
+* Rolling a natural 1 is more likely than rolling _above_ a 14.
+
+## Why are these true statements?
+
+A fairly straightforward way to show that all of the above statements are true 
+is to examine the PMF and CDF graphs that we made for d20 rolls at the end 
+of the last post. We show them again below:
+
+<VegaWrapper spec={adv_vs_dis} />
+
+<VegaWrapper spec={cdf} />
+
+By mousing over or tapping on the graphs you can see the exact
+probabilities of different situations. Mousing over the first graph
+shows that the probability of a natural 20 with advantage is 0.0975, which is
+about 1-in-10 and is _higher_ than the probability of rolling a 6 or lower 
+with advantage as seen in the second graph (which is only 0.09).
+By playing around with these, you can come up with all sorts of useful results!
+
+Here's a concrete DnD 5e example -- a Champion Fighter scores a critical hit
+when rolling a 19 or higher from its [Improved
+Critical](https://roll20.net/compendium/dnd5e/Fighter#toc_19) feature. Looking 
+at the graph above, we see that our fighter with advantage will crit on
+average in 1 out of 5 hits! With an extra attack and Action Surge at their
+disposal, an advantaged fighter is force to reckoned with.
