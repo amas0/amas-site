@@ -24,15 +24,15 @@ a feel for relative likelihoods, but still leaves us stuck thinking in terms
 of probabilities, which suffer from being challenging to interpret. 
 
 Another popular way to summarize advantage is to ground it in familiar DnD 
-terms as a "bonus". Bonuses are numbers added (or subtracted) from 
+terms as a **bonus**. Bonuses are numbers added (or subtracted) from 
 dice rolls depending on how good (or bad) a character is at a certain action,
 e.g. a barbarian will usually have a higher bonus for swinging a greataxe than
 a wizard and therefore a higher chance to hit. 
 
 Framing advantage as a bonus has led to the claim that **"advantage gives you
-about a +5 bonus to your roll"** -- is this true? People are usually quick 
-to point out that such a rule is an oversimplification, but how wrong is it?
-Let's dig into the math and explore!
+about a +5 bonus to your roll"** -- is this true? People quickly point out
+that such a rule is an oversimplification, but how wrong is it? Let's dig
+into the math and explore!
 
 ## The math
 
@@ -43,11 +43,11 @@ $$
 X_{adv} \sim \mathrm{Adv}(n) \qquad X \sim \mathrm{Dice}(n)
 $$
 
-The left being rolling with advantage, which we explore <Link to="/posts/advantage-disadvantage-distribution">here</Link>, and 
+The left being rolling with advantage, which we explored <Link to="/posts/advantage-disadvantage-distribution">here</Link>, and 
 the right being a simple $n$ sided dice roll, explored <Link to="/posts/dice-roll-probability">here</Link>.
 We want to show when these two have the same probability of success by adding
 a bonus, $b$, to the simple dice roll. "Success" in DnD meaning "rolling at or
-above a target value". We can represent this as:
+above a target value". We can represent the target value as $x$ and write:
 
 $$
 P(X_{adv} \geq x) = P(X + b \geq x)
@@ -56,3 +56,65 @@ $$
 In the above, we are most interested in the bonus, $b$. That tells us how 
 much advantage is "worth" by drawing a direct equivalence with adding a 
 modifier to a normal roll.
+
+We are going to use results from the previous posts linked above to avoid
+going through any derivations, specifically the cumulative probability 
+expressions:
+
+$$
+P(X_{adv} \leq x) = \left(\frac{x}{n}\right)^2 \qquad P(X \leq x) = \frac{x}{n}
+$$
+
+We will rearrange our expression that equates advantage and a bonus to make
+use of these results, like so:
+
+$$
+\begin{aligned}
+P(X_{adv} \geq x) &= P(X + b \geq x) \\
+P(X_{adv} \geq x) &= P(X \geq x - b) \\
+1 - P(X_{adv} \leq x - 1) &=  1 - P(X \leq x - b - 1) \\
+P(X_{adv} \leq x - 1) &=  P(X \leq x - b - 1) \\
+\end{aligned}
+$$
+
+Now we plug in to get:
+
+$$
+\left(\frac{x-1}{n}\right)^2 = \frac{x-b-1}{n}
+$$
+
+Simple algebra allows us to solve for $b$:
+
+$$
+b = x - 1 - \frac{(x-1)^2}{n}
+$$
+
+This is only for advantage, but we will state without showing that the bonus
+equivalent with _disadvantage_ is simply the negative of advantage (a good
+exercise for those who are curious!). We can summarize the results as:
+
+$$
+\boxed{
+b_{adv} = x - 1 - \frac{(x-1)^2}{n} \qquad b_{dis} = -b_{adv}
+}
+$$
+
+## The results
+
+By inspecting $b_{adv}$, we can get some of the main properties -- first, the
+bonus depends heavily on the target roll. As it is a quadratic expression,
+the graph is a downward facing parabola. By finding the _maximum_ of
+$b_{adv}$, we determine where advantage gives the biggest bonus. We denote
+the maximum to be $\hat{b}_{adv}$ and find:
+
+$$
+\hat{b}_{adv} = \frac{n}{4} \qquad \hat{x} = \frac{n}{2} + 1
+$$
+
+Substituting in $n=20$, we see an important result -- **the maximum bonus of 
+advantage is +5 and occurs when the target roll is an 11**. So there is some 
+truth to the statement that advantage is worth +5, it just happens to be the 
+maximum possible bonus and occurs when you need to roll about average.
+
+The best way to get a complete view of the bonus from advantage is to look 
+at the graph.
