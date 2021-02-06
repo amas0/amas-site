@@ -33,7 +33,8 @@ most of the outcomes are clustered near the expected value whereas a high
 variance implies the outcomes spread out far from the expected value.
 
 Mathematically, we represent the expectation of a discrete random variable
-$X$ as $E(X)$ and variance as $\mathrm{Var}(X)$. They are defined as follows:
+$X$ as $E(X)$ and variance as $\mathrm{Var}(X)$. They can be defined as
+follows:
 
 $$
 E(X) = \sum_{k=1}^n k P(X=k) \qquad \mathrm{Var}(X) = E(X^2) - E(X)^2
@@ -47,7 +48,7 @@ can be defined generally as summing over infinite outcomes).
 One important thing to note about variance is that it depends on the squared
 expectation _and_ the expectation of $X^2$. While we could calculate the
 probability distribution of $X^2$ and use our above expression for
-expectation, it is much easier to keep the following result in mind (called
+expectation, it is much easier to keep the following result in mind (named
 the [law of the unconscious
 statistician](https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician)):
 
@@ -61,4 +62,63 @@ to the value of the outcomes in the sum.
 
 ## Applying these to dice rolls
 
+All we need to calculate these for simple dice rolls is the probability mass 
+function, which we explored in our <Link to="/posts/dice-roll-probability">post on the dice roll distribution</Link>:
 
+$$
+X \sim \textrm{Dice}(n) \qquad P(X=x) =
+\begin{cases}
+	\frac{1}{n} & x\in\{1,\cdots,n\} \\
+	0 & \mathrm{otherwise}
+\end{cases}
+$$
+
+The direct calculation is straightforward from here:
+
+$$
+\begin{aligned}
+E(X) &= \sum_{k=1}^n \frac{k}{n} \\
+&= \frac{1}{n} \sum_{k=1}^n k \\
+&= \frac{n(n+1)}{2n}
+\end{aligned}
+$$
+
+Yielding the simplified expression for the expectation:
+
+$$
+\boxed{
+E(X) = \frac{n+1}{2}
+}
+$$
+
+So the expected value of a dice roll is half of the number of faces
+plus $1/2$. Let's take a look at the variance -- we first calculate
+$E(X^2)$:
+
+$$
+\begin{aligned}
+E(X^2) &= \frac{1}{n} \sum_{k=1}^n k^2 \\
+&= \frac{1}{n}\left(\frac{n(n+1)(2n+1)}{6}\right)\\
+&= \frac{(n+1)(2n+1)}{6}
+\end{aligned}
+$$
+
+Substituting this result and the square of our expectation into our
+definition for variance we get:
+
+$$
+\mathrm{Var}(X) = \frac{(n+1)(2n+1)}{6} - \left(\frac{n+1}{2}\right)^2
+$$
+
+Simplifying this expression yields:
+
+$$
+\boxed{
+	\mathrm{Var}(X) = \frac{n^2 - 1}{12}
+}
+$$
+
+## What does this tell us about dice rolls?
+
+This is the part where I tell you that *expectations and variances are 
+useless summaries of 
