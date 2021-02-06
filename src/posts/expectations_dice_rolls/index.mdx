@@ -11,3 +11,54 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+
+Often when rolling a dice, we know what we _want_ -- a high roll to defeat
+the monster or the right number to win a wager -- unfortunately for us,
+desire has little impact on the outcome of the roll. In these situations,
+it's useful to know what to expect and how variable the outcome will be
+around that expectation.
+
+In this post, we define expectation and variance mathematically, compute 
+them for dice rolls, and explore some key properties that help us 
+understand the outcomes of rolls.
+
+## Some definitions
+
+By their names, we develop a decent intuition of what expectation and 
+variance are trying to tell us. **Expectation (or expected value) gives us a
+single value that summarizes the _average_ outcome**, often representing some
+measure of the center of a probability distribution. **Variance quantifies how
+variable the outcomes are _about the average_.** A low variance implies that
+most of the outcomes are clustered near the expected value whereas a high 
+variance implies the outcomes spread out far from the expected value.
+
+Mathematically, we represent the expectation of a discrete random variable
+$X$ as $E(X)$ and variance as $\mathrm{Var}(X)$. They are defined as follows:
+
+$$
+E(X) = \sum_{k=1}^n k P(X=k) \qquad \mathrm{Var}(X) = E(X^2) - E(X)^2
+$$
+
+Expectation is a weighted sum of outcomes by their probability and variance 
+is itself defined in terms of expectations. As we primarily care about the 
+outcomes of dice rolls, the sum only goes over the $n$ finite outcomes (it
+can be defined generally as summing over infinite outcomes). 
+
+One important thing to note about variance is that it depends on the squared
+expectation _and_ the expectation of $X^2$. While we could calculate the
+probability distribution of $X^2$ and use our above expression for
+expectation, it is much easier to keep the following result in mind (called
+the [law of the unconscious
+statistician](https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician)):
+
+$$
+E(g(X)) = \sum_{k=1}^n g(k) P(X=k)
+$$
+
+Which tells us that the expectation of a function, $g(X)$, can be computed 
+using the original probability distribution and applying the function, $g$,
+to the value of the outcomes in the sum.
+
+## Applying these to dice rolls
+
+
