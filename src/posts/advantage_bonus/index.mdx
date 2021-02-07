@@ -90,15 +90,22 @@ $$
 b = x - 1 - \frac{(x-1)^2}{n}
 $$
 
-This is only for advantage, but we will state without showing that the bonus
-equivalent with _disadvantage_ is simply the negative of advantage (a good
-exercise for those who are curious!). We can summarize the results as:
+One key requirement is that **$b$ must be a whole number.**
+The outcome of a dice roll can only ever be a whole number, and fractional
+bonuses will never increase your probability of success. This means that the 
+values of $b$ that we can find from this will only be _approximate_ in most
+cases, but they will represent the bonus that gets as close as possible to 
+the probability of success when rolling with advantage. We can summarize 
+our result as:
 
 $$
 \boxed{
-b_{adv} = x - 1 - \frac{(x-1)^2}{n} \qquad b_{dis} = -b_{adv}
+b_{adv} = \left\lfloor x - 1 - \frac{(x-1)^2}{n} \right\rceil
 }
 $$
+
+Where the notation $\lfloor a \rceil$ means rounding to the nearest whole
+number.
 
 ## The results
 
@@ -124,12 +131,12 @@ at the graph.
 
 We immediately see some important observations that can be made.
 First, **if your target roll is anywhere between 8 and 14, then +5 is a 
-good rule of thumb**. For all of those targets $b_{adv} > 4.5$ and we can 
-round without too much worry. Beyond hitting target rolls around the center,
-the equivalent bonus drops significantly. **When trying to hit target rolls
-of 18 or higher, advantage is worth +2.5 or less.** At
-the extreme, advantage only gives you a bonus of about +1 to hit a target of
-20.
+good rule of thumb**. For all of those targets, the best approximating 
+bonus is +5. Outside of those target rolls in the center, the equivalent
+bonus drops off significantly.
+**When trying to hit target rolls
+of 17 or higher, advantage is worth about +3 or less.** At the extreme,
+advantage only gives you a bonus of about +1 to hit a target of 20.
 
 It can be helpful to think about _why_ advantage has this behavior of 
 being equivalent to a strong +5 bonus when you need to hit around an 11 and 
@@ -151,30 +158,27 @@ advantage depends heavily on the target roll. Without knowledge of
 typical target rolls, it can be hard to give a hard and fast rule.
 To really dig into this question, exploring the rules of a system to 
 figure out a typical target roll for success would be necessary 
-(perhaps a worthy exploration in a future post).
+(perhaps a worthwhile exploration in a future post).
 
 That being said, we can get somewhere with just a little bit of 
-reasoning. First, we note that we typically only care about the value 
-of advantage when it comes to hitting challenging rolls. The fact that 
-$b_{adv} \approx 3$ for trying to hit a target of 5 is not really saying 
-that advantage is weak, it's just saying that it's already so easy to 
-hit a 5 with advantage that you don't need to add much of a bonus to 
-get there anyways.
-
-With that in mind, I would like to claim that the relevance of the bonus 
-could be restricted to only target rolls greater than or equal to 11. 
-Below that, we have a high chance of success anyways. Following that 
-restriction, we can use the median bonus in this upper region to 
-quantify it's general behavior where we care about it, and we find:
+reasoning. If we pretend that we are completely ignorant of common 
+target rolls, then we can approximate the overall $b_{adv}$ with 
+the median value over all target rolls. Doing so we find:
 
 $$
-\mathrm{Med}(b_{adv}) \approx 4 \qquad x \geq 11
+\mathrm{Med}(b_{adv}) = 4
 $$
 
-In practice, a equivalent bonus of +4 is not much different
-than the commonly used +5, but it is more conservative. **A +5 
-represents the best possible bonus effect of advantage, whereas +4 
-represents an average over the whole region we care about. Even so, the
-higher the target roll, the weaker the bonus gets.**
+An equivalent bonus of +4 is not much different
+than the commonly used +5, but it is a more conservative rule of thumb. **A
++5 represents the highest bonus effect of advantage, whereas +4
+represents an average over the whole range of outcomes. The
+more extreme the target roll, the weaker the bonus gets.** In practice,
+it seems likely the the majority of target rolls would fall somewhere near 
+the middle of the distribution, and therefore **the commonly accepted +5
+rule of thumb effectively captures the typical behavior of rolling 
+with advantage**.
 
-
+*A short note on disadvantage, it is fairly easy to show that all the work 
+above applies to disadvantage as well, you just need to make the bonuses 
+negative -- a good exercise for the intrepid reader!*
