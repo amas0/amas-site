@@ -14,7 +14,7 @@ import VegaWrapper from "../../components/Vega";
 import two_dice_vega from "../probabilities_dice_rolls/two_dice_vega.json";
 
 Often when rolling a dice, we know what we _want_ -- a high roll to defeat
-the monster or the right number to win a wager -- unfortunately for us,
+the monster or win a wager -- unfortunately for us,
 desire has little impact on the outcome of the roll. In these situations,
 it's useful to know what to expect and how variable the outcome will be
 around that expectation.
@@ -25,13 +25,13 @@ understand the potential outcomes.
 
 ## Some definitions
 
-By their names, we develop a decent intuition of what expectation and 
-variance are trying to tell us. **Expectation (or expected value) gives us a
+Just by their names, we get a decent idea of what these concepts 
+tell us. **Expectation (also known as expected value or mean) gives us a
 single value that summarizes the _average_ outcome**, often representing some
-measure of the center of a probability distribution. **Variance quantifies how
-variable the outcomes are _about the average_.** A low variance implies that
-most of the outcomes are clustered near the expected value whereas a high 
-variance implies the outcomes are spread out.
+measure of the center of a probability distribution. **Variance quantifies
+how variable the outcomes are _about the average_.** A low variance implies
+that most of the outcomes are clustered near the expected value whereas a
+high variance implies the outcomes are spread out.
 
 We represent the expectation of a discrete random variable $X$ as $E(X)$ and
 variance as $\mathrm{Var}(X)$. They can be defined as follows:
@@ -40,7 +40,7 @@ $$
 E(X) = \sum_{k=1}^n k P(X=k) \qquad \mathrm{Var}(X) = E(X^2) - E(X)^2
 $$
 
-Expectation, **also known as the mean**, is a weighted sum of outcomes by
+Expectation is a sum of outcomes weighted by
 their probability. The variance is itself defined in terms of expectations. As
 we primarily care dice rolls here, the sum only goes over the $n$ finite
 outcomes representing the $n$ faces of the dice (it can be defined more
@@ -124,18 +124,19 @@ $$
 This is the part where I tell you that **expectations and variances are 
 mostly useless summaries of _single_ dice rolls**. The fact that every 
 face is equiprobable in a single roll is all the information you need 
-to understand the general behavior of dice.
+to understand the behavior of one dice.
 
 On the other hand, **expectations and variances are extremely useful 
-when rolling _multiple_ dice**. As we showed at the end of 
+when rolling _multiple_ dice**. At the end of 
 our <Link to="/posts/dice-roll-probability">post on simple dice roll probabilities</Link>,
-when you sum multiple dice rolls, the distribution concentrates
-about the center of possible outcomes -- in fact, it concentrates exactly
-around the expectation of the sum. We see this for two d6s here:
+we showed that when you sum multiple dice rolls, the distribution
+concentrates about the center of possible outcomes -- in fact, it
+concentrates exactly around the expectation of the sum. We see this for two
+d6s here:
 
 <VegaWrapper spec={two_dice_vega} />
 
-As we add more and more dice, the distributions concentrates more about the 
+As we add more dice, the distributions concentrates to the 
 expected value as it [approaches a normal
 distribution](https://en.wikipedia.org/wiki/Central_limit_theorem). 
 
@@ -169,9 +170,10 @@ A quick check using $m=2$ and $n=6$ gives an expected value of $7$, which
 matches up exactly with the peak in the above graph.
 
 Both expectation and variance grow with linearly with the number of dice. 
-While variance is a measure of the spread of a distribution, the 
+As we said before, variance is a measure of the spread of a distribution, but
+we can also look at the 
 [*standard deviation*](https://en.wikipedia.org/wiki/Standard_deviation)
-provides a more interpretable way of doing so -- it is defined as the
+for a more interpretable way of quantifying spread -- it is defined as the
 square root of the variance:
 
 $$
@@ -179,13 +181,13 @@ $$
 $$
 
 $\sigma_X$ is considered more interpretable because it has the same units as
-the expected value, whereas variance is measured in terms of squared units --
-a consequence of the definition using squares of expectations and random 
-variables. Standard deviation allows us to use quantities like $E(X) \pm
-\sigma_X$ to accurately summarize the spread of outcomes.
+the expected value, whereas variance is measured in terms of squared units (a 
+consequence of all those powers of two in the definition.) On the other hand, 
+standard deviation allows us to use quantities like $E(X) \pm \sigma_X$ to
+directly summarize the spread of outcomes.
 
-Practically, this means that when looking at the same units, expectation grows 
-faster than the spread of the distribution, as:
+The important conclusion from this is: when measuring with the same units,
+expectation grows faster than the spread of the distribution, as:
 
 $$
 E(\textstyle\sum\! X) \propto m \qquad \sigma_X \propto \sqrt{m}
@@ -193,7 +195,7 @@ $$
 
 The range of possible outcomes also grows linearly with $m$, so **as you roll 
 more and more dice, the likely outcomes are more concentrated about the
-expected value relative to the size of all possible outcomes.** This can be
+expected value relative to the range of all possible outcomes.** This can be
 seen intuitively by recognizing that if you are rolling 10 6-sided dice, it
 is unlikely that you would get all 1s or all 6s, and more likely to get a
 mixture of values which have a tendency to average out near the expected
