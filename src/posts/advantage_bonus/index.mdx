@@ -1,6 +1,6 @@
 ---
 path: "/posts/advantage-bonus"
-date: "2021/02/30"
+date: "2021/02/10"
 title: "How much is advantage really worth?"
 summary: "An often repeated rule of thumb is that advantage is similar to a +5 
 bonus. How accurate is this? Let's find out."
@@ -10,6 +10,7 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+import advantage_bonus_vega from "./advantage_bonus_vega.json";
 
 Continuing our <Link to="/posts/advantage-disadvantage-tips">previous</Link> <Link to="/posts/advantage-disadvantage-distribution">discussions</Link> on 
 the Advantage and Disadvantage mechanic in DnD 5e, we are going to examine
@@ -118,3 +119,62 @@ maximum possible bonus and occurs when you need to roll about average.
 
 The best way to get a complete view of the bonus from advantage is to look 
 at the graph.
+
+<VegaWrapper spec={advantage_bonus_vega} />
+
+We immediately see some important observations that can be made.
+First, **if your target roll is anywhere between 8 and 14, then +5 is a 
+good rule of thumb**. For all of those targets $b_{adv} > 4.5$ and we can 
+round without too much worry. Beyond hitting target rolls around the center,
+the equivalent bonus drops significantly. **When trying to hit target rolls
+of 18 or higher, advantage is worth +2.5 or less.** At
+the extreme, advantage only gives you a bonus of about +1 to hit a target of
+20.
+
+It can be helpful to think about _why_ advantage has this behavior of 
+being equivalent to a strong +5 bonus when you need to hit around an 11 and 
+dropping off when you need to hit higher. It comes down to what is actually 
+happening when you apply the effects of advantage versus adding a bonus. 
+
+When you roll with advantage, you shift the mass of the distribution so that
+low rolls become rarer and high rolls become more likely, but the possible
+outcomes stay the same. However when you roll with a bonus, it has the effect
+of _shifting_ the distribution uniformly -- with a +5 bonus, it's no longer
+possible to roll below a 6 and rolls up to a 25 can be achieved. This shifting 
+causes bonuses to be a stronger force than advantage when trying to hit targets 
+at the edge of possibility.
+
+## Okay...so what is it actually worth?
+
+One thing that's clear from the above is that the relative value of 
+advantage depends heavily on the target roll. Without knowledge of 
+typical target rolls, it can be hard to give a hard and fast rule.
+To really dig into this question, exploring the rules of a system to 
+figure out a typical target roll for success would be necessary 
+(perhaps a worthy exploration in a future post).
+
+That being said, we can get somewhere with just a little bit of 
+reasoning. First, we note that we typically only care about the value 
+of advantage when it comes to hitting challenging rolls. The fact that 
+$b_{adv} \approx 3$ for trying to hit a target of 5 is not really saying 
+that advantage is weak, it's just saying that it's already so easy to 
+hit a 5 with advantage that you don't need to add much of a bonus to 
+get there anyways.
+
+With that in mind, I would like to claim that the relevance of the bonus 
+could be restricted to only target rolls greater than or equal to 11. 
+Below that, we have a high chance of success anyways. Following that 
+restriction, we can use the median bonus in this upper region to 
+quantify it's general behavior where we care about it, and we find:
+
+$$
+\mathrm{Med}(b_{adv}) \approx 4 \qquad x \geq 11
+$$
+
+In practice, a equivalent bonus of +4 is not much different
+than the commonly used +5, but it is more conservative. **A +5 
+represents the best possible bonus effect of advantage, whereas +4 
+represents an average over the whole region we care about. Even so, the
+higher the target roll, the weaker the bonus gets.**
+
+
