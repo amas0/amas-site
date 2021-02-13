@@ -1,0 +1,47 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"fontSize": 16}
+  },
+  "data": {"name": "data-d20505b5b469f89d650c5fc3547545a4"},
+  "mark": "bar",
+  "encoding": {
+    "color": {"value": "#966e6e"},
+    "x": {"type": "ordinal", "field": "x", "title": "Target roll"},
+    "y": {
+      "type": "quantitative",
+      "axis": {"format": ".0f", "tickCount": 5},
+      "field": "y",
+      "title": "Nearest equivalent bonus"
+    }
+  },
+  "title": "Advantage bonus varies by target roll",
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-d20505b5b469f89d650c5fc3547545a4": [
+      {"x": 2, "y": 1},
+      {"x": 3, "y": 2},
+      {"x": 4, "y": 3},
+      {"x": 5, "y": 3},
+      {"x": 6, "y": 4},
+      {"x": 7, "y": 4},
+      {"x": 8, "y": 5},
+      {"x": 9, "y": 5},
+      {"x": 10, "y": 5},
+      {"x": 11, "y": 5},
+      {"x": 12, "y": 5},
+      {"x": 13, "y": 5},
+      {"x": 14, "y": 5},
+      {"x": 15, "y": 4},
+      {"x": 16, "y": 4},
+      {"x": 17, "y": 3},
+      {"x": 18, "y": 3},
+      {"x": 19, "y": 2},
+      {"x": 20, "y": 1}
+    ]
+  }
+}
