@@ -15,7 +15,7 @@
       "type": "quantitative",
       "axis": {"format": ".0f", "tickCount": 5},
       "field": "y",
-      "title": "Equivalent bonus"
+      "title": "Nearest equivalent bonus"
     }
   },
   "title": "Advantage bonus varies by target roll",
