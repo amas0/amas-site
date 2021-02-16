@@ -1,5 +1,5 @@
 ---
-path: "/posts/sums_dice_rolls"
+path: "/posts/sums-dice-rolls"
 date: "2021/02/30"
 title: "The sum of many dice rolls"
 summary: "Games would be rather uninteresting if all we did was roll single
@@ -12,5 +12,12 @@ import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
 
-Rolling a single dice is one of the simplest ways to generate random numbers --
-rolling a whole handful of dice on the other hand? 
+Rolling a whole handful of dice, other than being an extraordinarily fun 
+thing to do, is a simple way to generate a random number from a complex 
+distribution. In <Link to="/posts/dice-roll-probability">previous</Link>
+<Link to="/posts/dice-roll-expectations">posts</Link>, we explored the
+comparatively simple cases of rolling one and two dice. We made the general
+observation that as you roll many dice, the total value has a probability
+distribution that tends to concentrate near the expected value. In this post,
+we are going to take a closer look at that process and compute the probability 
+distribution for the sum of many dice rolls.
