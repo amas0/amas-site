@@ -79,7 +79,7 @@ The above we only show for 6 sided dice, the general form of the polynomial
 for a sum of $m$ $n$-sided dice is given by:
 
 $$
-\frac{1}{n^m}\left(\sum_{i=1}^n x^i\right)^m
+g(x) = \frac{1}{n^m}\left(\sum_{i=1}^n x^i\right)^m
 $$ 
 
 We divide the whole polynomial by the total number of outcomes to make
@@ -91,7 +91,7 @@ X_i \sim \textrm{Dice}(n) \qquad Y = \sum_{i=1}^m X_i
 $$
 
 Then, **finding $P(Y=y)$ can be done by finding the coefficient of 
-$x^y$ in the above polynomial.**
+$x^y$ in the polynomial $g(x)$ above.**
 
 _For the astute of you, this is a conceptual approach to solving
 this problem with [probability generating functions](https://en.wikipedia.org/wiki/Probability-generating_function). We could have gone straight there, but
@@ -100,4 +100,7 @@ works._
 
 ## Tricky polynomials and series
 
-
+Just knowing that we _can_ compute probabilities using polynomial 
+coefficients doesn't mean that it's easy. In this case, it is possible, 
+but we are going to have to do some polynomial manipulation to get where
+we want to go.
