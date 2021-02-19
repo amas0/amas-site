@@ -104,3 +104,107 @@ Just knowing that we _can_ compute probabilities using polynomial
 coefficients doesn't mean that it's easy. In this case, it is possible, 
 but we are going to have to do some polynomial manipulation to get where
 we want to go.
+
+First, we'll start with the following way to rewrite our original polynomial
+$f(x)$:
+
+$$
+\sum_{i=1}^n x^i = \frac{x(x^n-1)}{x-1}
+$$
+
+This can be directly verified by polynomial division. From this we can rewrite 
+$g(x)$ as:
+
+$$
+g(x) = \frac{1}{n^m} \frac{x^m(x^n-1)^m}{(x-1)^m}
+$$
+
+We will start by taking a look at the term $(x^n - 1)^m$. We can expand 
+this back into a sum with the [binomial theorem](https://en.wikipedia.org/wiki/Binomial_theorem):
+
+$$
+(x^n - 1)^m = \sum_{j=0}^m {m \choose j} x^{nj} (-1)^{m-j}
+$$
+
+Multiplying through by $x^m$ we get:
+
+$$
+x^m(x^n - 1)^m = \sum_{j=0}^m {m \choose j} x^{nj + m} (-1)^{m-j}
+$$
+
+So let's keep in mind this bit, which represents the numerator of $g(x)$
+and turn our attention to the denominator, $(x-1)^{-m}$. Again we can 
+rewrite this as a sum, but this time as a [binomial series](https://en.wikipedia.org/wiki/Binomial_series), which 
+generalizes the binomial theorem to complex exponents:
+
+$$
+(x-1)^{-m} = (-1)^{-m}(1-x)^{-m} = (-1)^{-m}\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+$$
+
+We can now write $g(x)$ in it's full glory as the product of the sum and 
+series:
+
+$$
+g(x) = \frac{1}{n^m} \left(\sum_{j=0}^m {m \choose j} x^{nj + m} (-1)^{m-j}
+\right) \left((-1)^{-m}\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+\right)
+$$
+
+We can make a slight simplification by bringing the factor of $(-1)^{-m}$
+into the first sum to give (we can also rewrite $(-1)^{-j} = (-1)^j$):
+
+$$
+g(x) = \frac{1}{n^m} \left(\sum_{j=0}^m (-1)^{j}{m \choose j} x^{nj + m} 
+\right) \left(\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+\right)
+$$
+
+We can think of the first discrete sum as an infinite sum where we are 
+summing up $0$s when $j > m$. With this in mind, we can take the 
+[Cauchy product](https://en.wikipedia.org/wiki/Cauchy_product) of the 
+two series to get the coefficients, which generally states:
+
+$$
+\left(\sum_{i=0}^\infty a_i x^i\right)
+\left(\sum_{j=0}^\infty b_j x^j\right) = 
+\sum_{k=0}^\infty c_k x^k
+$$
+
+Where the coefficients $c_k$ are given by:
+
+$$
+c_k = \sum_{l=0}^k a_k b_{k-l}
+$$
+
+Those coefficients are the key. This whole business we're going through 
+is to get those coefficients. Remember -- those coefficients will be 
+our probabilities. Now, in our series above we have to do careful 
+accounting about which of the coefficients are zero when doing the 
+product. When all is said and done, we are left with the following
+expression:
+
+$$
+g(x) = \frac{1}{n^m}\sum_{k=0}^\infty \left(\sum_{l=0}^{\left\lfloor\frac{k - m}{n}\right\rfloor} (-1)^l {m \choose l} {k - nl - 1 \choose m - 1}
+\right)x^k
+$$
+
+Where $\lfloor a \rfloor$ is the floor function that rounds down to the 
+nearest integer. 
+
+## The probability distribution
+
+When all is said and done, we can ignore the full power
+series and only look at the coefficients to write our final expression 
+for the probability mass function:
+
+$$
+\boxed{
+P(Y=y) = \frac{1}{n^m}\sum_{l=0}^{\left\lfloor\frac{y - m}{n}\right\rfloor} (-1)^l {m \choose l} {y - nl - 1 \choose m - 1}
+}
+$$
+
+Needless to say, it's not the cleanest of expressions. You'd have to 
+pay me quite a bit to calculate any probabilities by hand from this.
+It is correct though! Exactly so.
+
+
