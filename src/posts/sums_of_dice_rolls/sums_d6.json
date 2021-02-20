@@ -1,0 +1,118 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+    "axis": {
+      "labelAngle": 0,
+      "labelFont": "noto sans",
+      "labelFontSize": 14,
+      "titleFont": "noto sans",
+      "titleFontSize": 14
+    },
+    "facet": {"spacing": 0},
+    "title": {"font": "noto sans", "fontSize": 18}
+  },
+  "data": {"name": "data-f0f00a887a49de3ff633e0599098e195"},
+  "facet": {
+    "row": {
+      "type": "quantitative",
+      "field": "num_dice",
+      "header": {
+        "labelAlign": "right",
+        "labelAngle": 0,
+        "labelFontSize": 0,
+        "labelPadding": -26
+      },
+      "title": null
+    }
+  },
+  "spec": {
+    "mark": "bar",
+    "encoding": {
+      "color": {
+        "type": "nominal",
+        "field": "num_dice",
+        "legend": {
+          "labelFont": "noto sans",
+          "labelFontSize": 12,
+          "orient": "top",
+          "title": "Number of dice",
+          "titleColor": "grey",
+          "titleFont": "noto sans",
+          "titleFontSize": 14
+        },
+        "scale": {"scheme": "yelloworangered"}
+      },
+      "opacity": {"value": 0.8},
+      "x": {
+        "type": "ordinal",
+        "axis": {"labelOverlap": "parity"},
+        "field": "outcome",
+        "title": "Sum of dice roll"
+      },
+      "y": {
+        "type": "quantitative",
+        "axis": null,
+        "field": "probability",
+        "scale": {"range": [50, -100]}
+      }
+    },
+    "height": 50,
+	"width":"container"
+  },
+  "background": "#f2f0e9",
+  "bounds": "flush",
+  "title": ["Distributions of multiple 6-sided dice rolls"],
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-f0f00a887a49de3ff633e0599098e195": [
+      {"probability": 0.027777777777777776, "outcome": 2, "num_dice": 2},
+      {"probability": 0.05555555555555555, "outcome": 3, "num_dice": 2},
+      {"probability": 0.004629629629629629, "outcome": 3, "num_dice": 3},
+      {"probability": 0.08333333333333333, "outcome": 4, "num_dice": 2},
+      {"probability": 0.013888888888888888, "outcome": 4, "num_dice": 3},
+      {"probability": 0.0007716049382716049, "outcome": 4, "num_dice": 4},
+      {"probability": 0.1111111111111111, "outcome": 5, "num_dice": 2},
+      {"probability": 0.027777777777777776, "outcome": 5, "num_dice": 3},
+      {"probability": 0.0030864197530864196, "outcome": 5, "num_dice": 4},
+      {"probability": 0.1388888888888889, "outcome": 6, "num_dice": 2},
+      {"probability": 0.046296296296296294, "outcome": 6, "num_dice": 3},
+      {"probability": 0.007716049382716049, "outcome": 6, "num_dice": 4},
+      {"probability": 0.16666666666666666, "outcome": 7, "num_dice": 2},
+      {"probability": 0.06944444444444445, "outcome": 7, "num_dice": 3},
+      {"probability": 0.015432098765432098, "outcome": 7, "num_dice": 4},
+      {"probability": 0.1388888888888889, "outcome": 8, "num_dice": 2},
+      {"probability": 0.09722222222222222, "outcome": 8, "num_dice": 3},
+      {"probability": 0.02700617283950617, "outcome": 8, "num_dice": 4},
+      {"probability": 0.1111111111111111, "outcome": 9, "num_dice": 2},
+      {"probability": 0.11574074074074074, "outcome": 9, "num_dice": 3},
+      {"probability": 0.043209876543209874, "outcome": 9, "num_dice": 4},
+      {"probability": 0.08333333333333333, "outcome": 10, "num_dice": 2},
+      {"probability": 0.125, "outcome": 10, "num_dice": 3},
+      {"probability": 0.06172839506172839, "outcome": 10, "num_dice": 4},
+      {"probability": 0.05555555555555555, "outcome": 11, "num_dice": 2},
+      {"probability": 0.125, "outcome": 11, "num_dice": 3},
+      {"probability": 0.08024691358024691, "outcome": 11, "num_dice": 4},
+      {"probability": 0.027777777777777776, "outcome": 12, "num_dice": 2},
+      {"probability": 0.11574074074074074, "outcome": 12, "num_dice": 3},
+      {"probability": 0.09645061728395062, "outcome": 12, "num_dice": 4},
+      {"probability": 0.09722222222222222, "outcome": 13, "num_dice": 3},
+      {"probability": 0.10802469135802469, "outcome": 13, "num_dice": 4},
+      {"probability": 0.06944444444444445, "outcome": 14, "num_dice": 3},
+      {"probability": 0.11265432098765432, "outcome": 14, "num_dice": 4},
+      {"probability": 0.046296296296296294, "outcome": 15, "num_dice": 3},
+      {"probability": 0.10802469135802469, "outcome": 15, "num_dice": 4},
+      {"probability": 0.027777777777777776, "outcome": 16, "num_dice": 3},
+      {"probability": 0.09645061728395062, "outcome": 16, "num_dice": 4},
+      {"probability": 0.013888888888888888, "outcome": 17, "num_dice": 3},
+      {"probability": 0.08024691358024691, "outcome": 17, "num_dice": 4},
+      {"probability": 0.004629629629629629, "outcome": 18, "num_dice": 3},
+      {"probability": 0.06172839506172839, "outcome": 18, "num_dice": 4},
+      {"probability": 0.043209876543209874, "outcome": 19, "num_dice": 4},
+      {"probability": 0.02700617283950617, "outcome": 20, "num_dice": 4},
+      {"probability": 0.015432098765432098, "outcome": 21, "num_dice": 4},
+      {"probability": 0.007716049382716049, "outcome": 22, "num_dice": 4},
+      {"probability": 0.0030864197530864196, "outcome": 23, "num_dice": 4},
+      {"probability": 0.0007716049382716049, "outcome": 24, "num_dice": 4}
+    ]
+  }
+}

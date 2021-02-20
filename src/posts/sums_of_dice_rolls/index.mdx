@@ -1,7 +1,7 @@
 ---
 path: "/posts/sums-dice-rolls"
-date: "2021/02/30"
-title: "Probability distribution of the sum of many dice rolls"
+date: "2021/02/20"
+title: "Deriving the probability distribution for the sum of many dice rolls"
 summary: "Games would be rather uninteresting if all we did was roll single
 dice. In this post, we dive into calculating the probabilities associated
 with the sum of many dice rolls."
@@ -11,6 +11,7 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+import sums_d6 from "./sums_d6.json"
 
 Rolling a whole handful of dice, other than being an extraordinarily fun 
 thing to do, is a simple way to generate a random number from a not-so-simple 
@@ -207,4 +208,13 @@ Needless to say, it's not the cleanest of expressions. You'd have to
 pay me quite a bit to calculate any probabilities by hand from this.
 It is correct though! Exactly so.
 
+It's pretty tough to divine what this distribution looks like 
+just from the closed form, we'll get a better idea if we look at a 
+graph of the distribution. Below we show the shapes of the distribution
+for 2, 3, and 4 d6 rolls. 
 
+<VegaWrapper spec={sums_d6} />
+
+The triangular distribution the characterizes the 2d6 rolls smooths
+out as we increase the number of dice and approaches the more 
+familiar bell curve.
