@@ -1,0 +1,208 @@
+---
+path: "/posts/dice-roll-expectations"
+date: "2021/02/07"
+title: "Expectations and variances of dice rolls"
+summary: "\"What do I expect?\" is a natural question to ask when rolling a
+dice. Here we dive into expectations and variances of dice rolls and discuss
+what they help us understand and where they lead us astray."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import two_dice_vega from "../probabilities_dice_rolls/two_dice_vega.json";
+
+Often when rolling a dice, we know what we _want_ -- a high roll to defeat
+the monster or win a wager -- unfortunately for us,
+desire has little impact on the outcome of the roll. In these situations,
+it's useful to know what to expect and how variable the outcome will be
+around that expectation.
+
+In this post, we define expectation and variance mathematically, compute 
+them for dice rolls, and explore some key properties that help us 
+understand the potential outcomes.
+
+## Some definitions
+
+Just by their names, we get a decent idea of what these concepts 
+tell us. **Expectation (also known as expected value or mean) gives us a
+single value that summarizes the _average_ outcome**, often representing some
+measure of the center of a probability distribution. **Variance quantifies
+how variable the outcomes are _about the average_.** A low variance implies
+that most of the outcomes are clustered near the expected value whereas a
+high variance implies the outcomes are spread out.
+
+We represent the expectation of a discrete random variable $X$ as $E(X)$ and
+variance as $\mathrm{Var}(X)$. They can be defined as follows:
+
+$$
+E(X) = \sum_{k=1}^n k P(X=k) \qquad \mathrm{Var}(X) = E(X^2) - E(X)^2
+$$
+
+Expectation is a sum of outcomes weighted by
+their probability. The variance is itself defined in terms of expectations. As
+we primarily care dice rolls here, the sum only goes over the $n$ finite
+outcomes representing the $n$ faces of the dice (it can be defined more
+generally as summing over infinite outcomes for other probability
+distributions).
+
+One important thing to note about variance is that it depends on the squared
+expectation _and_ the expectation of $X^2$. While we could calculate the
+probability distribution of $X^2$ and compute the expectation directly, it is
+much easier to use the [law of the unconscious
+statistician](https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician):
+
+$$
+E(g(X)) = \sum_{k=1}^n g(k) P(X=k)
+$$
+
+This allows us to compute the expectation of a function of a random variable,
+$g(X)$, with the original probability distribution and applying the function,
+$g$, to the outcomes, $k$, in the sum.
+
+## Applying these to dice rolls
+
+All we need to calculate these for simple dice rolls is the probability mass 
+function, which we explored in our <Link to="/posts/dice-roll-probability">post on the dice roll distribution</Link>:
+
+$$
+X \sim \textrm{Dice}(n) \qquad P(X=x) =
+\begin{cases}
+	\frac{1}{n} & x\in\{1,\cdots,n\} \\
+	0 & \mathrm{otherwise}
+\end{cases}
+$$
+
+The direct calculation is straightforward from here:
+
+$$
+\begin{aligned}
+E(X) &= \sum_{k=1}^n \frac{k}{n} \\
+&= \frac{1}{n} \sum_{k=1}^n k \\
+&= \frac{n(n+1)}{2n}
+\end{aligned}
+$$
+
+Yielding the simplified expression for the expectation:
+
+$$
+\boxed{
+E(X) = \frac{n+1}{2}
+}
+$$
+
+The expected value of a dice roll is half of the number of faces
+plus $1/2$. Let's take a look at the variance -- we first calculate
+$E(X^2)$:
+
+$$
+\begin{aligned}
+E(X^2) &= \frac{1}{n} \sum_{k=1}^n k^2 \\
+&= \frac{1}{n}\frac{n(n+1)(2n+1)}{6}\\
+&= \frac{(n+1)(2n+1)}{6}
+\end{aligned}
+$$
+
+Substituting this result and the square of our expectation into the 
+definition for variance we get:
+
+$$
+\mathrm{Var}(X) = \frac{(n+1)(2n+1)}{6} - \left(\frac{n+1}{2}\right)^2
+$$
+
+Simplifying this expression yields:
+
+$$
+\boxed{
+	\mathrm{Var}(X) = \frac{n^2 - 1}{12}
+}
+$$
+
+## What does this tell us about dice rolls?
+
+This is the part where I tell you that **expectations and variances are 
+mostly useless summaries of _single_ dice rolls**. The fact that every 
+face is equiprobable in a single roll is all the information you need 
+to understand the behavior of one dice.
+
+On the other hand, **expectations and variances are extremely useful 
+when rolling _multiple_ dice**. At the end of 
+our <Link to="/posts/dice-roll-probability">post on simple dice roll probabilities</Link>,
+we showed that when you sum multiple dice rolls, the distribution
+concentrates about the center of possible outcomes -- in fact, it
+concentrates exactly around the expectation of the sum. We see this for two
+d6s here:
+
+<VegaWrapper spec={two_dice_vega} />
+
+As we add more dice, the distributions concentrates to the 
+expected value as it [approaches a normal
+distribution](https://en.wikipedia.org/wiki/Central_limit_theorem). 
+
+Since our multiple dice rolls are independent of each other, calculating 
+the expectation and variance can be done using the following true statements (the
+statement on expectations is always true, the statement on variance is true
+only if the random variables are uncorrelated):
+
+$$
+E\left(\sum_{i=1}^m X_i\right) = \sum_{i=1}^m E(X_i)
+$$
+
+$$
+\mathrm{Var}\left(\sum_{i=1}^m X_i\right) = \sum_{i=1}^m \mathrm{Var}(X_i)
+$$
+
+The expectation and variance of a sum of $m$ dice is the sum of their 
+respective expectations and variances. If we plug in what we derived above,
+we get expressions for the expectation and variance of a sum of $m$
+identical dice:
+
+$$
+E\left(\sum_{i=1}^m X_i\right) = \frac{m(n+1)}{2}
+$$
+
+$$
+\mathrm{Var}\left(\sum_{i=1}^m X_i\right) = \frac{m(n^2 - 1)}{12}
+$$
+
+A quick check using $m=2$ and $n=6$ gives an expected value of $7$, which
+matches up exactly with the peak in the above graph.
+
+Both expectation and variance grow with linearly with the number of dice. 
+As we said before, variance is a measure of the spread of a distribution, but
+we can also look at the 
+[*standard deviation*](https://en.wikipedia.org/wiki/Standard_deviation)
+for a more interpretable way of quantifying spread -- it is defined as the
+square root of the variance:
+
+$$
+\sigma_X = \sqrt{\mathrm{Var}(X)}
+$$
+
+$\sigma_X$ is considered more interpretable because it has the same units as
+the expected value, whereas variance is measured in terms of squared units (a 
+consequence of all those powers of two in the definition.) On the other hand, 
+standard deviation allows us to use quantities like $E(X) \pm \sigma_X$ to
+directly summarize the spread of outcomes.
+
+The important conclusion from this is: when measuring with the same units,
+expectation grows faster than the spread of the distribution, as:
+
+$$
+E(\textstyle\sum\! X) \propto m \qquad \sigma_X \propto \sqrt{m}
+$$
+
+The range of possible outcomes also grows linearly with $m$, so **as you roll 
+more and more dice, the likely outcomes are more concentrated about the
+expected value relative to the range of all possible outcomes.** This can be
+seen intuitively by recognizing that if you are rolling 10 6-sided dice, it
+is unlikely that you would get all 1s or all 6s, and more likely to get a
+mixture of values which have a tendency to average out near the expected
+value.
+
+While we have not discussed exact probabilities or just how many of the possible
+outcomes lie close to the expectation, the main takeaway is the same -- **when 
+rolling multiple dice, the expected value gives a good estimate for about _where_
+you should expect the outcome to be. The more dice you roll, the more confident 
+you should be that the sum will be close to the expectation.** 

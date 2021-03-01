@@ -1,0 +1,184 @@
+---
+path: "/posts/advantage-bonus"
+date: "2021/02/13"
+title: "How much is advantage really worth?"
+summary: "An often repeated rule of thumb is that advantage is similar to a +5 
+bonus. How accurate is this? Let's find out."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import advantage_bonus_vega from "./advantage_bonus_vega.json";
+
+Continuing our <Link to="/posts/advantage-disadvantage-tips">previous</Link> <Link to="/posts/advantage-disadvantage-distribution">discussions</Link> on 
+the Advantage and Disadvantage mechanic in DnD 5e, we are going to examine
+a straightforward question -- **how much is advantage worth?**
+
+On the surface, the question is open ended -- it requires defining 
+"worth" in some way. A decent interpretation is "some measure of how 
+much advantage increases your chance of success". In our <Link to="/posts/advantage-disadvantage-tips">post on probability rules of thumb</Link> for 
+the mechanic, we give general statements on the outcome of the dice rolls,
+such as "you are more likely to get a 20 than rolling below a 7". It gives
+a feel for relative likelihoods, but still leaves us stuck thinking in terms 
+of probabilities, which suffer from being challenging to interpret. 
+
+Another popular way to summarize advantage is to ground it in familiar DnD 
+terms as a **bonus**. Bonuses are numbers added (or subtracted) from 
+dice rolls depending on how good (or bad) a character is at a certain action,
+e.g. a barbarian will usually have a higher bonus for swinging a greataxe than
+a wizard and therefore a higher chance to hit. 
+
+Framing advantage as a bonus has led to the claim that **"advantage gives you
+about a +5 bonus to your roll"** -- is this true? People quickly point out
+that such a rule is an oversimplification, but how wrong is it? Let's dig
+into the math and explore!
+
+## The math
+
+As per usual, we will work out the solution for $n$ sided dice and substitute
+in d20s at the end. We have two random variables that we want to look at:
+
+$$
+X_{adv} \sim \mathrm{Adv}(n) \qquad X \sim \mathrm{Dice}(n)
+$$
+
+The left being rolling with advantage, which we explored <Link to="/posts/advantage-disadvantage-distribution">here</Link>, and 
+the right being a simple $n$ sided dice roll, explored <Link to="/posts/dice-roll-probability">here</Link>.
+We want to show when these two have the same probability of success by adding
+a bonus, $b$, to the simple dice roll. "Success" in DnD meaning "rolling at or
+above a target value". We can represent the target value as $x$ and write:
+
+$$
+P(X_{adv} \geq x) = P(X + b \geq x)
+$$
+
+In the above, we are most interested in the bonus, $b$. That tells us how 
+much advantage is "worth" by drawing a direct equivalence with adding a 
+modifier to a normal roll.
+
+We are going to use results from the previous posts linked above to avoid
+going through any derivations, specifically the cumulative probability 
+expressions:
+
+$$
+P(X_{adv} \leq x) = \left(\frac{x}{n}\right)^2 \qquad P(X \leq x) = \frac{x}{n}
+$$
+
+We will rearrange our expression that equates advantage and a bonus to make
+use of these results, like so:
+
+$$
+\begin{aligned}
+P(X_{adv} \geq x) &= P(X + b \geq x) \\
+P(X_{adv} \geq x) &= P(X \geq x - b) \\
+1 - P(X_{adv} \leq x - 1) &=  1 - P(X \leq x - b - 1) \\
+P(X_{adv} \leq x - 1) &=  P(X \leq x - b - 1) \\
+\end{aligned}
+$$
+
+Now we plug in to get:
+
+$$
+\left(\frac{x-1}{n}\right)^2 = \frac{x-b-1}{n}
+$$
+
+Simple algebra allows us to solve for $b$:
+
+$$
+b = x - 1 - \frac{(x-1)^2}{n}
+$$
+
+One requirement that I will impose is that **$b$ must be a whole number.**
+The outcome of a dice roll can only ever be a whole number, and fractional
+bonuses will never increase your probability of success. This means that the 
+values of $b$ that we can find from this will only be _approximate_ in most
+cases, but they will represent the bonus that gets *as close as possible* to 
+the probability of success when rolling with advantage. We can summarize 
+our result as:
+
+$$
+\boxed{
+b_{adv} = \left\lfloor x - 1 - \frac{(x-1)^2}{n} \right\rceil
+}
+$$
+
+Where the notation $\lfloor a \rceil$ means rounding to the nearest whole
+number.
+
+## The results
+
+By inspecting $b_{adv}$, we can get some of the main properties -- first, the
+bonus depends heavily on the target roll. As it is a quadratic expression,
+the graph is a downward facing parabola. By finding the _maximum_ of
+$b_{adv}$, we determine where advantage gives the biggest bonus. We denote
+the maximum to be $\hat{b}_{adv}$ and find:
+
+$$
+\hat{b}_{adv} = \frac{n}{4} \qquad \hat{x} = \frac{n}{2} + 1
+$$
+
+Substituting in $n=20$, we see an important result -- **the maximum bonus of 
+advantage is +5 and occurs when the target roll is an 11**. So there is some 
+truth to the statement that advantage is worth +5, it just happens to be the 
+maximum possible bonus and occurs when you need to roll about average.
+
+The best way to get a complete view of the bonus from advantage is to look 
+at the graph.
+
+<VegaWrapper spec={advantage_bonus_vega} />
+
+We immediately see some important observations that can be made.
+First, **if your target roll is anywhere between 8 and 14, then +5 is a 
+good rule of thumb**. For all of those targets, the best approximating 
+bonus is +5. Outside of those target rolls in the center, the equivalent
+bonus drops off significantly.
+**When trying to hit target rolls
+of 17 or higher, advantage is worth about +3 or less.** At the extreme,
+advantage only gives you a bonus of about +1 to hit a target of 20.
+
+It can be helpful to think about _why_ advantage has this behavior of 
+being equivalent to a strong +5 bonus when you need to hit around an 11 and 
+dropping off when you need to hit higher. It comes down to what is actually 
+happening when you apply the effects of advantage versus adding a bonus. 
+
+When you roll with advantage, you shift the mass of the distribution so that
+low rolls become rarer and high rolls become more likely, but the possible
+outcomes stay the same. However when you roll with a bonus, it has the effect
+of _shifting_ the distribution uniformly -- with a +5 bonus, it's no longer
+possible to roll below a 6 and rolls up to a 25 can be achieved. This shifting 
+causes bonuses to be a stronger force than advantage when trying to hit targets 
+at the edge of possibility.
+
+## Okay...so what is it actually worth?
+
+One thing that's clear from the above is that the relative value of 
+advantage depends heavily on the target roll. Without knowledge of 
+typical target rolls, it can be hard to give a hard and fast rule.
+To really dig into this question, exploring the rules of a system to 
+figure out a typical target roll for success would be necessary 
+(perhaps a worthwhile exploration in a future post).
+
+That being said, we can get somewhere with just a little bit of 
+reasoning. If we pretend that we are completely ignorant of common 
+target rolls, then we can approximate the overall $b_{adv}$ with 
+the median value over all target rolls. Doing so we find:
+
+$$
+\mathrm{Med}(b_{adv}) = 4
+$$
+
+An equivalent bonus of +4 is not much different
+than the commonly used +5, but it is a more conservative rule of thumb. **A
++5 represents the highest bonus effect of advantage, whereas +4
+represents an average over the whole range of outcomes. The
+more extreme the target roll, the weaker the bonus gets.** In practice,
+it seems likely the the majority of target rolls would fall somewhere near 
+the middle of the distribution, and therefore **the commonly accepted +5
+rule of thumb effectively captures the typical behavior of rolling 
+with advantage**.
+
+*A short note on disadvantage, it is fairly easy to show that all the work 
+above applies to disadvantage as well, you just need to make the bonuses 
+negative -- a good exercise for the intrepid reader!*

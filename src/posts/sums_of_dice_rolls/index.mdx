@@ -1,0 +1,228 @@
+---
+path: "/posts/sums-dice-rolls"
+date: "2021/02/20"
+title: "Deriving the probability distribution for the sum of many dice rolls"
+summary: "Rolling one or two dice is simple. Rolling a whole handful is not. 
+In this post, we derive the probability distribution that describes the sum
+of many dice."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import sums_d6 from "./sums_d6.json"
+
+Rolling a whole handful of dice is one of a tabletop gamer's simple
+pleasures. The math that governs the behavior of that dice roll is
+not so simple. We <Link to="/posts/dice-roll-probability">previously</Link> explored the cases of rolling just one or two dice. <Link to="/posts/dice-roll-expectations">Later</Link>, we made the general
+observation that as you roll many dice the probability distribution tends to
+concentrate near the expected value. 
+
+In this post, we are going to look directly at the process of rolling 
+a whole bunch of dice and derive the probability distribution that governs 
+its behavior. Fair warning - this post is going to get pretty math heavy![^1]
+
+[^1]: The derivation is adapted from _Introduction to Mathematical Probability_ (1937) by Uspensky
+
+## Counting possible dice roll outcomes
+
+Beginners in probability often work problems involving dice, coins, or 
+playing cards -- really any sort of game of chance. These
+problems are typically solved not by appealing to probability distribution or
+random variables, but by _counting outcomes_. We will ultimately use the 
+same approach here. As a refresher, consider the following problem.
+
+> **What is the probability of rolling a total of 3 on a 2d6 roll?**
+> 
+> To solve this, we need two numbers -- the total number of possible
+> outcomes and the number of outcomes that result in a total of 3.
+>
+> There are 36 total possible outcomes, 6 for each individual dice, and
+> we take the product for the total number. When counting up 
+> the outcomes that result in 3, we find only two, 
+> $(2, 1)$ and $(1, 2)$. 
+> 
+> The probability is the number of outcomes with a total of 3
+> divided by the total number of outcomes, or $\frac{2}{36} \approx 0.06$.
+> It's easy to check that this answer is identical to one that we would get 
+> appealing to the uniform probability distribution that we used in <Link to="/posts/dice-roll-probability">this post</Link>.
+
+The above is not too hard, but you can easily imagine how much of a pain
+this would be if you're using 10 dice instead of 2. Oof. The good news is 
+that there is a better way!
+
+Let's take a look at this polynomial. The purpose will become clear in a bit.
+
+$$
+f(x) = x + x^2 + x^3 + x^4 + x^5 + x^6
+$$
+
+This is the [all ones polynomial](https://en.wikipedia.org/wiki/All_one_polynomial)
+without the constant 1. If we square this polynomial and expand the terms, we
+get:
+
+$$
+\begin{aligned}
+f(x)^2 = x^2 &+ 2 x^3 + 3x^4 + 4x^5 +5x^6 + 6x^7 \\
+&+ 5x^8 + 4x^9 + 3x^{10} + 2x^{11} + x^{12}
+\end{aligned}
+$$
+
+Look carefully at the coefficients. You may notice that they correspond
+exactly to the number of ways to get a given outcome on a 2d6 roll --
+there's one way to get a 2, two ways to get a 3 (that's the one we did
+above), three ways to get a 4, and so on and so forth. 
+
+If we want to get the probability of rolling an outcome like 3, we look at
+the coefficient of $x^3$. We take that coefficient and divide by 36 to get
+the probability - $\frac{2}{36}$ just like before.
+
+This is important, because what we've shown here is an alternate way to count
+the outcomes -- and therefore compute the probability -- of our dice roll
+outcome. Instead of directly counting, we find polynomial coefficients.
+The above example is for two 6 sided dice, but the general approach for 
+$m$ $n$-sided dice is the same. We take the below polynomial and find 
+it's coefficients. 
+
+$$
+g(x) = \frac{1}{n^m}\left(\sum_{i=1}^n x^i\right)^m
+$$ 
+
+For convenience, we divide the whole polynomial by the total number of
+outcomes, $n^m$ to make the coefficients probabilities instead of counts. 
+Formally, our problem here can be written with random variables as follows:
+
+$$
+X_i \sim \textrm{Dice}(n) \qquad Y = \sum_{i=1}^m X_i
+$$
+
+Then, **$P(Y=y)$ is calculated by finding the coefficient of 
+$x^y$ in the polynomial $g(x)$ above.**
+
+_Some of you may recognize that we are taking a conceptual approach to
+solving this problem with [probability generating functions](https://en.wikipedia.org/wiki/Probability-generating_function). We
+could have gone straight there, but I find the counting line of reasoning to
+be a satisfying way to see why this works._
+
+## Tricky polynomials and series
+
+Just knowing that we _can_ compute probabilities using polynomial 
+coefficients doesn't mean that it's easy. In this case, it is possible, 
+but we are going to have to do some not-so-obvious polynomial manipulation to
+get where we want to go.
+
+We'll start by rewriting our original polynomial $f(x)$:
+
+$$
+\sum_{i=1}^n x^i = \frac{x(x^n-1)}{x-1}
+$$
+
+This can be directly verified by polynomial division. This transforms
+$g(x)$ into:
+
+$$
+g(x) = \frac{1}{n^m} \frac{x^m(x^n-1)^m}{(x-1)^m}
+$$
+
+From here, we go term by term. We start by taking a look at $(x^n - 1)^m$. We
+can expand this as a sum with the [binomial
+theorem](https://en.wikipedia.org/wiki/Binomial_theorem):
+
+$$
+(x^n - 1)^m = \sum_{j=0}^m {m \choose j} x^{nj} (-1)^{m-j}
+$$
+
+Multiplying through by $x^m$ we get:
+
+$$
+x^m(x^n - 1)^m = \sum_{j=0}^m {m \choose j} x^{nj + m} (-1)^{m-j}
+$$
+
+This represents the numerator of $g(x)$. Let's now turn our attention to the
+denominator, $(x-1)^{-m}$. Again we can rewrite this as a sum, but this time
+as a [binomial series](https://en.wikipedia.org/wiki/Binomial_series), which
+generalizes the binomial theorem to complex exponents:
+
+$$
+(x-1)^{-m} = (-1)^{-m}(1-x)^{-m} = (-1)^{-m}\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+$$
+
+We can now write $g(x)$ in it's full glory as the product:
+
+$$
+g(x) = \frac{1}{n^m} \left(\sum_{j=0}^m {m \choose j} x^{nj + m} (-1)^{m-j}
+\right) \left((-1)^{-m}\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+\right)
+$$
+
+We make a slight simplification by bringing the factor of $(-1)^{-m}$
+into the first sum to give (we also rewrite $(-1)^{-j} = (-1)^j$):
+
+$$
+g(x) = \frac{1}{n^m} \left(\sum_{j=0}^m (-1)^{j}{m \choose j} x^{nj + m} 
+\right) \left(\sum_{k=0}^\infty {k + m - 1 \choose m - 1} x^k
+\right)
+$$
+
+The finite sum can be thought of as an infinite series that takes on
+values of $0$s when $j > m$. With this in mind, we can take the 
+[Cauchy product](https://en.wikipedia.org/wiki/Cauchy_product) of the 
+two series to get the coefficients, which generally states:
+
+$$
+\left(\sum_{i=0}^\infty a_i x^i\right)
+\left(\sum_{j=0}^\infty b_j x^j\right) = 
+\sum_{k=0}^\infty c_k x^k
+$$
+
+Where the coefficients $c_k$ are given by:
+
+$$
+c_k = \sum_{l=0}^k a_k b_{k-l}
+$$
+
+Those coefficients are the key. This whole business we're going through 
+is to get those coefficients. Remember -- those coefficients will be 
+our probabilities. If we do some careful accounting to collect the
+coefficients, we are left with the following expression:
+
+$$
+g(x) = \frac{1}{n^m}\sum_{k=0}^\infty \left(\sum_{l=0}^{\left\lfloor\frac{k - m}{n}\right\rfloor} (-1)^l {m \choose l} {k - nl - 1 \choose m - 1}
+\right)x^k
+$$
+
+Where $\lfloor a \rfloor$ is the floor function that rounds down to the 
+nearest integer. 
+
+## The probability distribution
+
+To get back to probabilities, we ignore the power series and only look at the
+coefficients to write our final expression for the probability mass function:
+
+$$
+\boxed{
+P(Y=y) = \frac{1}{n^m}\sum_{l=0}^{\left\lfloor\frac{y - m}{n}\right\rfloor} (-1)^l {m \choose l} {y - nl - 1 \choose m - 1}
+}
+$$
+
+Needless to say, it's not the cleanest of expressions, and I wouldn't want 
+to have to calculate any of these probabilities by hand. 
+It is correct though! Exactly so.
+
+I have a hard time divining what this distribution looks like 
+just from the closed form. We get a better idea if we look at a 
+graph of the distribution. Below we show the shapes of the distribution
+for 2, 3, and 4 d6 rolls. 
+
+<VegaWrapper spec={sums_d6} />
+
+From top to bottom, we see the triangular distribution that characterizes the
+2d6 roll smoothing out as we add more dice. The distribution quickly takes on 
+a familiar bell shaped curve with as little as 4 dice!
+
+We know from the [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) that 
+the sum approaches a normal distribution for large $m$, but we seem to be
+getting pretty close even with small $m$ (at least in shape)! Exploring this
+property further and looking at convergence to a normal distribution will
+have to be a topic for the future. Stay tuned!
