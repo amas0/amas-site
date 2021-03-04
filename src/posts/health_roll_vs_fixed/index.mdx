@@ -1,7 +1,7 @@
 ---
 path: "/posts/health-roll-vs-fixed"
-date: "2021/02/39"
-title: "How bad is rolling for health?"
+date: "2021/03/02"
+title: "How bad is rolling for health in DnD 5e?"
 summary: "DnD 5e provides two mechanics for gaining health when leveling up: 
 roll for it or take a fixed value. The fixed value is better on average, but
 by how much?"
@@ -11,3 +11,100 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+
+Core character progression in Dungeons and Dragons revolves around
+leveling up, in which your adventurer becomes hardier and more powerful.
+As part of this, characters gain a higher hit point maximum each level.
+The rules provide two alternates ways of determining how much of an 
+increase you get, as we see here from PHB page 15:
+
+> Each time you gain a level, you gain 1 additional Hit Die. Roll 
+> that Hit Die, add your Constitution modifier to the roll, and add 
+> the total to your hit point maximum. Alternatively, you can use the 
+> fixed value shown in your class entry, which is the average result
+> of the die roll (rounded up).
+
+An interesting bit here is that the alternate rule uses a _rounded 
+up_ average of the dice roll. This means that on average, **the fixed value will
+be better than rolling.** In this post, we'll take a look at the expected 
+differences in using these two different rules.
+
+## Defining the strategies
+
+We can represent these strategies as random variables. As for notation, 
+we will use $X_{\mathrm{roll}}^k$ and $X_{\mathrm{fixed}}^k$, to represent 
+the amount of health gained after leveling up $k$ times for the rolling and
+fixed value rules, respectively. The fixed value is so simple since it's
+deterministic, we write:
+
+$$
+X_{\mathrm{fixed}}^k = k\left(\frac{d+2}{2} + C_{mod}\right)
+$$
+
+Where $d$ is the value of your class's hit dice and $C_{mod}$ is your
+constitution modifier. As an example, suppose you are playing a Bard
+with a +1 Constitution modifier, then $X_{\mathrm{fixed}}^k = 6k$ -- 
+each level you gain 6 health (until your constitution modifier changes).
+
+The rolling strategy is a bit more complex. If we let $Y_d^k$ represent 
+the sum of $k$ $d$-sided dice rolls, we can rewrite it as:
+
+$$
+X_{\mathrm{roll}}^k = k C_{mod} + Y_d^k 
+$$
+
+We are primarily interested in the _difference_ between these two 
+strategies, $\Delta X^k = X_\mathrm{fixed}^k - X_\mathrm{roll}^k$, 
+which represents how much better the fixed strategy is compared 
+to rolling. We can rewrite it using the definitions above:
+
+$$
+\Delta X^k = k \frac{d+2}{2} - Y_d^k
+$$
+
+Rather unsurprisingly, our dependence on the constitution modifier 
+drops completely and we have a random variable defined in terms 
+of the sum of dice rolls, which is another random variable.
+
+## Expectation
+
+A simple step from here is to take a look at the expectation of this random
+variable. Applying the tools that we looked at in a
+post on <Link to="/posts/dice-roll-expectations">expectations of dice rolls</Link> we can tackle this:
+
+$$
+\begin{aligned}
+E\left(\Delta X^k\right) &= k \frac{d + 2}{2} - E Y_d^k \\
+&= k\frac{d+2}{2} - k \frac{d+1}{2} \\
+E\left(\Delta X^k\right) &= \frac{k}{2}
+\end{aligned}
+$$
+
+It makes sense in retrospect, but the fact that the expected difference 
+between the two strategies doesn't depend on your hit dice, but only 
+the number of levels gained surprised me. A simple way to say this is 
+**for every two levels gained, taking the fixed health increase will 
+give you 1 more hit point, on average**.
+
+## The probabily distribution
+
+The expectation is not the whole picture, of course. The whole point 
+of rolling is that there is randomness in the process. We can do a 
+bit of algebra to write out the probability distribution of $\Delta X^k$ 
+in terms of the sum of dice roll as below:
+
+$$
+P(\Delta X^k = x) = P\left(Y_d^k = k\frac{d+2}{2} - x\right)
+$$
+
+Using the results from our <Link to="/posts/sums-dice-rolls">recent post</Link>
+on the sums of dice rolls, we can write out the exact form of this:
+
+$$
+P(\Delta X^k = x) = \frac{1}{d^k}\sum_{l=0}^{\left\lfloor\frac{k}{2} - \frac{x}{d}\right\rfloor} (-1)^l {k \choose l} {k\frac{d+2}{2} - x - dl - 1 \choose k - 1}
+$$
+
+It's a bit messy, but we can calculate some interesting quantities,
+such as the probability that taking the fixed health on level-up is better
+than rolling -- $P(\Delta X^k > 0)$ -- by simply adding up terms when $x > 0$
+from above.
