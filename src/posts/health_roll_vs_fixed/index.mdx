@@ -13,6 +13,7 @@ import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
 
 import probability_fixed_better_vega from "./probability_fixed_better_vega.json";
+import interval_fixed_vs_rolling_vega from "./interval_fixed_vs_rolling_vega.json";
 
 Core character progression in Dungeons and Dragons revolves around
 leveling up, in which your adventurer becomes hardier and more powerful.
@@ -130,8 +131,57 @@ if you're one of those people who wants to mathematically min-max your
 character to the greatest degree possible, you can still have a little fun 
 by rolling for health _just one time_. 
 
-# Just how big is the difference?
+## Just how big is the difference?
 
-While the above is more focused on whether there is any difference at all, probably 
-what would be more interesting is looking the range of possible outcomes and seeing 
-how s
+While the above is more focused on whether there is any difference at all,
+probably what would be more interesting is looking at the range of possible
+outcomes and seeing how the *actual number of hit points gained varies among
+these strategies*. 
+
+In the below figure, we compare the fixed health strategy (horizontal line)
+with the 50% central interval of outcomes from the rolling strategy, you 
+can think of the interval as the range of outcomes that are pretty close to
+average. 
+
+<VegaWrapper spec={interval_fixed_vs_rolling_vega} />
+
+We are only showing the results for d6 and d12 hit dice up to 10 level ups to
+avoid cluttering the graph -- the behavior we see is consistent for the 
+other hit dice as well. The key thing is that the fixed health amount slowly 
+moves to the upper end of the central interval. By the 10th level up, fixed 
+health increases are either just outside the 50% interval as is the case for 
+d6 hit dice, or at the upper end of the range as we see for d12.
+
+In all cases, the fixed health outcome is at least close to the central
+intervals, which means that the differences between the two strategies isn't
+that big. If I had to sum it up, I'd say that **although the odds favor the
+fixed health strategy, I wouldn't be surprised at all if someone happened
+to roll better health in the long term.**
+
+## Which strategy to pick?
+
+The way you choose to advance your character's health is one of the more
+minor decisions you have to make in DnD. But hey. That doesn't stop us from 
+talking about the pros and cons of the different strategies:
+
+#### Why choose fixed health increases?
+
+* Mathematically, it wins on average
+* Especially when playing a low hit dice class like Wizard, hit points come 
+at a premium and taking the fixed value is a prudent choice
+* At low levels, the prospect of rolling a 1 or 2 for health can have dangerous
+consequences -- avoiding that can be the difference between life and death for your character
+
+#### Why choose rolling for health?
+
+* Rolling is fun!
+* The benefits of fixed health for high hit dice classes are diminished, 
+so you risk less by choosing to roll 
+* Fixed health prevents you from getting low values, but it also prevents 
+you from getting high values as well -- if you want to press your luck, there's 
+no better way to get a big health pool than some lucky rolls
+
+Outside of any number-based arguments, it goes without saying (I'll say it 
+anyways) that it's best to **pick the strategy that is most likely
+to give you a character/style of play that you have the most fun with. It is 
+a game, after all.** 

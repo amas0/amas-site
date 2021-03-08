@@ -4,35 +4,58 @@
     "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
     "background": "#f2f0e9",
     "font": "noto sans",
-    "title": {"anchor": "start", "dy": -5, "fontSize": 16}
+    "title": {"anchor": "start", "fontSize": 16}
   },
-  "data": {"name": "data-3e2d10f90a0d575be6f9f2f287cd1cd8"},
-  "mark": "point",
-  "encoding": {
-    "color": {
-      "type": "nominal",
-      "field": "Hit Dice",
-      "legend": {
-        "labelFontSize": 14,
-        "orient": "top",
-        "title": null,
-        "values": ["d6", "d8", "d10", "d12"]
+  "layer": [
+    {
+      "mark": {"type": "line", "point": true, "strokeWidth": 1.2},
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice", "legend": null},
+        "x": {
+          "type": "ordinal",
+          "field": "Number of level ups",
+          "title": "Number of level ups"
+        },
+        "y": {
+          "type": "quantitative",
+          "field": "Probability",
+          "scale": {"domain": [0, 1]},
+          "title": "Probability that fixed is better"
+        }
       }
     },
-    "x": {"type": "ordinal", "field": "Number of level ups"},
-    "y": {
-      "type": "quantitative",
-      "field": "Probability",
-      "scale": {"domain": [0, 1]},
-      "title": "Probability fixed is better"
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "font": "noto sans",
+        "fontSize": 14,
+        "fontWeight": 500
+      },
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice"},
+        "text": {"type": "nominal", "field": "Hit Dice"},
+        "x": {
+          "type": "ordinal",
+          "aggregate": "max",
+          "field": "Number of level ups"
+        },
+        "y": {
+          "type": "quantitative",
+          "aggregate": "max",
+          "field": "Probability"
+        }
+      }
     }
-  },
+  ],
+  "data": {"name": "data-3e2d10f90a0d575be6f9f2f287cd1cd8"},
   "title": [
     "The probability that fixed health is better increases",
     "as you level up -- more so for lower hit dice"
   ],
   "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
-  "width": "container",
+  "width":"container",
   "datasets": {
     "data-3e2d10f90a0d575be6f9f2f287cd1cd8": [
       {"Hit Dice": "d6", "Number of level ups": 1, "Probability": 0.5},

@@ -1,0 +1,181 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"anchor": "start", "dy": -5, "fontSize": 16}
+  },
+  "layer": [
+    {
+      "data": {"name": "data-b5ef3ec9759219b69f7d7b717d6fb99f"},
+      "mark": {
+        "type": "rule",
+        "opacity": 0.7,
+        "strokeCap": "round",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice", "legend": null},
+        "x": {
+          "type": "quantitative",
+          "axis": {"grid": false},
+          "field": "Number of level ups",
+          "scale": {"domain": [0.5, 10]},
+          "title": "Number of level ups"
+        },
+        "y": {
+          "type": "quantitative",
+          "aggregate": "min",
+          "field": "interval",
+          "title": "Hit points added"
+        },
+        "y2": {"aggregate": "max", "field": "interval"}
+      }
+    },
+    {
+      "data": {"name": "data-4f4ecb8d7be2d18743c4bfb254cf171c"},
+      "mark": {
+        "type": "rule",
+        "opacity": 0.7,
+        "strokeCap": "round",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice"},
+        "x": {
+          "type": "quantitative",
+          "aggregate": "min",
+          "field": "Number of level ups"
+        },
+        "x2": {"aggregate": "max", "field": "Number of level ups"},
+        "y": {"type": "quantitative", "field": "interval"}
+      }
+    },
+    {
+      "data": {"name": "data-b5ef3ec9759219b69f7d7b717d6fb99f"},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "font": "noto sans",
+        "fontSize": 14,
+        "fontWeight": 500
+      },
+      "encoding": {
+        "color": {
+          "type": "nominal",
+          "field": "Hit Dice",
+          "scale": {"domain": ["d6", "d12"], "range": ["#d62728", "#ff7f0e"]}
+        },
+        "text": {"type": "nominal", "field": "Hit Dice"},
+        "x": {
+          "type": "quantitative",
+          "aggregate": "max",
+          "field": "Number of level ups"
+        },
+        "y": {"type": "quantitative", "aggregate": "max", "field": "interval"}
+      }
+    }
+  ],
+  "title": {
+    "text": [
+      "As you level up, fixed health places you in the high end",
+      "of what's expected when rolling for health"
+    ],
+    "subtitle": [
+      "Vertical bar represents the central 50% interval of expected health;",
+      "horizontal tick is the fixed health value"
+    ],
+    "subtitleFont": "noto-sans",
+    "subtitleFontSize": 14
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "width":"container",
+  "datasets": {
+    "data-b5ef3ec9759219b69f7d7b717d6fb99f": [
+      {"Hit Dice": "d6", "Number of level ups": 1, "interval": 2},
+      {"Hit Dice": "d6", "Number of level ups": 1, "interval": 5},
+      {"Hit Dice": "d6", "Number of level ups": 2, "interval": 5},
+      {"Hit Dice": "d6", "Number of level ups": 2, "interval": 9},
+      {"Hit Dice": "d6", "Number of level ups": 3, "interval": 8},
+      {"Hit Dice": "d6", "Number of level ups": 3, "interval": 13},
+      {"Hit Dice": "d6", "Number of level ups": 4, "interval": 12},
+      {"Hit Dice": "d6", "Number of level ups": 4, "interval": 16},
+      {"Hit Dice": "d6", "Number of level ups": 5, "interval": 15},
+      {"Hit Dice": "d6", "Number of level ups": 5, "interval": 20},
+      {"Hit Dice": "d6", "Number of level ups": 6, "interval": 18},
+      {"Hit Dice": "d6", "Number of level ups": 6, "interval": 24},
+      {"Hit Dice": "d6", "Number of level ups": 7, "interval": 21},
+      {"Hit Dice": "d6", "Number of level ups": 7, "interval": 28},
+      {"Hit Dice": "d6", "Number of level ups": 8, "interval": 25},
+      {"Hit Dice": "d6", "Number of level ups": 8, "interval": 31},
+      {"Hit Dice": "d6", "Number of level ups": 9, "interval": 28},
+      {"Hit Dice": "d6", "Number of level ups": 9, "interval": 35},
+      {"Hit Dice": "d6", "Number of level ups": 10, "interval": 31},
+      {"Hit Dice": "d6", "Number of level ups": 10, "interval": 39},
+      {"Hit Dice": "d12", "Number of level ups": 1, "interval": 3},
+      {"Hit Dice": "d12", "Number of level ups": 1, "interval": 10},
+      {"Hit Dice": "d12", "Number of level ups": 2, "interval": 10},
+      {"Hit Dice": "d12", "Number of level ups": 2, "interval": 16},
+      {"Hit Dice": "d12", "Number of level ups": 3, "interval": 15},
+      {"Hit Dice": "d12", "Number of level ups": 3, "interval": 24},
+      {"Hit Dice": "d12", "Number of level ups": 4, "interval": 21},
+      {"Hit Dice": "d12", "Number of level ups": 4, "interval": 31},
+      {"Hit Dice": "d12", "Number of level ups": 5, "interval": 27},
+      {"Hit Dice": "d12", "Number of level ups": 5, "interval": 38},
+      {"Hit Dice": "d12", "Number of level ups": 6, "interval": 33},
+      {"Hit Dice": "d12", "Number of level ups": 6, "interval": 45},
+      {"Hit Dice": "d12", "Number of level ups": 7, "interval": 39},
+      {"Hit Dice": "d12", "Number of level ups": 7, "interval": 52},
+      {"Hit Dice": "d12", "Number of level ups": 8, "interval": 45},
+      {"Hit Dice": "d12", "Number of level ups": 8, "interval": 59},
+      {"Hit Dice": "d12", "Number of level ups": 9, "interval": 51},
+      {"Hit Dice": "d12", "Number of level ups": 9, "interval": 66},
+      {"Hit Dice": "d12", "Number of level ups": 10, "interval": 58},
+      {"Hit Dice": "d12", "Number of level ups": 10, "interval": 72}
+    ],
+    "data-4f4ecb8d7be2d18743c4bfb254cf171c": [
+      {"Hit Dice": "d6", "Number of level ups": 0.75, "interval": 4},
+      {"Hit Dice": "d6", "Number of level ups": 1.25, "interval": 4},
+      {"Hit Dice": "d6", "Number of level ups": 1.75, "interval": 8},
+      {"Hit Dice": "d6", "Number of level ups": 2.25, "interval": 8},
+      {"Hit Dice": "d6", "Number of level ups": 2.75, "interval": 12},
+      {"Hit Dice": "d6", "Number of level ups": 3.25, "interval": 12},
+      {"Hit Dice": "d6", "Number of level ups": 3.75, "interval": 16},
+      {"Hit Dice": "d6", "Number of level ups": 4.25, "interval": 16},
+      {"Hit Dice": "d6", "Number of level ups": 4.75, "interval": 20},
+      {"Hit Dice": "d6", "Number of level ups": 5.25, "interval": 20},
+      {"Hit Dice": "d6", "Number of level ups": 5.75, "interval": 24},
+      {"Hit Dice": "d6", "Number of level ups": 6.25, "interval": 24},
+      {"Hit Dice": "d6", "Number of level ups": 6.75, "interval": 28},
+      {"Hit Dice": "d6", "Number of level ups": 7.25, "interval": 28},
+      {"Hit Dice": "d6", "Number of level ups": 7.75, "interval": 32},
+      {"Hit Dice": "d6", "Number of level ups": 8.25, "interval": 32},
+      {"Hit Dice": "d6", "Number of level ups": 8.75, "interval": 36},
+      {"Hit Dice": "d6", "Number of level ups": 9.25, "interval": 36},
+      {"Hit Dice": "d6", "Number of level ups": 9.75, "interval": 40},
+      {"Hit Dice": "d6", "Number of level ups": 10.25, "interval": 40},
+      {"Hit Dice": "d12", "Number of level ups": 0.75, "interval": 7},
+      {"Hit Dice": "d12", "Number of level ups": 1.25, "interval": 7},
+      {"Hit Dice": "d12", "Number of level ups": 1.75, "interval": 14},
+      {"Hit Dice": "d12", "Number of level ups": 2.25, "interval": 14},
+      {"Hit Dice": "d12", "Number of level ups": 2.75, "interval": 21},
+      {"Hit Dice": "d12", "Number of level ups": 3.25, "interval": 21},
+      {"Hit Dice": "d12", "Number of level ups": 3.75, "interval": 28},
+      {"Hit Dice": "d12", "Number of level ups": 4.25, "interval": 28},
+      {"Hit Dice": "d12", "Number of level ups": 4.75, "interval": 35},
+      {"Hit Dice": "d12", "Number of level ups": 5.25, "interval": 35},
+      {"Hit Dice": "d12", "Number of level ups": 5.75, "interval": 42},
+      {"Hit Dice": "d12", "Number of level ups": 6.25, "interval": 42},
+      {"Hit Dice": "d12", "Number of level ups": 6.75, "interval": 49},
+      {"Hit Dice": "d12", "Number of level ups": 7.25, "interval": 49},
+      {"Hit Dice": "d12", "Number of level ups": 7.75, "interval": 56},
+      {"Hit Dice": "d12", "Number of level ups": 8.25, "interval": 56},
+      {"Hit Dice": "d12", "Number of level ups": 8.75, "interval": 63},
+      {"Hit Dice": "d12", "Number of level ups": 9.25, "interval": 63},
+      {"Hit Dice": "d12", "Number of level ups": 9.75, "interval": 70},
+      {"Hit Dice": "d12", "Number of level ups": 10.25, "interval": 70}
+    ]
+  }
+}
