@@ -12,6 +12,8 @@ import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
 
+import probability_fixed_better_vega from "./probability_fixed_better_vega.json";
+
 Core character progression in Dungeons and Dragons revolves around
 leveling up, in which your adventurer becomes hardier and more powerful.
 As part of this, characters gain a higher hit point maximum each level.
@@ -26,7 +28,7 @@ increase you get, as we see here from PHB page 15:
 
 An interesting bit here is that the alternate rule uses a _rounded 
 up_ average of the dice roll. This means that on average, **the fixed value will
-be better than rolling.** In this post, we'll take a look at the expected 
+be better than rolling.** In this post, we'll take a look at the detailed 
 differences in using these two different rules.
 
 ## Defining the strategies
@@ -86,7 +88,7 @@ the number of levels gained surprised me. A simple way to say this is
 **for every two levels gained, taking the fixed health increase will 
 give you 1 more hit point, on average**.
 
-## The probabily distribution
+## The probability distribution of how much better fixed health is
 
 The expectation is not the whole picture, of course. The whole point 
 of rolling is that there is randomness in the process. We can do a 
@@ -106,5 +108,30 @@ $$
 
 It's a bit messy, but we can calculate some interesting quantities,
 such as the probability that taking the fixed health on level-up is better
-than rolling -- $P(\Delta X^k > 0)$ -- by simply adding up terms when $x > 0$
-from above.
+than rolling -- $P(\Delta X^k > 0)$ -- by adding up terms when $x > 0$
+from above. The below figure shows how this quantity changes as you level 
+up more.
+
+<VegaWrapper spec={probability_fixed_better_vega} />
+
+There are a few interesting features immediately noticeable here. The 
+first is how **the benefits of taking the fixed health increase are greater
+with a low hit dice** -- by 5th level a Wizard or Sorcerer has a 2-in-3 
+chance of having more health by taking fixed every level. On the other hand, 
+a class with a d10 hit dice doesn't reach that same likelihood 
+until around 10th or 11th level. 
+
+Conceptually, this arises because the $\frac{1}{2}$ average benefit is a pretty 
+big chunk of the range of possible outcomes on a d6, but on a d12? Not so much.
+
+The second interesting point on this graph (to me) is that **there is 
+no difference between fixed health and rolling if you only do it once!** So 
+if you're one of those people who wants to mathematically min-max your 
+character to the greatest degree possible, you can still have a little fun 
+by rolling for health _just one time_. 
+
+# Just how big is the difference?
+
+While the above is more focused on whether there is any difference at all, probably 
+what would be more interesting is looking the range of possible outcomes and seeing 
+how s
