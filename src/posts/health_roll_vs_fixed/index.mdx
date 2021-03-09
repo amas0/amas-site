@@ -1,0 +1,190 @@
+---
+path: "/posts/health-roll-vs-fixed"
+date: "2021/03/08"
+title: "How bad is rolling for health in DnD 5e?"
+summary: "DnD 5e provides two rules for gaining health when leveling up: 
+roll for it or take a fixed value. The fixed value is better on average, but
+by how much?"
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+
+import probability_fixed_better_vega from "./probability_fixed_better_vega.json";
+import interval_fixed_vs_rolling_vega from "./interval_fixed_vs_rolling_vega.json";
+
+Progression in Dungeons and Dragons revolves around gaining levels, in which
+your character becomes more powerful. One component of leveling up is
+increasing your maximum hit points each level. The rules as written provide
+two alternate ways of determining how much of an increase you get:
+
+> Each time you gain a level, you gain 1 additional Hit Die. Roll 
+> that Hit Die, add your Constitution modifier to the roll, and add 
+> the total to your hit point maximum. Alternatively, you can use the 
+> fixed value shown in your class entry, which is the average result
+> of the die roll (rounded up). -- *Player's Handbook p. 15*
+
+An interesting bit here is that the fixed health rule uses the _rounded 
+up_ average of the roll. This means that **the fixed value will
+be better than rolling, on average.** In this post, we'll dig in a bit 
+deeper, talk about the math behind each rule, and compare the practical 
+differences.
+
+## Defining the strategies
+
+Our approach to comparing these rules is to define them mathematically as 
+random variables. As for notation, we will use $X_{\mathrm{roll}}^k$ and
+$X_{\mathrm{fixed}}^k$, to represent the amount of health gained after
+leveling up $k$ times for the rolling and fixed health rules, respectively.
+
+The fixed health rule increases your character's health pool by the same
+amount each level, which we write as:
+
+$$
+X_{\mathrm{fixed}}^k = k\left(\frac{d+2}{2} + C_{mod}\right)
+$$
+
+Where $d$ is the value of your class's hit dice and $C_{mod}$ is your
+constitution modifier. As an example, suppose you are playing a Bard
+with a +1 Constitution modifier, then $X_{\mathrm{fixed}}^k = 6k$.
+Each level you gain 6 health (until your constitution modifier changes).
+
+The rolling strategy is a bit more complex. If we let $Y_d^k$ represent 
+the sum of $k$ $d$-sided dice rolls, we can write the health gained 
+from the dice rolling rule as:
+
+$$
+X_{\mathrm{roll}}^k = k C_{mod} + Y_d^k 
+$$
+
+Since we are primarily interested in comparing these two rules, we 
+can look directly at the _difference_ between them, $\Delta X^k_d =
+X_\mathrm{fixed}^k - X_\mathrm{roll}^k$, which represents how much better the
+fixed strategy is compared to rolling after $k$ level ups of a class with 
+hit dice $d$. We can rewrite it using the definitions above:
+
+$$
+\Delta X^k_d = k \frac{d+2}{2} - Y_d^k
+$$
+
+Our dependence on the constitution modifier drops completely and we have a
+random variable defined in terms of the sum of dice rolls.
+
+## Expected differences
+
+A simple step from here is to take a look at the expectation of this 
+difference between the rules. Applying the tools that we looked at in a
+post on <Link to="/posts/dice-roll-expectations">expectations of dice rolls</Link> we can tackle this:
+
+$$
+\begin{aligned}
+E\left(\Delta X^k_d\right) &= k \frac{d + 2}{2} - E Y_d^k \\
+&= k\frac{d+2}{2} - k \frac{d+1}{2} \\
+E\left(\Delta X^k_d\right) &= \frac{k}{2}
+\end{aligned}
+$$
+
+Simply put: **the fixed health increase will give you 1 more hit point every
+2 levels, on average**. It's no surprise that this value comes up, because it
+is exactly the amount that is gained by rounding up the average roll each level.
+
+## The probability distribution of how much better fixed health is
+
+The expectation is not the whole picture, of course. The whole point 
+of rolling is the element of randomness in the process. We can do a 
+bit of algebra to write out the probability distribution of $\Delta X^k_d$ 
+in terms of the sum of dice rolls:
+
+$$
+P(\Delta X^k_d = x) = P\left(Y_d^k = k\frac{d+2}{2} - x\right)
+$$
+
+Using the results from our <Link to="/posts/sums-dice-rolls">recent post</Link>
+on dice roll sums, we can write out the exact form:
+
+$$
+P(\Delta X^k_d = x) = \frac{1}{d^k}\sum_{l=0}^{\left\lfloor\frac{k}{2} - \frac{x}{d}\right\rfloor} (-1)^l {k \choose l} {k\frac{d+2}{2} - x - dl - 1 \choose k - 1}
+$$
+
+It's a bit messy, but we can calculate some interesting quantities,
+such as the probability that the fixed health increase on level up is strictly 
+better than rolling -- $P(\Delta X^k_d > 0)$ -- by adding up terms when $x >
+0$. The below graph shows how this quantity changes as you level
+up:
+
+<VegaWrapper spec={probability_fixed_better_vega} />
+
+There are a few interesting features here. The 
+first is how **the benefits of taking the fixed health increase are greater
+with a low hit dice** -- by 5th level a Wizard or Sorcerer has a 2-in-3 
+chance of having more health by taking fixed increases. On the other hand, 
+a class with a d10 hit dice doesn't reach that same likelihood 
+until around 10th or 11th level. 
+
+Conceptually, this arises because the $\frac{1}{2}$ average benefit is fairly 
+large relative to the range of possible outcomes on a d6, but on a d12? Not
+so much.
+
+The second interesting point on this graph (to me) is that **there is 
+no difference between fixed health and rolling if you only do it once!** So 
+if you're one of those people who wants to mathematically min-max your 
+character to the greatest degree possible, you can still have a little fun 
+by rolling for health _just one time_. 
+
+## Just how big is the difference?
+
+While the above is more focused on whether there is any difference at all,
+probably what would be more interesting is looking at the range of possible
+outcomes and seeing how the *actual hit point increases vary between 
+the different rules*. 
+
+In the below figure, we compare the fixed health rule (horizontal line)
+with the 50% central interval of outcomes from the rolling strategy, you 
+can think of the interval as the range of possible outcomes that are pretty
+close to average.
+
+<VegaWrapper spec={interval_fixed_vs_rolling_vega} />
+
+We are only showing the results for d6 and d12 hit dice up to 11th level to
+avoid cluttering the graph, but the behavior we see is consistent for the 
+other hit dice as well. The key feature is that the health pool of the fixed
+increases inches its way to the upper end of the central interval. By 11th
+level, fixed health increases are either just outside the 50% interval as
+is the case for d6 hit dice, or at the upper end of the range as we see for
+d12.
+
+In all cases, the fixed health outcome is relatively close to the central
+intervals, which means that the difference between the two rules isn't
+that big. If I had to sum it up, I'd say that **although the odds favor the
+fixed health strategy, it wouldn't be surprising if someone happened
+to roll higher health in the long term.**
+
+## Which strategy to pick?
+
+The way you choose to advance your character's health is one of the more
+minor decisions you have to make in DnD. But hey. That doesn't stop us from 
+talking about the pros and cons of each rule:
+
+#### Why choose fixed increases?
+
+* Mathematically, it wins on average
+* Especially when playing a low hit dice class like Wizard, hit points come 
+at a premium and taking the fixed value is a prudent choice
+* At low levels, rolling a 1 or 2 for health can have fatal 
+consequences -- avoiding that by taking fixed increases could be the difference
+between life and death for your character
+
+#### Why choose rolling for health?
+
+* Rolling is fun!
+* The benefits of fixed increases for are smaller for high hit dice classes, 
+so you risk less by choosing to roll 
+* Fixed health prevents you from getting low values, but it also prevents 
+you from getting high values as well -- if you want to press your luck, there's 
+no better way to get a big health pool than some lucky rolls
+
+Outside of any number-based arguments, just **pick the strategy that is most
+likely to give you a character/style of play that you have the most fun with.**
+It is a game, after all.

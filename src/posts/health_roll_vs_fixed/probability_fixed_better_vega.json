@@ -1,0 +1,403 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"anchor": "start", "fontSize": 16}
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "point": true, "strokeWidth": 1.2},
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice", "legend": null},
+        "x": {
+          "type": "ordinal",
+          "field": "Number of level ups",
+          "title": "Number of level ups"
+        },
+        "y": {
+          "type": "quantitative",
+          "field": "Probability",
+          "scale": {"domain": [0, 1]},
+          "title": "Probability that fixed is better"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "font": "noto sans",
+        "fontSize": 14,
+        "fontWeight": 500
+      },
+      "encoding": {
+        "color": {"type": "nominal", "field": "Hit Dice"},
+        "text": {"type": "nominal", "field": "Hit Dice"},
+        "x": {
+          "type": "ordinal",
+          "aggregate": "max",
+          "field": "Number of level ups"
+        },
+        "y": {
+          "type": "quantitative",
+          "aggregate": "max",
+          "field": "Probability"
+        }
+      }
+    }
+  ],
+  "data": {"name": "data-3e2d10f90a0d575be6f9f2f287cd1cd8"},
+  "title": [
+    "The probability that fixed health is better increases",
+    "as you level up -- more so for lower hit dice"
+  ],
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "width":"container",
+  "datasets": {
+    "data-3e2d10f90a0d575be6f9f2f287cd1cd8": [
+      {"Hit Dice": "d6", "Number of level ups": 1, "Probability": 0.5},
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 2,
+        "Probability": 0.5833333333333334
+      },
+      {"Hit Dice": "d6", "Number of level ups": 3, "Probability": 0.625},
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 4,
+        "Probability": 0.6643518518518516
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 5,
+        "Probability": 0.6948302469135802
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 6,
+        "Probability": 0.7206147119341563
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 7,
+        "Probability": 0.7428305041152262
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 8,
+        "Probability": 0.76228673696845
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 9,
+        "Probability": 0.7795576488911753
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 10,
+        "Probability": 0.7950317711508663
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 11,
+        "Probability": 0.8090005724853512
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 12,
+        "Probability": 0.8216864844129278
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 13,
+        "Probability": 0.8332641392308688
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 14,
+        "Probability": 0.8438738201046606
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 15,
+        "Probability": 0.8536302676635648
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 16,
+        "Probability": 0.8626288145999698
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 17,
+        "Probability": 0.8709497253012719
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 18,
+        "Probability": 0.8786613528858332
+      },
+      {
+        "Hit Dice": "d6",
+        "Number of level ups": 19,
+        "Probability": 0.8858224856963364
+      },
+      {"Hit Dice": "d8", "Number of level ups": 1, "Probability": 0.5},
+      {"Hit Dice": "d8", "Number of level ups": 2, "Probability": 0.5625},
+      {"Hit Dice": "d8", "Number of level ups": 3, "Probability": 0.59375},
+      {"Hit Dice": "d8", "Number of level ups": 4, "Probability": 0.6240234375},
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 5,
+        "Probability": 0.647705078125
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 6,
+        "Probability": 0.668243408203125
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 7,
+        "Probability": 0.6862258911132812
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 8,
+        "Probability": 0.702284574508667
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 9,
+        "Probability": 0.716808944940567
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 10,
+        "Probability": 0.7300713434815407
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 11,
+        "Probability": 0.7422737842425704
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 12,
+        "Probability": 0.753569038468413
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 13,
+        "Probability": 0.764076576277148
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 14,
+        "Probability": 0.7738918244758679
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 15,
+        "Probability": 0.7830924992886139
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 16,
+        "Probability": 0.7917429292845526
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 17,
+        "Probability": 0.7998971094746832
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 18,
+        "Probability": 0.8076009139318847
+      },
+      {
+        "Hit Dice": "d8",
+        "Number of level ups": 19,
+        "Probability": 0.8148937322547343
+      },
+      {"Hit Dice": "d10", "Number of level ups": 1, "Probability": 0.5},
+      {"Hit Dice": "d10", "Number of level ups": 2, "Probability": 0.55},
+      {"Hit Dice": "d10", "Number of level ups": 3, "Probability": 0.575},
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 4,
+        "Probability": 0.5994999999999998
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 5,
+        "Probability": 0.6187499999999999
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 6,
+        "Probability": 0.6356349999999998
+      },
+      {"Hit Dice": "d10", "Number of level ups": 7, "Probability": 0.6505245},
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 8,
+        "Probability": 0.6639407500000003
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 9,
+        "Probability": 0.6761773249999999
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 10,
+        "Probability": 0.6874471944999999
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 11,
+        "Probability": 0.6979058521
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 12,
+        "Probability": 0.7076707928949998
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 13,
+        "Probability": 0.7168335592995001
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 14,
+        "Probability": 0.7254670142634503
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 15,
+        "Probability": 0.7336303077076045
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 16,
+        "Probability": 0.7413722424260635
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 17,
+        "Probability": 0.7487336563382658
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 18,
+        "Probability": 0.7557491432935958
+      },
+      {
+        "Hit Dice": "d10",
+        "Number of level ups": 19,
+        "Probability": 0.7624483242070823
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 1,
+        "Probability": 0.49999999999999994
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 2,
+        "Probability": 0.5416666666666666
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 3,
+        "Probability": 0.5625000000000002
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 4,
+        "Probability": 0.5830439814814817
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 5,
+        "Probability": 0.5992235725308642
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 6,
+        "Probability": 0.6135022826646089
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 7,
+        "Probability": 0.6261413323045266
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 8,
+        "Probability": 0.6375851729279193
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 9,
+        "Probability": 0.6480696529463429
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 10,
+        "Probability": 0.6577706345938659
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 11,
+        "Probability": 0.6668149386274498
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 12,
+        "Probability": 0.6752985325957968
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 13,
+        "Probability": 0.6832959788615511
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 14,
+        "Probability": 0.6908665211787969
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 15,
+        "Probability": 0.6980581603881646
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 16,
+        "Probability": 0.7049104244120203
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 17,
+        "Probability": 0.7114563271390245
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 18,
+        "Probability": 0.7177237817907829
+      },
+      {
+        "Hit Dice": "d12",
+        "Number of level ups": 19,
+        "Probability": 0.7237366443789869
+      }
+    ]
+  }
+}
