@@ -1,0 +1,233 @@
+---
+path: "/posts/damage-calculations"
+date: "2021/03/29"
+title: "Calculating attack damage in DnD 5e"
+summary: "A common task when analyzing character builds or theorycrafting in
+Dungeons and Dragons is mathematically exploring the damage output of
+various spells and abilities. In this post, we show how to calculate the
+probability distribution of damage from an attack."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+
+import longsword_vega from "./longsword_vega.json";
+import inflict_wounds_vega from "./inflict_wounds_vega.json";
+
+Calculating damage is a common -- perhaps the _most_ common -- task in 
+analyzing builds and theorycrafting in Dungeons and Dragons. It is not 
+an easy one, however. Like many other concepts in DnD, damage comes
+at the whims of dice. For this reason, damage cannot be effective described 
+as a single number, but rather as a distribution of possible values. On top
+of that, there are a number of rules and spell-specific effects that must be
+accounted for when determining the range of outcomes.
+
+In this post we'll lay out the general framework of the damage distribution and 
+calculate it for a basic attack roll.
+
+## Describing damage as a probability distribution
+
+When a character attacks or casts a spell there are typically two steps that
+occur: 1) a roll by either the player or the DM to determine the degree to
+which the target is affected and 2) a subsequent damage roll that determines
+how much damage is taken by the target. There is randomness at every step of
+this process so we can best represent its outcome as a probability
+distribution $p(d)$, which is the probability that an attack does $d$ damage.
+
+Let's think about how we can compute this for a standard attack roll. We start 
+by recognizing that a target can be affected by an attack in three ways: a
+miss, a normal hit, or a critical hit. A miss deals no damage, a normal hit
+will deal damage as written in the ability block, and a critical hit deals
+damage but with double the number of dice rolled. These three possibilities
+can be represented by breaking down our damage into conditional components:
+
+$$
+p(d) = \sum_{h\in H} p(d \,|\, h) \,p(h)
+$$
+
+Where $H = \lbrace \textrm{Miss}, \textrm{Normal}, \textrm{Crit} \rbrace$. The 
+above expression states that the probability that $d$ damage is done is the
+weighted sum of doing that damage under each of our three hit types. By
+breaking it down like this, we can directly compute $p(d)$ by first looking 
+at the hit probabilities, $p(h)$, and conditional damage distributions,
+$p(d|h)$.
+
+It's not too hard to see that this general formula can represent other damage 
+processes. For a spell with a saving throw we could have $H = \lbrace
+\textrm{Success}, \textrm{Fail} \rbrace$. From there, it comes down to
+defining the conditional damage distributions.
+
+## The hit probabilities of an attack roll
+
+The first step of computing our attack damage distribution is calculating the
+hit probabilities $p(h)$. We will only concern ourselves with a standard
+roll, no advantage or disadvantage. Their effects could be explored with the
+appropriate
+substitution of <Link to="posts/advantage-disadvantage-distribution">probabilities given by advantage or disadvantage rules</Link>, and 
+following the structure of the rest of this post.
+
+
+We'll start with a critical hit. The rules state a critical hit
+occurs when rolling a 20 on an attack roll. For a standard attack roll, 
+this is simply:
+
+
+$$
+p(\textrm{crit}) = \frac{1}{20}
+$$
+
+Next, we examine the probability of a normal hit, i.e. a roll 
+that meets or exceeds a target's AC after bonuses but is neither a critical
+hit or a critical fail (which guarantees a miss).
+To do this, we must reach back to our previous post on <Link to="posts/dice-roll-probability">dice rolls probabilities</Link>. 
+
+We introduce two new parameters: a target roll, $t$, and a bonus to add to
+the roll, $b$. In an attack roll, $t$ is typically the target's
+armor class. The parameter $b$ is usually a combination of a proficiency
+bonus and a stat modifier.
+
+> As an example, suppose a fighter with a +5 to hit attempts to strike a 
+> Goblin with AC 15, then $t = 15$ and $b = 5$. 
+
+If $X$ is the outcome of our attack roll, then we can write:
+
+$$
+p(\textrm{normal}) = \begin{cases}
+P(t-b \leq X \leq 19)& t-b \geq 2\\
+P(2 \leq X \leq 19)& \mathrm{otherwise}
+\end{cases}
+$$
+
+Using our dice roll probabilities, we can write this as:
+
+$$
+p(\textrm{normal}) = \begin{cases}
+\frac{19 - t + b + 1}{20}& t-b \geq 2\\
+\frac{18}{20}& \mathrm{otherwise}
+\end{cases}
+$$
+
+The above expression describes the probability that a roll 
+meets or exceeds the target after bonuses, while excluding 
+critical hits and failures. 
+
+The last category to look at is the probability of a miss. We 
+could calculate it directly as before, but it's easier to just 
+derive the result using the complement:
+
+$$
+p(\textrm{miss}) = 1 - p(\textrm{crit}) - p(\textrm{normal})
+$$
+
+Then we can write:
+
+$$
+p(\textrm{miss}) = \begin{cases}
+\frac{t - b - 1}{20}& t-b \geq 2\\
+\frac{1}{20}& \mathrm{otherwise}
+\end{cases}
+$$
+
+With this, we fully describe the probability of an attack hitting
+when accounting for the target's AC and the attacker's bonuses. From 
+here, we turn our attention to the conditional damage distributions.
+
+## Damage conditional on the attack roll
+
+The damage distributions themselves are determined by the specific attack 
+type or spell being used, but most follow a pattern -- the total damage 
+is determined by the sum of rolling one or more dice and adding a bonus. We
+will write ${}_{m}D_n$ to represent the random variable of a sum of $m$
+$n$-sided dice and $d_0$ will be the damage bonus added, then:
+
+$$
+p(d|h) = P({}_{m}D_n + d_0 = d | h) = P({}_{m}D_n = d - d_0| h)
+$$
+
+With the way we've written the above, we can see that our damage 
+distribution can be written directly in terms of ${}_{m}D_n$, which we
+conveniently defined in a <Link to="posts/sums-dice-rolls">prior post</Link>.
+
+For our normal damage distribution, we write it out directly:
+
+$$
+p(d|\textrm{normal}) = \frac{1}{n^m}\sum_{l=0}^{\left\lfloor\frac{d - d_0 - m}{n}\right\rfloor} (-1)^l {m \choose l} {d - d_0 - nl - 1 \choose m - 1}
+$$
+
+Which is the full expression of our dice roll sum distribution equal to $d -
+d_0$ as above.
+
+Critical hits are a simple modification of the above, substituting $m \to 2m$,
+which represents doubling the number of damage dice that one rolls. This
+gives:
+
+$$
+p(d|\textrm{crit}) = \frac{1}{n^{2m}}\sum_{l=0}^{\left\lfloor\frac{d - d_0 - 2m}{n}\right\rfloor} (-1)^l {2m \choose l} {d - d_0 - nl - 1 \choose 2m - 1}
+$$
+
+Our last distribution -- damage when the attack roll is missed -- is the
+simplest:
+
+$$
+p(d|\textrm{miss}) = \begin{cases}
+1& d = 0\\
+0& \textrm{otherwise}
+\end{cases}
+$$
+
+When an attack is missed, damage done is 0 with probability 1. Simple enough.
+
+## Complete damage distributions
+
+We now have all the necessary components to compute $p(d)$ in its entirety.
+As a reminder, for an attack roll we have:
+
+$$
+p(d) = p(d|\textrm{miss})p(\textrm{miss}) + p(d|\textrm{normal})p(\textrm{normal}) + p(d|\textrm{crit})p(\textrm{crit})
+$$
+
+It would be too verbose to substitute all of our values directly into this
+expression, but easy enough to describe the output by looking at graphs of 
+different damage distributions. Let's consider some examples:
+
+> Suppose Ria, a fighter, is facing down a zombie. Her attack bonus 
+> with her longsword is +5 and the zombie's AC is 8. Ria's longsword deals 
+> 1d8 + 3 slashing damage. What is the damage distribution of her strike?
+
+From the prompt, we know that $t = 8$, $b=5$, $m=1$, $n=8$, and $d_0 = 3$.
+All there is to do now is plug these values into our previously described 
+expressions. The below graph shows the probable outcomes of her strike.
+
+<VegaWrapper spec={longsword_vega}/>
+
+It's not exactly a bell curve to say the least. The complex behavior is 
+the mixture of our three possible damage conditions -- the single bar at 
+0 is the probability of missing, the mostly uniform damage from 4 to 11 
+is the damage from a normal hit, and the triangular distribution that lies 
+on top of that is the critical hit damage.
+
+The shapes and relative magnitudes depend on all the parameters present.
+To see just how different they can be, let's consider another situation.
+
+> An adventuring party is going toe to toe with a large Ogre. Yar, a cleric, 
+> calls on the power of his deity to cast Inflict Wounds at 1st level. His 
+> spellcasting ability modifier is +5 and the AC of the Ogre is 11. Damage 
+> dealt on a hit is 3d10 necrotic damage. What is the damage distribution?
+
+We approach this in a similar way to before, noting that $t = 11$, $b=5$,
+$m=3$, $n=10$, and $d_0 = 0$.
+
+<VegaWrapper spec={inflict_wounds_vega}/>
+
+Now we see an entirely different distribution. The 0 damage possibility has 
+risen to 25% and the bulk of the non-zero damage forms a familiar bell curve 
+from the 3-dice sum with a long tail that represents possible crit damage.
+
+In both of these examples, the mixture of different attack roll outcomes 
+gives rise to non-trivial damage outcomes. Even so, the 
+damage from an attack roll that we explored here is one of the simplest 
+damage mechanics in 5e. Varying spell effects, different damage types, and 
+other features all paint a rich mechanical picture. It suffices to say that 
+we still have much to explore in this realm, but that will be for future posts.
