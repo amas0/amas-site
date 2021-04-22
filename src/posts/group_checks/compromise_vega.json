@@ -1,0 +1,89 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "strokeWidth": 0},
+    "axis": {"labelAngle": 0, "labelFontSize": 14, "titleFontSize": 14},
+    "background": "#f2f0e9",
+    "font": "noto sans",
+    "title": {"anchor": "start", "fontSize": 16}
+  },
+  "layer": [
+    {
+      "data": {"name": "data-670716076e26cf64cc6e3fe0898ffa1b"},
+      "mark": {"type": "line", "opacity": 0.5, "point": true},
+      "encoding": {
+        "color": {"type": "nominal", "field": "Rounding", "legend": null},
+        "x": {"type": "ordinal", "field": "Party Size", "title": "Party Size"},
+        "y": {
+          "type": "quantitative",
+          "field": "Probability",
+          "scale": {"domain": [0, 1]},
+          "title": "Probability of success"
+        }
+      }
+    },
+    {
+      "data": {"name": "data-1491e6536197f89a91aa09d641336c00"},
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "color": {"value": "red"},
+        "x": {"type": "ordinal", "field": "Party Size"},
+        "y": {"type": "quantitative", "field": "Probability"}
+      }
+    }
+  ],
+  "title": "Our compromise (red line) finds a reasonable balance",
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-670716076e26cf64cc6e3fe0898ffa1b": [
+      {"Probability": 0.75, "Party Size": 2, "Rounding": "Round Up"},
+      {"Probability": 0.5, "Party Size": 3, "Rounding": "Round Up"},
+      {
+        "Probability": 0.6875000000000002,
+        "Party Size": 4,
+        "Rounding": "Round Up"
+      },
+      {
+        "Probability": 0.49999999999999994,
+        "Party Size": 5,
+        "Rounding": "Round Up"
+      },
+      {
+        "Probability": 0.6562500000000002,
+        "Party Size": 6,
+        "Rounding": "Round Up"
+      },
+      {
+        "Probability": 0.5000000000000002,
+        "Party Size": 7,
+        "Rounding": "Round Up"
+      },
+      {"Probability": 0.75, "Party Size": 2, "Rounding": "Round Down"},
+      {"Probability": 0.875, "Party Size": 3, "Rounding": "Round Down"},
+      {
+        "Probability": 0.6875000000000002,
+        "Party Size": 4,
+        "Rounding": "Round Down"
+      },
+      {"Probability": 0.8125, "Party Size": 5, "Rounding": "Round Down"},
+      {
+        "Probability": 0.6562500000000002,
+        "Party Size": 6,
+        "Rounding": "Round Down"
+      },
+      {
+        "Probability": 0.7734375000000004,
+        "Party Size": 7,
+        "Rounding": "Round Down"
+      }
+    ],
+    "data-1491e6536197f89a91aa09d641336c00": [
+      {"Probability": 0.75, "Party Size": 2},
+      {"Probability": 0.6875, "Party Size": 3},
+      {"Probability": 0.6875000000000002, "Party Size": 4},
+      {"Probability": 0.65625, "Party Size": 5},
+      {"Probability": 0.6562500000000002, "Party Size": 6},
+      {"Probability": 0.6367187500000003, "Party Size": 7}
+    ]
+  }
+}
