@@ -1,0 +1,92 @@
+---
+path: "/posts/group-checks"
+date: "2021/04/22"
+title: "Group checks depend too much on whether you have an odd or even number of players - here's a proposed fix"
+summary: "Making group checks requires awkwardly deciding on how to round the 
+required number of successes. Either choice is bad. Here we propose a rule that
+uses randomization to compromise and give more reasonable results."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+
+import group_check_vega from "./group_check_vega.json";
+import compromise_vega from "./compromise_vega.json";
+
+
+In DnD 5e, a *group check* is a helpful mechanic to approach situations 
+where the entire party succeeds or fails together. While group checks don't
+always come up in the average session, they certainly have their place. In my
+games, I often use a group Stealth check if the party tries to collectively
+sneak past an enemy or to adjudicate a Survival check to see if they navigate
+a hazardous terrain effectively.
+
+Unfortunately -- perhaps due to the designers assuming they are rare
+-- the rule determining group checks is very sensitive to whether you have 
+an odd or even number of party members. 
+
+Let's take a look at the rule as written:
+
+> To make a group ability check, everyone in the group makes the ability check.
+> If at least half the group succeeds, the whole group succeeds. Otherwise, the 
+> group fails. -- *Player's Handbook p. 175*
+
+The rule itself is simple, but the issues arise in the: "at least half the
+group" clause. As we know, party sizes in DnD are typically somewhere between
+3-6 players. **If you happen to have an odd number of players in your group,
+you're stuck with interpreting what that "at least half" means** -- do you
+round up or down?
+
+That decision is best left to
+the [rules lawyers](https://rpg.stackexchange.com/questions/156264/how-many-people-need-to-succeed-in-a-group-check-with-three-people). 
+Instead we focus on the fact that **either decision leads to a situation where 
+your party is punished or rewarded just because they have an odd number of 
+members**.
+
+The below figure shows what I'm talking about. (Here I assume each party 
+member has a 50% chance of success, which is not necessarily realistic but
+doesn't change the result).
+
+<VegaWrapper spec={group_check_vega}/>
+
+Every time you hit an odd numbered group size, the success chance 
+shoots up or down compared to an even sized party, with the direction 
+being determined by how you round. These are the sorts of odd results you end
+up with when you take a simple rule and combine it with having to round small
+numbers.
+
+A modification of the rule can alleviate this issue. I propose 
+the following change to the rule as written:
+
+> To make a group ability check, everyone in the group makes the ability check.
+> **If the group has an even number of members, **the whole group succeeds if at
+> least half the group succeeds. Otherwise, the group fails.
+>
+> **If the group has an odd number of members, 
+> the DM rolls a dice and records if the result is odd or even. If the DM 
+> rolls odd, the whole group succeeds if at least half the group 
+> succeeds, _rounded down_.
+> If the DM rolls even, the whole group succeeds if at least half the group 
+> succeeds, _rounded up_. Otherwise the group fails.**
+
+Essentially, we change the rule so that with an odd number of players, the DM 
+_randomly_ chooses between rounding up or down the number of players required
+for success. This randomization process results in a compromise between the two 
+extremes.
+
+The below figure shows how the proposed rule compares to the original:
+
+<VegaWrapper spec={compromise_vega}/>
+
+The success chance of our new rule is shown in red. It is clearly
+more well behaved when it comes to odd numbered group sizes. I'd go so far to 
+argue that the proposed rule is _more fair_ to the players -- no group should 
+be significantly affected by whether they have an odd or even number of members!
+
+The downside of the proposed rule is that it places a little more burden on
+the DM by requiring an extra roll, but I believe the added complexity is worth
+it. Maybe I am the only DM who uses group checks and it doesn't really
+matter, but hey, hopefully there was something interesting here to think
+about.
