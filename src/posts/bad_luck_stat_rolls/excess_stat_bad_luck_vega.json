@@ -1,0 +1,205 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+    "axis": {
+      "labelAngle": 0,
+      "labelFont": "noto sans",
+      "labelFontSize": 14,
+      "titleFont": "noto sans",
+      "titleFontSize": 14
+    },
+    "text": {"font": "noto sans", "fontSize": 14},
+    "title": {"anchor": "start", "font": "noto sans", "fontSize": 16}
+  },
+  "layer": [
+    {
+      "data": {"name": "data-f0387716f3586473e2b9ef3662818367"},
+      "mark": {"type": "point", "size": 65},
+      "encoding": {
+        "x": {
+          "type": "quantitative",
+          "field": "Cutoff",
+          "scale": {"domain": [50, 75]},
+          "title": "Bad luck threshold"
+        },
+        "y": {
+          "type": "quantitative",
+          "field": "Expected Total",
+          "scale": {"domain": [70, 78]},
+          "title": "Expected stat total"
+        }
+      }
+    },
+    {
+      "data": {"name": "data-4fb75dde27cf83dbaa0b8c8ce71c8493"},
+      "mark": {"type": "rule", "color": "red", "opacity": 0.8},
+      "encoding": {"y": {"type": "quantitative", "field": "y"}}
+    },
+    {
+      "data": {"name": "data-4fb75dde27cf83dbaa0b8c8ce71c8493"},
+      "mark": {"type": "text", "color": "red", "dy": -7},
+      "encoding": {
+        "text": {"value": "Standard Array"},
+        "x": {"type": "quantitative", "field": "x"},
+        "y": {"type": "quantitative", "field": "y"}
+      }
+    },
+    {
+      "data": {"name": "data-d5d2af758ed96c3bdfaa8ad1e886da04"},
+      "mark": {"type": "rule", "color": "orange", "opacity": 0.8},
+      "encoding": {"y": {"type": "quantitative", "field": "y"}}
+    },
+    {
+      "data": {"name": "data-d5d2af758ed96c3bdfaa8ad1e886da04"},
+      "mark": {"type": "text", "color": "orange", "dy": -7},
+      "encoding": {
+        "text": {"value": "Rolling RAW"},
+        "x": {"type": "quantitative", "field": "x"},
+        "y": {"type": "quantitative", "field": "y"}
+      }
+    },
+    {
+      "data": {"name": "data-25f8a0d9b1ee8e169cb21f93e6884c0a"},
+      "mark": {"type": "rule", "color": "black", "opacity": 0.8},
+      "encoding": {"y": {"type": "quantitative", "field": "y"}}
+    },
+    {
+      "data": {"name": "data-25f8a0d9b1ee8e169cb21f93e6884c0a"},
+      "mark": {"type": "text", "color": "black", "dy": -7},
+      "encoding": {
+        "text": {"type": "nominal", "field": "t"},
+        "x": {"type": "quantitative", "field": "x"},
+        "y": {"type": "quantitative", "field": "y"}
+      }
+    }
+  ],
+  "background": "#f2f0e9",
+  "title": {
+    "text": [
+      "Even a little bad luck protection puts you an",
+      "ASI above the standard array"
+    ]
+  },
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-f0387716f3586473e2b9ef3662818367": [
+      {
+        "Expected Total": 73.47413286008116,
+        "Cutoff": 50,
+        "Above Standard Array": 1.4741328600811556
+      },
+      {
+        "Expected Total": 73.48087451379487,
+        "Cutoff": 51,
+        "Above Standard Array": 1.4808745137948733
+      },
+      {
+        "Expected Total": 73.48974149262158,
+        "Cutoff": 52,
+        "Above Standard Array": 1.489741492621576
+      },
+      {
+        "Expected Total": 73.5048756591707,
+        "Cutoff": 53,
+        "Above Standard Array": 1.5048756591706933
+      },
+      {
+        "Expected Total": 73.52395577641944,
+        "Cutoff": 54,
+        "Above Standard Array": 1.5239557764194416
+      },
+      {
+        "Expected Total": 73.55218726402211,
+        "Cutoff": 55,
+        "Above Standard Array": 1.552187264022109
+      },
+      {
+        "Expected Total": 73.58940879116014,
+        "Cutoff": 56,
+        "Above Standard Array": 1.589408791160139
+      },
+      {
+        "Expected Total": 73.6386939566233,
+        "Cutoff": 57,
+        "Above Standard Array": 1.6386939566232996
+      },
+      {
+        "Expected Total": 73.70559488449179,
+        "Cutoff": 58,
+        "Above Standard Array": 1.7055948844917879
+      },
+      {
+        "Expected Total": 73.79040836655416,
+        "Cutoff": 59,
+        "Above Standard Array": 1.7904083665541606
+      },
+      {
+        "Expected Total": 73.89956608774078,
+        "Cutoff": 60,
+        "Above Standard Array": 1.89956608774078
+      },
+      {
+        "Expected Total": 74.0340138239109,
+        "Cutoff": 61,
+        "Above Standard Array": 2.0340138239108967
+      },
+      {
+        "Expected Total": 74.1960104212772,
+        "Cutoff": 62,
+        "Above Standard Array": 2.196010421277194
+      },
+      {
+        "Expected Total": 74.38866852687013,
+        "Cutoff": 63,
+        "Above Standard Array": 2.388668526870134
+      },
+      {
+        "Expected Total": 74.6190296065861,
+        "Cutoff": 64,
+        "Above Standard Array": 2.6190296065860963
+      },
+      {
+        "Expected Total": 74.88129299283601,
+        "Cutoff": 65,
+        "Above Standard Array": 2.881292992836009
+      },
+      {
+        "Expected Total": 75.18545302997774,
+        "Cutoff": 66,
+        "Above Standard Array": 3.1854530299777366
+      },
+      {
+        "Expected Total": 75.52454812661384,
+        "Cutoff": 67,
+        "Above Standard Array": 3.524548126613837
+      },
+      {
+        "Expected Total": 75.90545646296236,
+        "Cutoff": 68,
+        "Above Standard Array": 3.9054564629623627
+      },
+      {
+        "Expected Total": 76.32970393948011,
+        "Cutoff": 69,
+        "Above Standard Array": 4.329703939480112
+      },
+      {
+        "Expected Total": 76.7909076727219,
+        "Cutoff": 70,
+        "Above Standard Array": 4.7909076727219
+      },
+      {
+        "Expected Total": 77.28594250156165,
+        "Cutoff": 71,
+        "Above Standard Array": 5.2859425015616495
+      }
+    ],
+    "data-4fb75dde27cf83dbaa0b8c8ce71c8493": [{"y": 72, "x": 70}],
+    "data-d5d2af758ed96c3bdfaa8ad1e886da04": [{"y": 73.463961, "x": 70}],
+    "data-25f8a0d9b1ee8e169cb21f93e6884c0a": [
+      {"y": 74, "x": 54, "t": "First ASI"},
+      {"y": 76, "x": 54, "t": "Second ASI"}
+    ]
+  }
+}
