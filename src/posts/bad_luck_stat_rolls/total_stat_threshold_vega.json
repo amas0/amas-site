@@ -1,0 +1,184 @@
+{
+    "config": {
+      "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+      "axis": {
+        "labelAngle": 0,
+        "labelFont": "noto sans",
+        "labelFontSize": 14,
+        "titleFont": "noto sans",
+        "titleFontSize": 14
+      },
+      "title": {"anchor": "start", "font": "noto sans", "fontSize": 16}
+    },
+    "layer": [
+      {
+        "data": {"name": "data-03aeb8122041330d2d8898eec7c6e4e2"},
+        "mark": {"type": "bar", "color": "orange", "opacity": 0.6},
+        "encoding": {
+          "x": {"type": "quantitative", "field": "array_mean", "title": null},
+          "y": {"type": "quantitative", "axis": null, "field": "num"}
+        }
+      },
+      {
+        "data": {"name": "data-dde03a0a0348678926b2c4cdd21311c3"},
+        "mark": {"type": "bar", "opacity": 0.6},
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "array_mean",
+            "scale": {"domain": [41, 100]},
+            "title": null
+          },
+          "y": {"type": "quantitative", "axis": null, "field": "num"}
+        }
+      },
+      {
+        "data": {"name": "data-27ec0b9b8bb6b2d88ba53171ff9b47e2"},
+        "mark": {"type": "rule", "color": "grey", "opacity": 0.9, "size": 3},
+        "encoding": {"x": {"type": "quantitative", "field": "x"}}
+      },
+      {
+        "data": {"name": "data-d44687109a6ee113e883ee6211384fcd"},
+        "mark": {
+          "type": "text",
+          "color": "grey",
+          "dx": -35,
+          "font": "noto sans",
+          "lineBreak": "\n",
+          "opacity": 0.9,
+          "size": 14
+        },
+        "encoding": {
+          "text": {"type": "nominal", "field": "t"},
+          "x": {"type": "quantitative", "field": "x"},
+          "y": {"type": "quantitative", "field": "y"}
+        }
+      }
+    ],
+    "width":"container",
+    "background": "#f2f0e9",
+    "title": {
+      "text": [
+        "Cutting off the array at some threshold",
+        "raises the likelihood of the other outcomes"
+      ]
+    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+    "datasets": {
+      "data-03aeb8122041330d2d8898eec7c6e4e2": [
+        {"array_mean": 39, "num": 0.000002},
+        {"array_mean": 41, "num": 0.000003},
+        {"array_mean": 42, "num": 0.000007},
+        {"array_mean": 43, "num": 0.000005},
+        {"array_mean": 44, "num": 0.000008},
+        {"array_mean": 45, "num": 0.000021},
+        {"array_mean": 46, "num": 0.000038},
+        {"array_mean": 47, "num": 0.000062},
+        {"array_mean": 48, "num": 0.000093},
+        {"array_mean": 49, "num": 0.000153},
+        {"array_mean": 50, "num": 0.000287},
+        {"array_mean": 51, "num": 0.000394},
+        {"array_mean": 52, "num": 0.000703},
+        {"array_mean": 53, "num": 0.000928},
+        {"array_mean": 54, "num": 0.00144},
+        {"array_mean": 55, "num": 0.001994},
+        {"array_mean": 56, "num": 0.002777},
+        {"array_mean": 57, "num": 0.003969},
+        {"array_mean": 58, "num": 0.005302},
+        {"array_mean": 59, "num": 0.007193},
+        {"array_mean": 60, "num": 0.009337},
+        {"array_mean": 61, "num": 0.01185},
+        {"array_mean": 62, "num": 0.014827},
+        {"array_mean": 63, "num": 0.018609},
+        {"array_mean": 64, "num": 0.022174},
+        {"array_mean": 65, "num": 0.026811},
+        {"array_mean": 66, "num": 0.03101},
+        {"array_mean": 67, "num": 0.035929},
+        {"array_mean": 68, "num": 0.040953},
+        {"array_mean": 69, "num": 0.045175},
+        {"array_mean": 70, "num": 0.04878},
+        {"array_mean": 71, "num": 0.051962},
+        {"array_mean": 72, "num": 0.054879},
+        {"array_mean": 73, "num": 0.056362},
+        {"array_mean": 74, "num": 0.056426},
+        {"array_mean": 75, "num": 0.05615},
+        {"array_mean": 76, "num": 0.054246},
+        {"array_mean": 77, "num": 0.051958},
+        {"array_mean": 78, "num": 0.047775},
+        {"array_mean": 79, "num": 0.043133},
+        {"array_mean": 80, "num": 0.038626},
+        {"array_mean": 81, "num": 0.03375},
+        {"array_mean": 82, "num": 0.028187},
+        {"array_mean": 83, "num": 0.023676},
+        {"array_mean": 84, "num": 0.019083},
+        {"array_mean": 85, "num": 0.015031},
+        {"array_mean": 86, "num": 0.011303},
+        {"array_mean": 87, "num": 0.008511},
+        {"array_mean": 88, "num": 0.006123},
+        {"array_mean": 89, "num": 0.004229},
+        {"array_mean": 90, "num": 0.002878},
+        {"array_mean": 91, "num": 0.002026},
+        {"array_mean": 92, "num": 0.001218},
+        {"array_mean": 93, "num": 0.000705},
+        {"array_mean": 94, "num": 0.000427},
+        {"array_mean": 95, "num": 0.000263},
+        {"array_mean": 96, "num": 0.00011},
+        {"array_mean": 97, "num": 0.000061},
+        {"array_mean": 98, "num": 0.000037},
+        {"array_mean": 99, "num": 0.000019},
+        {"array_mean": 100, "num": 0.00001},
+        {"array_mean": 101, "num": 0.000001},
+        {"array_mean": 102, "num": 0.000001}
+      ],
+      "data-dde03a0a0348678926b2c4cdd21311c3": [
+        {"array_mean": 61, "num": 0.012276179860020471},
+        {"array_mean": 62, "num": 0.015360246310930255},
+        {"array_mean": 63, "num": 0.01927826422068531},
+        {"array_mean": 64, "num": 0.022971477824142945},
+        {"array_mean": 65, "num": 0.027775245420000746},
+        {"array_mean": 66, "num": 0.032125260545083106},
+        {"array_mean": 67, "num": 0.03722117014267304},
+        {"array_mean": 68, "num": 0.042425856017503656},
+        {"array_mean": 69, "num": 0.04679969832712445},
+        {"array_mean": 70, "num": 0.05053435051238806},
+        {"array_mean": 71, "num": 0.05383078969505348},
+        {"array_mean": 72, "num": 0.056852698273254294},
+        {"array_mean": 73, "num": 0.058389033693710866},
+        {"array_mean": 74, "num": 0.05845533542460043},
+        {"array_mean": 75, "num": 0.05816940921013919},
+        {"array_mean": 76, "num": 0.05619693271617472},
+        {"array_mean": 77, "num": 0.053826645836872876},
+        {"array_mean": 78, "num": 0.04949320614451291},
+        {"array_mean": 79, "num": 0.04468425872592936},
+        {"array_mean": 80, "num": 0.04001516652094099},
+        {"array_mean": 81, "num": 0.03496380339879248},
+        {"array_mean": 82, "num": 0.02920073263412633},
+        {"array_mean": 83, "num": 0.024527496570957357},
+        {"array_mean": 84, "num": 0.01976931141508613},
+        {"array_mean": 85, "num": 0.015571583078140733},
+        {"array_mean": 86, "num": 0.011709507253823746},
+        {"array_mean": 87, "num": 0.008817094243766602},
+        {"array_mean": 88, "num": 0.006343210909949818},
+        {"array_mean": 89, "num": 0.004381094061436841},
+        {"array_mean": 90, "num": 0.0029815059609399927},
+        {"array_mean": 91, "num": 0.0020988641684726982},
+        {"array_mean": 92, "num": 0.0012618048159919776},
+        {"array_mean": 93, "num": 0.0007303550043303318},
+        {"array_mean": 94, "num": 0.0004423568607787967},
+        {"array_mean": 95, "num": 0.000272458675374294},
+        {"array_mean": 96, "num": 0.00011395609996643475},
+        {"array_mean": 97, "num": 0.00006319383725411382},
+        {"array_mean": 98, "num": 0.00003833068817052805},
+        {"array_mean": 99, "num": 0.000019683326357838728},
+        {"array_mean": 100, "num": 0.000010359645451494068},
+        {"array_mean": 101, "num": 0.0000010359645451494068},
+        {"array_mean": 102, "num": 0.0000010359645451494068}
+      ],
+      "data-27ec0b9b8bb6b2d88ba53171ff9b47e2": [
+        {"x": 60.5, "y": 0.1, "t": "Bad luck threshold"}
+      ],
+      "data-d44687109a6ee113e883ee6211384fcd": [
+        {"x": 60.5, "y": 0.03, "t": "Bad luck\n threshold"}
+      ]
+    }
+  }
