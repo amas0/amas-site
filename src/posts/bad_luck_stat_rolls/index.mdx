@@ -19,42 +19,49 @@ import total_stat_threshold_vega from "./total_stat_threshold_vega.json"
 Rolling for stats in DnD 5e always carries the risk of ending up with
 a weak character. Despite recommendations to use the standard array,
 point buy, or any number of homebrew rules for generating stats, rolling
-rules-as-written nevertheless remains. For these tables, bad luck will
-inevitably strike, and when that happens, many DMs allow rerolling a bad
-array so that everyone is happy.
+rules-as-written nevertheless remains common. For these tables, poor rolls
+inevitably occur, and when that happens, many DMs implement _bad luck
+protection_ by allowing bad stats to be rerolled.
 
 In this post, we look at the mathematical consequences of rerolling your stat
-array. We will explore the fact that allowing for stat arrays to be rerolled
-fundamentally changes the underlying distribution of possible outcomes and
-biases ability scores higher than they would otherwise be.
+array. By setting a limit on how bad a player can roll before allowing a
+reroll -- we call that limit the _bad luck threshold_ -- the underlying
+distribution of possible outcomes changes and biases ability scores higher
+than they would otherwise be.
 
 ## Reviewing the standard array and rolling RAW
 
 Before we dive into how rerolling changes the odds, let's review how rolling 
 rules-as-written compares to the standard array. As a reminder, the standard
 array is [8, 10, 12, 13, 14, 15]. Rolling for stats with 4d6 dropping the
-lowest generates a distribution of possible outcomes.
+lowest generates a wide range of possible outcomes.
 
-The below charts compare the range of likely outcomes from rolling to the
-standard array for each value from lowest to highest.
+The chart below compares the two methods. The top-left shows the distribution
+of possible outcomes for the _lowest_ value in your rolled array; typical
+values are somewhere between 6 and 11. The red line at 8 indicates the
+corresponding standard array values. Moving right, we see the distribution 
+for the next highest stat in the array. This continues until the bottom-right,
+showing the possible outcomes of the highest stat in the array.
 
 <img src={rolling_vs_standard_array} />
 
 The standard array more or less selects the average from rolling, but not 
-always! Interestingly, the largest deviation is in the highest stat -- the
-standard array gives a 15, whereas rolling more often than not results in a
-16 or higher.
+always! Interestingly, the largest deviation is the highest stat -- rolling
+more often than not gives 16 or higher, compared to the standard array's 15.
 
 Seemingly small differences result in the fact that rolling will _on average_
 give higher ability scores than the standard array. By looking at the _total
-ability score_ of the array, which is all stats added together, we get a
-better idea of how they compare.
+ability score_ of the array, which is sum of the whole array, we get a
+better idea of how they compare. The figure below shows the bell-shaped 
+curved of the total ability scores from rolling compared to the red line of 
+the standard array.
 
 <VegaWrapper spec={total_stat_rolling_vs_standard_vega} />
 
-The standard array gives a total ability score of 72, whereas the expected 
-value from rolling is about 73.5 -- an extra point or two isn't
-earth-shattering, but it is a difference worth noting.
+The standard array's red line is slightly left-of-center of the
+potential outcomes from rolling. Compared to the standard array's 72 total 
+ability score, rolling has an expected value of about 73.5. An extra point or
+two isn't earth-shattering, but it is a difference worth noting.
 
 ## Bad luck protection and the upward bias of rolled stats
 
@@ -72,24 +79,41 @@ under the standard array may want a reroll. This has the effect of chopping
 off the left side of the total ability score distribution and increasing the
 odds of the remaining outcomes.
 
+The chart below shows how that shift happens -- the underlying yellow-orange
+bars represent the full possible outcomes of rolling, whereas the slightly
+higher overlaid blue bars show how the distribution changes when it gets cuts
+off. The bad luck threshold shown here is the point where we say "any stats 
+that are worse than this should be rerolled".
+
 <VegaWrapper spec={total_stat_threshold_vega} />
 
-The relatively modest cutoff shown above, where a player rerolls when their total 
-ability score is 60 or below (which are effectively commoner stats!), has the
-same shape as before, but with the left tail cut off. Although the difference
-seems minor, it is enough to raise the expected total ability score from 73.5
-to 74. **By allowing players to reroll commoner-tier stats, they expect to
-gain half of an ability score in the process.**
+The relatively modest bad luck threshold shown above, where a player rerolls
+when their total ability score is 60 or below (which are effectively commoner
+stats!), has the same shape as before, but with the left tail cut off.
+Although the difference seems minor, it is enough to raise the expected total
+ability score from 73.5 to 74. **By allowing players to reroll commoner-tier
+stats, they expect to gain half of an ability score in the process.**
 
-Every "bad luck threshold" below which stats are allowed to be rerolled
-gives a different expected boost to your ability score. The figure below shows 
-just how that bonus varies.
+Every bad luck threshold we pick gives a different expected boost to your
+ability score. 
+
+The figure below shows just how that bonus varies. The horizontal axis
+represents the different thresholds we can set. Higher bad luck thresholds
+correspond to being more generous with rerolls. The vertical axis is our
+expected total ability score when we roll using this bad luck protection
+rule.
+
+As we increase the threshold, we see our expected stat total increase (as 
+represented by the blue markers). Our previous threshold of 60 puts us right 
+at a full ability score increase above the standard array. Increasing it to 
+a higher value of 68 or so is equivalent to two full ASIs above the standard 
+array.
 
 <VegaWrapper spec={excess_stat_bad_luck_vega} />
 
-Even a small amount of bad luck protection increases expected stats a full
-ability score increase above the standard array. More generous reroll
-policies pushes the expected ability score total even higher. 
+When phrased in terms of ASIs, it is clear that a small amount of bad luck 
+protection can give players who roll a notable expected boost over those 
+who take the standard array.
 
 ## Some thoughts on fairness 
 
