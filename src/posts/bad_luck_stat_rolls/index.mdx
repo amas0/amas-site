@@ -1,0 +1,161 @@
+---
+path: "/posts/bad-luck-stat-rolls"
+date: "2021/07/17"
+title: "Rolling for stats in practice: how bad luck protection inflates ability scores"
+summary: "Rolling for stats in DnD 5e always carries the risk of creating a weak 
+character. Many tables offer a player the chance to reroll if bad luck strikes. We 
+show that offering the possibility of a reroll inflates a character's expected stats."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+import rolling_vs_standard_array from "./rolling_vs_standard_array.png"
+import excess_stat_bad_luck_vega from "./excess_stat_bad_luck_vega.json"
+import total_stat_rolling_vs_standard_vega from "./total_stat_rolling_vs_standard_vega.json"
+import total_stat_threshold_vega from "./total_stat_threshold_vega.json"
+
+Rolling for stats in DnD 5e always carries the risk of ending up with
+a weak character. Despite recommendations to use the standard array,
+point buy, or any number of homebrew rules for generating stats, rolling
+rules-as-written nevertheless remains common. For these tables, poor rolls
+inevitably occur, and when that happens, many DMs implement _bad luck
+protection_ by allowing bad stats to be rerolled.
+
+In this post, we look at the mathematical consequences of rerolling your stat
+array. By setting a limit on how bad a player can roll before allowing a
+reroll -- we call that limit the _bad luck threshold_ -- the underlying
+distribution of possible outcomes changes and biases ability scores higher
+than they would otherwise be.
+
+## Reviewing the standard array and rolling RAW
+
+Before we dive into how rerolling changes the odds, let's review how rolling 
+rules-as-written compares to the standard array. As a reminder, the standard
+array is [8, 10, 12, 13, 14, 15]. Rolling for stats with 4d6 dropping the
+lowest generates a wide range of possible outcomes.
+
+The chart below compares the two methods. The top-left shows the distribution
+of possible outcomes for the _lowest_ value in your rolled array; typical
+values are somewhere between 6 and 11. The red line at 8 indicates the
+corresponding standard array values. Moving right, we see the distribution 
+for the next highest stat in the array. This continues until the bottom-right,
+showing the possible outcomes of the highest stat in the array.
+
+<img src={rolling_vs_standard_array} />
+
+The standard array more or less selects the average from rolling, but not 
+always! Interestingly, the largest deviation is the highest stat -- rolling
+more often than not gives 16 or higher, compared to the standard array's 15.
+
+Seemingly small differences result in the fact that rolling will _on average_
+give higher ability scores than the standard array. By looking at the _total
+ability score_ of the array, which is sum of the whole array, we get a
+better idea of how they compare. The figure below shows the bell-shaped 
+curved of the total ability scores from rolling compared to the red line of 
+the standard array.
+
+<VegaWrapper spec={total_stat_rolling_vs_standard_vega} />
+
+The standard array's red line is slightly left-of-center of the
+potential outcomes from rolling. Compared to the standard array's 72 total 
+ability score, rolling has an expected value of about 73.5. An extra point or
+two isn't earth-shattering, but it is a difference worth noting.
+
+## Bad luck protection and the upward bias of rolled stats
+
+Armed with an understanding of how different rules generate differing ability
+scores for a character (point buy is beyond this post's scope), we shift our 
+focus to how these rules work _in practice_.
+
+As mentioned in the intro, many groups rightly prioritize the enjoyment of
+the players over some arbitrary standard of mathematical fairness by
+rerolling bad arrays. This biases the total ability score upwards by cutting
+out extreme lows.
+
+One can imagine that a player who has the misfortune to roll significantly
+under the standard array may want a reroll. This has the effect of chopping
+off the left side of the total ability score distribution and increasing the
+odds of the remaining outcomes.
+
+The chart below shows how that shift happens -- the underlying yellow-orange
+bars represent the full possible outcomes of rolling, whereas the slightly
+higher overlaid blue bars show how the distribution changes when it gets cuts
+off. The bad luck threshold shown here is the point where we say "any stats 
+that are worse than this should be rerolled".
+
+<VegaWrapper spec={total_stat_threshold_vega} />
+
+The relatively modest bad luck threshold shown above, where a player rerolls
+when their total ability score is 60 or below (which are effectively commoner
+stats!), has the same shape as before, but with the left tail cut off.
+Although the difference seems minor, it is enough to raise the expected total
+ability score from 73.5 to 74. **By allowing players to reroll commoner-tier
+stats, they expect to gain half of an ability score in the process.**
+
+Every bad luck threshold we pick gives a different expected boost to your
+ability score. 
+
+The figure below shows just how that bonus varies. The horizontal axis
+represents the different thresholds we can set. Higher bad luck thresholds
+correspond to being more generous with rerolls. The vertical axis is our
+expected total ability score when we roll using this bad luck protection
+rule.
+
+As we increase the threshold, we see our expected stat total increase (as 
+represented by the blue markers). Our previous threshold of 60 puts us right 
+at a full ability score increase above the standard array. Increasing it to 
+a higher value of 68 or so is equivalent to two full ASIs above the standard 
+array.
+
+<VegaWrapper spec={excess_stat_bad_luck_vega} />
+
+When phrased in terms of ASIs, it's clear that rolling RAW already gives a
+notable average boost over the standard array. Adding even a small amount of
+bad luck protection to that pushes the disparity even further.
+
+As mentioned previously, a bad luck threshold of 60 -- which corresponds 
+to an average ability score of 10 -- is enough to push rolling to a full 
+ASI above the standard array. A more generous threshold of 66, or an 
+average ability score of 11, doubles the expected stat bonus of rolling 
+from 1.5 to 3 above the standard array.
+
+Of course, a single number like the total ability score cannot capture 
+all of the nuances that come into play when determining what is a "good"
+stat array. Having a very strong primary stat can more than make up for 
+a poor dump stat or two, and none of that nuance is appropriately 
+captured by this post. Regardless, **when looking at different methods 
+for generating ability scores, it's important to explore how they are 
+used _in practice_ for an honest comparison between them.**
+
+## Some thoughts on fairness 
+
+There is nothing wrong with ensuring everyone is happy by allowing players to
+rerolls stats, but tables should be wary as to how this method can affect
+players that use different stat generating methods. **If some players want to
+roll and others prefer to use the standard array, bad luck protection can
+lead to a lopsided power balance in favor of the rollers.**
+
+On one hand, it is something that could easily go by unnoticed and (in all
+honesty) likely wouldn't have too much of an effect on the game. On the other
+hand, it could feel bad to effectively give an ASI to some players at
+character creation and not to others. Encouraging everyone to use the same
+method for generating ability scores ensures an even playing field, but if a
+table does split, buffing the standard array by an ASI isn't a half-bad way
+to go.
+
+Another point that often comes up in these discussions about rolling for stats 
+is the opposite problem -- good luck protection. Players who roll far above 
+their party members may feel guilty about their greater character power and 
+choose to reroll to get a more average array. This has a counteracting
+effect, pushing the expected ability scores lower. One strategy to constrain
+extreme ability scores is to reroll on _both_ overly weak and overly 
+strong characters. If the reroll rules are symmetric, it leaves the expected 
+stats unchanged from the original method. 
+
+The goal of character creation should always be to create a party of
+adventurers that your table is excited to play. Keeping in mind that something 
+as simple as allowing a player to reroll their stats will inflate them is
+worth keeping in mind, so that you can ensure balanced table where everyone
+can shine.

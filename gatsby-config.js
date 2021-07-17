@@ -94,6 +94,7 @@ module.exports = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-theme-ui",
+    "gatsby-remark-images",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -113,6 +114,13 @@ module.exports = {
         gatsbyRemarkPlugins: [
           `gatsby-remark-katex`,
           `gatsby-remark-smartypants`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1035,
+              sizeByPixelDensity: true
+            },
+          },
         ],
         remarkPlugins: [require("remark-math"), require("remark-html-katex")],
       },

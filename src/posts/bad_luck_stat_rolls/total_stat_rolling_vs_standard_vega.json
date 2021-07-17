@@ -1,0 +1,129 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+    "axis": {
+      "labelAngle": 0,
+      "labelFont": "noto sans",
+      "labelFontSize": 14,
+      "titleFont": "noto sans",
+      "titleFontSize": 14
+    },
+    "text": {"font": "noto sans", "fontSize": 14},
+    "title": {"anchor": "start", "font": "noto sans", "fontSize": 16}
+  },
+  "layer": [
+    {
+      "data": {"name": "data-af2e34ea27d32e3f3a408de4d96ab018"},
+      "mark": {"type": "bar", "opacity": 0.8},
+      "encoding": {
+        "x": {
+          "type": "quantitative",
+          "field": "array_mean",
+          "title": "Total ability score"
+        },
+        "y": {"type": "quantitative", "axis": null, "field": "num"}
+      }
+    },
+    {
+      "data": {"name": "data-7e16de147ad03ca79a6f856fa6eeab4a"},
+      "mark": {"type": "rule", "color": "red", "size": 3},
+      "encoding": {"x": {"type": "quantitative", "field": "x"}}
+    },
+    {
+      "data": {"name": "data-50f708256f1e5a128fc1c7d8d14dac6f"},
+      "mark": {
+        "type": "text",
+        "color": "red",
+        "dx": -69,
+        "dy": -7,
+        "font": "noto sans",
+        "fontSize": 14,
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "text": {"type": "nominal", "field": "t"},
+        "x": {"type": "quantitative", "field": "x"},
+        "y": {"type": "quantitative", "field": "y"}
+      }
+    }
+  ],
+  "background": "#f2f0e9",
+  "title": {
+    "text": ["Rolling yields a slightly higher expected", "total ability score"]
+  },
+  "width": "container",
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "datasets": {
+    "data-af2e34ea27d32e3f3a408de4d96ab018": [
+      {"array_mean": 37, "num": 0.000001},
+      {"array_mean": 40, "num": 0.000001},
+      {"array_mean": 41, "num": 0.000002},
+      {"array_mean": 42, "num": 0.000005},
+      {"array_mean": 43, "num": 0.000007},
+      {"array_mean": 44, "num": 0.000018},
+      {"array_mean": 45, "num": 0.000021},
+      {"array_mean": 46, "num": 0.000028},
+      {"array_mean": 47, "num": 0.000072},
+      {"array_mean": 48, "num": 0.000116},
+      {"array_mean": 49, "num": 0.000186},
+      {"array_mean": 50, "num": 0.000255},
+      {"array_mean": 51, "num": 0.00043},
+      {"array_mean": 52, "num": 0.000652},
+      {"array_mean": 53, "num": 0.000955},
+      {"array_mean": 54, "num": 0.00141},
+      {"array_mean": 55, "num": 0.002051},
+      {"array_mean": 56, "num": 0.002768},
+      {"array_mean": 57, "num": 0.003878},
+      {"array_mean": 58, "num": 0.005303},
+      {"array_mean": 59, "num": 0.00708},
+      {"array_mean": 60, "num": 0.009086},
+      {"array_mean": 61, "num": 0.011966},
+      {"array_mean": 62, "num": 0.014942},
+      {"array_mean": 63, "num": 0.018285},
+      {"array_mean": 64, "num": 0.022166},
+      {"array_mean": 65, "num": 0.026858},
+      {"array_mean": 66, "num": 0.031023},
+      {"array_mean": 67, "num": 0.035707},
+      {"array_mean": 68, "num": 0.040343},
+      {"array_mean": 69, "num": 0.044922},
+      {"array_mean": 70, "num": 0.049138},
+      {"array_mean": 71, "num": 0.05251},
+      {"array_mean": 72, "num": 0.054554},
+      {"array_mean": 73, "num": 0.056238},
+      {"array_mean": 74, "num": 0.056739},
+      {"array_mean": 75, "num": 0.056245},
+      {"array_mean": 76, "num": 0.054291},
+      {"array_mean": 77, "num": 0.051377},
+      {"array_mean": 78, "num": 0.047867},
+      {"array_mean": 79, "num": 0.043405},
+      {"array_mean": 80, "num": 0.038922},
+      {"array_mean": 81, "num": 0.033288},
+      {"array_mean": 82, "num": 0.028645},
+      {"array_mean": 83, "num": 0.023487},
+      {"array_mean": 84, "num": 0.019105},
+      {"array_mean": 85, "num": 0.01511},
+      {"array_mean": 86, "num": 0.011591},
+      {"array_mean": 87, "num": 0.008589},
+      {"array_mean": 88, "num": 0.006169},
+      {"array_mean": 89, "num": 0.004279},
+      {"array_mean": 90, "num": 0.003098},
+      {"array_mean": 91, "num": 0.001905},
+      {"array_mean": 92, "num": 0.001248},
+      {"array_mean": 93, "num": 0.000748},
+      {"array_mean": 94, "num": 0.000417},
+      {"array_mean": 95, "num": 0.000241},
+      {"array_mean": 96, "num": 0.00014},
+      {"array_mean": 97, "num": 0.00006},
+      {"array_mean": 98, "num": 0.000031},
+      {"array_mean": 99, "num": 0.000016},
+      {"array_mean": 100, "num": 0.000005},
+      {"array_mean": 101, "num": 0.000003},
+      {"array_mean": 102, "num": 0.000001},
+      {"array_mean": 103, "num": 0.000001}
+    ],
+    "data-7e16de147ad03ca79a6f856fa6eeab4a": [{"x": 72}],
+    "data-50f708256f1e5a128fc1c7d8d14dac6f": [
+      {"x": 72, "y": 0.055, "t": "Standard array - 72"}
+    ]
+  }
+}
