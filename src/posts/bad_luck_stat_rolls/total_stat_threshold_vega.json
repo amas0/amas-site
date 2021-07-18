@@ -15,7 +15,7 @@
         "data": {"name": "data-03aeb8122041330d2d8898eec7c6e4e2"},
         "mark": {"type": "bar", "color": "orange", "opacity": 0.6},
         "encoding": {
-          "x": {"type": "quantitative", "field": "array_mean", "title": null},
+          "x": {"type": "quantitative", "field": "array_mean", "title": "Total ability score"},
           "y": {"type": "quantitative", "axis": null, "field": "num"}
         }
       },
@@ -26,8 +26,7 @@
           "x": {
             "type": "quantitative",
             "field": "array_mean",
-            "scale": {"domain": [41, 100]},
-            "title": null
+            "scale": {"domain": [41, 100]}
           },
           "y": {"type": "quantitative", "axis": null, "field": "num"}
         }
