@@ -2,6 +2,7 @@
 import { Link } from "gatsby";
 import { jsx } from "theme-ui";
 import RSS from "./../svgs/rss.svg";
+import Twitter from "./../svgs/twitter.svg";
 
 function HeaderLink(props) {
   return (
@@ -63,12 +64,25 @@ function Header(props) {
       >
         <HeaderLink to="/allposts" text="Posts" />
         <HeaderLink to="/about" text="About" />
+        <a href="https://twitter.com/_amas0">
+          <Twitter
+            sx={{
+              color: "background",
+              height: "1rem",
+              width: "1rem",
+              marginLeft: "0.2rem",
+              "&:hover": {
+                color: "#5496ff",
+              },
+            }}
+          />
+        </a>
         <a href="/rss.xml">
           <RSS
             sx={{
               color: "background",
               height: "1rem",
-              width: "1rem",
+              width: "1.3rem",
               marginLeft: "0.2rem",
               "&:hover": {
                 color: "#5496ff",
