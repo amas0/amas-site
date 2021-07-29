@@ -1,0 +1,29 @@
+---
+path: "/posts/exploding-dice"
+date: "2021/07/30"
+title: "The math of exploding dice"
+summary: "Exploding dice is an exciting mechanic that allows a player to
+reroll any dice that lands on its maximum adding the new roll to the max.
+In this post, we dig into the math behind that fun system."
+---
+
+import { Link } from "gatsby";
+import Layout from "../../components/Layout";
+import SEO from "../../components/SEO";
+import VegaWrapper from "../../components/Vega";
+
+
+Exploding dice is a mechanic in various tabletop RPGs whereby a dice that
+lands on its maximum values "explodes" -- meaning that the player then rolls
+again, adding the new dice roll to the max value. If the exploded dice again
+lands on its maximum, the dice explodes a second time. This process continues
+and can lead to long chains of explosions that push the roll total far beyond
+what would be normally expected.
+
+This mechanic appears in a number of tabletop games, with 
+[Savage Worlds](https://peginc.com/savage-settings/savage-worlds/) likely being
+the most popular system within the RPG space that uses it. In this post, we 
+dig into the infinite nature of exploding dice and explore the math and
+expected outcomes from this fun mechanic.
+
+## Exploding probabilities
