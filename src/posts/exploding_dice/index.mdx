@@ -1,7 +1,7 @@
 ---
 path: "/posts/exploding-dice"
 date: "2021/07/30"
-title: "The math of exploding dice"
+title: "The math behind exploding dice rolls"
 summary: "Exploding dice is an exciting mechanic that allows a player to
 reroll any dice that lands on its maximum adding the new roll to the max.
 In this post, we dig into the math behind that fun system."
@@ -14,11 +14,11 @@ import VegaWrapper from "../../components/Vega";
 
 
 Exploding dice is a mechanic in various tabletop RPGs whereby a dice that
-lands on its maximum values "explodes" -- meaning that the player then rolls
+lands on its maximum values "explodes" -- meaning the player then rolls
 again, adding the new dice roll to the max value. If the exploded dice again
 lands on its maximum, the dice explodes a second time. This process continues
-and can lead to long chains of explosions that push the roll total far beyond
-what would be normally expected.
+and may lead to chains of explosions that push the roll total far beyond
+what is normally expected.
 
 This mechanic appears in a number of tabletop games, with 
 [Savage Worlds](https://peginc.com/savage-settings/savage-worlds/) likely being
@@ -27,3 +27,37 @@ dig into the infinite nature of exploding dice and explore the math and
 expected outcomes from this fun mechanic.
 
 ## Exploding probabilities
+
+Suppose we start with an $n$ sided dice that explodes when $n$ is rolled. The 
+probability of rolling a non-exploded value, that is between $1$ and $n-1$ is
+no different than a normal dice roll. Each face below $n$ appears with equal
+probability $1/n$. If instead the dice explodes -- which happens with the
+remaining probability $1/n$ -- we add $n$ to the outcome of another exploding
+dice roll.
+
+To see how we can deal with this mathematically, let's look at the concrete
+example when we are rolling a 6-sided dice, so $n = 6$. Anything between 1 and
+5 appears with probability $1/6$. How about the probability of rolling a 7?
+Rolling a 7 requires rolling a 6 on the first roll, triggering the explosion, 
+and then rolling a 1 on the second dice:
+
+$$
+P(X = 7) = P(X = 6)P(X=1) = \frac{1}{6^2}
+$$
+
+Any value of the exploded dice roll can be written like this -- as powers of
+$1/n$. Suppose we want to know the probability of rolling a 25 on an exploding
+d6. Well that's just rolling 6 four times in a row and then a 1, so $p = 1/6^5$.
+In general, for an $n$ sided dice, the probability of rolling any given value is:
+
+
+$$
+P(X = x) = \begin{cases}
+\left(\frac{1}{n}\right)^{\lfloor{x/n}\rfloor + 1} & x \textrm{ not a multiple of }n \\
+0 & \textrm{otherwise}
+\end{cases}
+$$
+
+Where $\lfloor{x/n}\rfloor$ represents the floor function, meaning dividing $x$ by $n$
+and rounding down. The probability of rolling a multiple of $n$ is 0, because every 
+time a multiple of $n$ would show up, it triggers a dice explosion.
