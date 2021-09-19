@@ -1,6 +1,6 @@
 ---
 path: "/posts/exploding-dice"
-date: "2021/07/30"
+date: "2021/09/19"
 title: "The math behind exploding dice rolls"
 summary: "Exploding dice is an exciting mechanic that allows a player to
 reroll any dice that lands on its maximum adding the new roll to the max.
@@ -11,14 +11,17 @@ import { Link } from "gatsby";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import VegaWrapper from "../../components/Vega";
+import d6_pmf_vega from "./d6_pmf_vega.json";
+import exploding_expectations_vega from "./exploding_expectations_vega.json";
+import percent_increase_vega from "./percent_increase_vega.json";
 
 
-Exploding dice is a mechanic in various tabletop RPGs whereby a dice that
-lands on its maximum values "explodes" -- meaning the player then rolls
-again, adding the new dice roll to the max value. If the exploded dice again
-lands on its maximum, the dice explodes a second time. This process continues
-and may lead to chains of explosions that push the roll total far beyond
-what is normally expected.
+Exploding dice is a mechanic that appears in various tabletop games. It
+works like this: a dice is rolled, if it lands on its maximum values, it
+"explodes" -- the dice is then rolled again, adding the new value to
+the max value of the dice. If dice again lands on its maximum, the dice
+explodes a second time. This process continues and may lead to chains of
+explosions that push the roll total far beyond what is normally expected.
 
 This mechanic appears in a number of tabletop games, with 
 [Savage Worlds](https://peginc.com/savage-settings/savage-worlds/) likely being
@@ -28,18 +31,16 @@ expected outcomes from this fun mechanic.
 
 ## Exploding probabilities
 
-Suppose we start with an $n$ sided dice that explodes when $n$ is rolled. The 
-probability of rolling a non-exploded value, that is between $1$ and $n-1$ is
-no different than a normal dice roll. Each face below $n$ appears with equal
-probability $1/n$. If instead the dice explodes -- which happens with the
-remaining probability $1/n$ -- we add $n$ to the outcome of another exploding
-dice roll.
+Suppose we roll an $n$ sided exploding dice. The probability of rolling a
+non-exploded value, that is between $1$ and $n-1$ is no different than a normal
+dice roll. Each face below $n$ appears with equal probability $1/n$. If instead
+the dice explodes -- which happens with the remaining probability $1/n$ -- we
+add $n$ to the outcome of a new exploding dice roll.
 
-To see how we can deal with this mathematically, let's look at the concrete
-example when we are rolling a 6-sided dice, so $n = 6$. Anything between 1 and
-5 appears with probability $1/6$. How about the probability of rolling a 7?
-Rolling a 7 requires rolling a 6 on the first roll, triggering the explosion, 
-and then rolling a 1 on the second dice:
+Let's look at an example when we are rolling a 6-sided dice, so $n = 6$.
+Any result between 1 and 5 appears with probability $1/6$. How about the
+probability of rolling a 7?  Rolling a 7 requires rolling a 6 on the first roll,
+triggering the explosion, and then rolling a 1 on the second:
 
 $$
 P(X = 7) = P(X = 6)P(X=1) = \frac{1}{6^2}
@@ -47,17 +48,142 @@ $$
 
 Any value of the exploded dice roll can be written like this -- as powers of
 $1/n$. Suppose we want to know the probability of rolling a 25 on an exploding
-d6. Well that's just rolling 6 four times in a row and then a 1, so $p = 1/6^5$.
+d6. Well that's just rolling 6 four times in a row followed by a 1, so $p = 1/6^5$.
 In general, for an $n$ sided dice, the probability of rolling any given value is:
 
 
 $$
+\boxed{
 P(X = x) = \begin{cases}
 \left(\frac{1}{n}\right)^{\lfloor{x/n}\rfloor + 1} & x \textrm{ not a multiple of }n \\
 0 & \textrm{otherwise}
 \end{cases}
+}
 $$
 
-Where $\lfloor{x/n}\rfloor$ represents the floor function, meaning dividing $x$ by $n$
-and rounding down. The probability of rolling a multiple of $n$ is 0, because every 
-time a multiple of $n$ would show up, it triggers a dice explosion.
+Where $\lfloor{x/n}\rfloor$ represents the rounded down result of dividing $x$
+by $n$. The probability of rolling a multiple of $n$ is 0, because every time a
+multiple of $n$ would show up, it triggers a dice explosion. The below graph shows 
+the outcome probabilities when rolling an exploding d6.
+
+<VegaWrapper spec={d6_pmf_vega} />
+
+Within a given number of explosions, each outcome is equally likely. As the
+number of explosions increases, the probability decays rapidly due to the rarity
+of rolling many 6s in a row. This particular graph cuts off at 18, but in
+reality it continues to infinity with ever decreasing probabilities.
+
+The probability of at least $k$ explosions on an $n$ sided dice is
+$P(\textrm{at least k explosions}) = n^{-k}$. Continuing with the d6 example, 
+we have:
+
+$$
+\begin{aligned}
+P(\textrm{at least 1 explosion on d6}) &\approx &17\% \\
+P(\textrm{at least 2 explosions on d6}) &\approx &3\% \\
+P(\textrm{at least 3 explosions on d6}) &\approx &0.5\% \\
+P(\textrm{at least 4 explosions on d6}) &\approx &0.08\% \\
+\end{aligned}
+$$
+
+While one or two explosions is fairly common, more beyond that are
+quite rare, with a less than 1-in-1000 chance that you roll at least 4 explosions
+on a d6.
+
+## Explosive expectations
+
+Another way to understand the effect of the exploding dice mechanic is to 
+look at how it changes the average or _expected_ outcome of a roll. In
+a <Link to="/posts/dice-roll-expectations">previous post</Link>, we showed
+that the expectation of a normal $n$ sided dice roll is $(n + 1) / 2$. It is
+clear that exploding dice would have a higher average, but by how much?
+
+We'll calculate this by appealing to something called the [law of total
+expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation).  It allows
+us to write the expectation of an exploding dice roll as follows:
+
+$$
+E(X) = E(X | \textrm{explode}) P(\textrm{explode}) + E(X | \textrm{not explode}) P(\textrm{not explode})
+$$
+
+By breaking up our expectation into two distinct cases -- exploding and not
+exploding -- we simplify our approach. First, the probability statements are are
+easily addressed by our previous work:
+
+$$
+P(\textrm{explode}) = \frac{1}{n}
+$$
+$$
+P(\textrm{not explode}) = \frac{n-1}{n}
+$$
+
+Next, we consider the expected value of a roll with no explosion. Since each 
+outcome below the maximum value is equally likely, this the same as the expected
+result of an $n-1$ sided roll. Plugging in to $(n + 1) / 2$, we get:
+
+$$
+E(X | \textrm{not explode}) = \frac{n}{2}
+$$
+
+The last term, which is the expected value of an exploded dice is less clear,
+but we can get around it with a little trick. Recall that once a dice explodes,
+you can view it as a new exploding dice roll with $n$ added to the final result.
+We can express this as:
+
+$$
+E(X | \textrm{explode}) =  n + E(X)
+$$
+
+
+While it may seem odd to write the original thing that we were trying to solve
+for -- $E(X)$ -- on the right hand side, it's perfectly valid to do and will 
+help us later. Now that we have expressions for all four terms in our original
+expectation equation, we can plug in to get:
+
+$$
+E(X) = \left(n + E(X)\right) \frac{1}{n} + \frac{n}{2}\frac{n - 1}{n}
+$$
+
+The above simplifies to: 
+
+$$
+E(X) = 1 + \frac{E(X)}{n} + \frac{n - 1}{2}
+$$
+
+We take advantage of our trick by subtracting $E(X)/n$ from both sides to
+gather all the $E(X)$ terms on the right and solve to get:
+
+$$
+\boxed{
+E(X) = \frac{n}{n-1} \frac{n + 1}{2}
+}
+$$
+
+Careful inspection of our final result shows that the expectation of a normal 
+dice roll appears on in our result, $(n + 1)/2$. **A succinct way to summarize 
+the effects of the exploding dice mechanic is that it increases the expected 
+result by a factor of $n / (n - 1)$.** 
+
+Revisiting our $n=6$ case, we plug in to see that $E(X) = 4.2$. A notable
+increase over the normal average of 3.5. The below graph summarizes the 
+differences over the standard dice from d4 up to d20.
+
+<VegaWrapper spec={exploding_expectations_vega} />
+
+While the effect is of a similar magnitude across different types, it is 
+most significant for low-faced dice. The factor of increase, $n / (n - 1)$, quickly
+approaches 1 as $n$ increases, but with few sides it is relatively large. For a
+d4, the increase from an average roll of 2.5 to one of 3.33, represents a 33%
+increase. On the other hand, the d20's 10.5 to 11.05 increase is a meager 5%. The graph
+below shows percent increase of the exploding mechanic across the standard dice types:
+
+<VegaWrapper spec={percent_increase_vega} />
+
+Despite explosions having a consistent increase the expected outcome, as a 
+percent difference, the effect is attenuated for high-sided dice.
+Such a difference suggests some reasoning behind the prevalence of exploding
+dice in d6 systems, but less so in those with a greater d20 focus.
+
+Regardless of those differences, exploding dice is a fun mechanic that leads to
+some interesting math and meaningfully alters outcomes in systems that employ
+it. 

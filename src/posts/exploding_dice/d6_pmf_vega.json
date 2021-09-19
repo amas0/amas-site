@@ -1,0 +1,52 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+    "axis": {
+      "labelAngle": 0,
+      "labelFont": "noto sans",
+      "labelFontSize": 14,
+      "titleFont": "noto sans",
+      "titleFontSize": 14
+    },
+    "facet": {"spacing": 0},
+    "title": {"font": "noto sans", "fontSize": 18}
+  },
+  "data": {"name": "data-2fd71506a191199fcc0411e51cea877c"},
+  "mark": "bar",
+  "background": "#f2f0e9",
+  "bounds": "flush",
+  "encoding": {
+    "x": {"type": "ordinal", "field": "x", "title": "Roll result"},
+    "y": {
+      "type": "quantitative",
+      "field": "p",
+      "scale": {"domain": [0, 1]},
+      "title": "Probability"
+    }
+  },
+  "title": ["Probabilities of an exploding d6"],
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "width":"container",
+  "datasets": {
+    "data-2fd71506a191199fcc0411e51cea877c": [
+      {"x": 1, "p": 0.16666666666666666},
+      {"x": 2, "p": 0.16666666666666666},
+      {"x": 3, "p": 0.16666666666666666},
+      {"x": 4, "p": 0.16666666666666666},
+      {"x": 5, "p": 0.16666666666666666},
+      {"x": 6, "p": 0},
+      {"x": 7, "p": 0.027777777777777776},
+      {"x": 8, "p": 0.027777777777777776},
+      {"x": 9, "p": 0.027777777777777776},
+      {"x": 10, "p": 0.027777777777777776},
+      {"x": 11, "p": 0.027777777777777776},
+      {"x": 12, "p": 0},
+      {"x": 13, "p": 0.0046296296296296285},
+      {"x": 14, "p": 0.0046296296296296285},
+      {"x": 15, "p": 0.0046296296296296285},
+      {"x": 16, "p": 0.0046296296296296285},
+      {"x": 17, "p": 0.0046296296296296285},
+      {"x": 18, "p": 0}
+    ]
+  }
+}
