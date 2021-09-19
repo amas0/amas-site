@@ -1,0 +1,42 @@
+{
+    "config": {
+      "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+      "axis": {
+        "labelAngle": 0,
+        "labelFont": "noto sans",
+        "labelFontSize": 14,
+        "titleFont": "noto sans",
+        "titleFontSize": 14
+      },
+      "facet": {"spacing": 0},
+      "title": {"font": "noto sans", "fontSize": 18}
+    },
+    "data": {"name": "data-26fe96bb2b25dd2ced59f073a6ab89b8"},
+    "mark": {"type": "point", "size": 50},
+    "background": "#f2f0e9",
+    "encoding": {
+      "x": {"type": "quantitative", "field": "N", "title": "Number of sides"},
+      "y": {
+        "type": "quantitative",
+        "axis": {"format": "%"},
+        "field": "perc_diff",
+        "title": "Expected improvement"
+      }
+    },
+    "title": [
+      "Percent increase from exploding",
+      "decays rapidly with higher dice"
+    ],
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+    "width":"container",
+    "datasets": {
+      "data-26fe96bb2b25dd2ced59f073a6ab89b8": [
+        {"N": 4, "diff": 0.833333333333333, "perc_diff": 0.3333333333333332},
+        {"N": 6, "diff": 0.7000000000000002, "perc_diff": 0.20000000000000004},
+        {"N": 8, "diff": 0.6428571428571423, "perc_diff": 0.14285714285714274},
+        {"N": 10, "diff": 0.6111111111111116, "perc_diff": 0.1111111111111112},
+        {"N": 12, "diff": 0.5909090909090899, "perc_diff": 0.09090909090909076},
+        {"N": 20, "diff": 0.5526315789473681, "perc_diff": 0.0526315789473684}
+      ]
+    }
+  }

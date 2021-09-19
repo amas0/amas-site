@@ -1,0 +1,76 @@
+{
+  "config": {
+    "view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null},
+    "axis": {
+      "labelAngle": 0,
+      "labelFont": "noto sans",
+      "labelFontSize": 14,
+      "titleFont": "noto sans",
+      "titleFontSize": 14
+    },
+    "facet": {"spacing": 0},
+    "title": {"font": "noto sans", "fontSize": 18}
+  },
+  "layer": [
+    {
+      "data": {"name": "data-3bd38b9842b00650fa9d796041ff34d1"},
+      "mark": {"type": "text", "dx": 47, "dy": 20, "size": 16},
+      "encoding": {
+        "color": {"type": "nominal", "field": "is_exploding", "legend": null},
+        "text": {"type": "nominal", "field": "text"},
+        "x": {"type": "quantitative", "field": "x", "title": "Number of sides"},
+        "y": {"type": "quantitative", "field": "y", "title": "Expected result"}
+      }
+    },
+    {
+      "data": {"name": "data-c5d06548bf84e0cf71eed51da4eea53d"},
+      "mark": {"type": "text", "dx": -35, "dy": -20, "size": 16},
+      "encoding": {
+        "color": {"type": "nominal", "field": "is_exploding", "legend": null},
+        "text": {"type": "nominal", "field": "text"},
+        "x": {"type": "quantitative", "field": "x", "title": "Number of sides"},
+        "y": {"type": "quantitative", "field": "y", "title": "Expected result"}
+      }
+    },
+    {
+      "data": {"name": "data-782e4804a5823e47c481be5d6f80242d"},
+      "mark": {"type": "point", "size": 50},
+      "encoding": {
+        "color": {"type": "nominal", "field": "is_exploding", "legend": null},
+        "tooltip": {"type": "quantitative", "field": "result"},
+        "x": {"type": "quantitative", "field": "N", "title": "Number of sides"},
+        "y": {
+          "type": "quantitative",
+          "field": "result",
+          "title": "Expected result"
+        }
+      }
+    }
+  ],
+  "background": "#f2f0e9",
+  "title": ["Exploding boosts the expected result"],
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
+  "width":"container",
+  "datasets": {
+    "data-3bd38b9842b00650fa9d796041ff34d1": [
+      {"x": 10, "y": 5.5, "is_exploding": false, "text": "Not exploding"}
+    ],
+    "data-c5d06548bf84e0cf71eed51da4eea53d": [
+      {"x": 10, "y": 6.115, "is_exploding": true, "text": "Exploding"}
+    ],
+    "data-782e4804a5823e47c481be5d6f80242d": [
+      {"N": 4, "result": 3.333333333333333, "is_exploding": true},
+      {"N": 6, "result": 4.2, "is_exploding": true},
+      {"N": 8, "result": 5.142857142857142, "is_exploding": true},
+      {"N": 10, "result": 6.111111111111112, "is_exploding": true},
+      {"N": 12, "result": 7.09090909090909, "is_exploding": true},
+      {"N": 20, "result": 11.052631578947368, "is_exploding": true},
+      {"N": 4, "result": 2.5, "is_exploding": false},
+      {"N": 6, "result": 3.5, "is_exploding": false},
+      {"N": 8, "result": 4.5, "is_exploding": false},
+      {"N": 10, "result": 5.5, "is_exploding": false},
+      {"N": 12, "result": 6.5, "is_exploding": false},
+      {"N": 20, "result": 10.5, "is_exploding": false}
+    ]
+  }
+}
